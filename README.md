@@ -4,8 +4,8 @@
 - [x] Create Relationship
 - [x] Configure Custom Admin Routes (panel.php)
 - [x] Setup Action/Service Directory Structure
-- [ ] Create Image Processing Action
-- [ ] Create Cart Service (Guest to User merging)
+- [x] Create Image Processing Action
+- [x] Create Cart Service (Guest to User merging)
 - [ ] Add Product Domain CRUD Actions
 - [ ] Add Category Domain CRUD Actions
 - [ ] Add Cart Domain CRUD Actions
