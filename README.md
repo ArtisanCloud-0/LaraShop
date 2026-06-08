@@ -3,7 +3,7 @@
 - [x] Create database
 - [x] Create Relationship
 - [x] Configure Custom Admin Routes (panel.php)
-- [ ] Setup Action/Service Directory Structure
+- [x] Setup Action/Service Directory Structure
 - [ ] Create Image Processing Action
 - [ ] Create Cart Service (Guest to User merging)
 - [ ] Add Product Domain CRUD Actions
