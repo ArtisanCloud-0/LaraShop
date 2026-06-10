@@ -21,5 +21,3 @@
 - [ ] Register MigrateCartOnLogin Event Hook
 - [ ] Enforce Authorizations Policies on Order Ledgers
 - [ ] Apply Admin Role Gates to routes/panel.php
-
-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
