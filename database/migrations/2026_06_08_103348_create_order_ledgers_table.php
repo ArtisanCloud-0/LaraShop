@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('order_number')->unique();
             $table->foreignId('user_id')->nullable()->constrained()->restrictOnDelete();
             $table->unsignedInteger('total_amount');
-            $table->eunm('status', ['pending', 'processing', 'completed', 'cancelled']); // pending, processing, completed, cancelled
+            $table->string('status'); // pending, processing, completed, cancelled
             $table->string('payment_gateway')->nullable();
             $table->timestamps();
         });

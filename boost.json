@@ -14,7 +14,6 @@
         "laravel-best-practices",
         "livewire-development",
         "pest-testing",
-        "tailwindcss-development",
-        "deploying-laravel-cloud"
+        "tailwindcss-development"
     ]
 }

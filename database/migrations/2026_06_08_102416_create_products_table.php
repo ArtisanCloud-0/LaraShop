@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('slug')->unique();
             $table->foreignId('category_id')->constrained()->restrictOnDelete();
             $table->text('descripiton');
-            $table->boolean('is_visible')->default(ture);
+            $table->boolean('is_visible')->default(true);
             $table->json('images')->nullable();
             $table->timestamps();
         });

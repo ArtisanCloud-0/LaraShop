@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('skuses', function (Blueprint $table) {
+        Schema::create('skus', function (Blueprint $table) {
             $table->id();
             // Cascade on delete means if the core product is wiped, its variants go with it
             $table->foreignId('product_id')->constrained()->cascadeOnDelete();

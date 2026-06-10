@@ -6,8 +6,8 @@
 - [x] Setup Action/Service Directory Structure
 - [x] Create Image Processing Action
 - [x] Create Cart Service (Guest to User merging)
-- [ ] Add Product Domain CRUD Actions
 - [ ] Add Category Domain CRUD Actions
+- [ ] Add Product Domain CRUD Actions
 - [ ] Add Cart Domain CRUD Actions
 - [ ] Build Admin Livewire Management Components
 - [ ] Configure Mail Driver (Mailpit or Log for Local Dev)
