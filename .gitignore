@@ -1,0 +1,48 @@
+# --- Local AI & Custom Workspace Tooling ---
+.agents/
+.codex/
+.factory/
+.junie/
+boost.json
+AGENTS.md
+
+# --- IDE & System Specifics ---
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# --- Laravel Core Ignored Files ---
+/node_modules/
+/vendor/
+/.phpunit.result.cache
+/bootstrap/cache/*
+!/bootstrap/cache/.gitignore
+/public/build/
+/public/hot
+/public/storage
+/storage/*.key
+/storage/framework/cache/data/*
+!/storage/framework/cache/data/.gitignore
+/storage/framework/sessions/*
+!/storage/framework/sessions/.gitignore
+/storage/framework/testing/*
+!/storage/framework/testing/.gitignore
+/storage/framework/views/*
+!/storage/framework/views/*
+
+# --- Logs ---
+/storage/logs/*
+!/storage/logs/.gitignore
+*.log
+
+# --- Databases (SQLite / Local Dumps) ---
+/database/*.sqlite
+/database/*.sqlite-journal
+/database/*.sqlite-shm
+/database/*.sqlite-wal
+
+# --- Environment Configurations (CRITICAL) ---
+.env
+.env.backup
+.env.production
