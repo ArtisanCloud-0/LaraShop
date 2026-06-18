@@ -1,4 +1,3 @@
-<img width="2480" height="3508" alt="Resume" src="https://github.com/user-attachments/assets/4c92ac26-3654-4c51-9104-dde0b4163b26" />
 
 # LaraShop Todo List
 
