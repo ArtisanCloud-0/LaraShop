@@ -1,5 +1,3 @@
-<img width="2448" height="3264" alt="IMG_20260513_163323" src="https://github.com/user-attachments/assets/647ddee8-d3a5-4eff-940a-c413a1e9aca6" />
-<img width="1024" height="1024" alt="enhanced" src="https://github.com/user-attachments/assets/e0717a1a-8fce-43dc-8e1e-2f07b1c68229" />
 
 # LaraShop Todo List
 
