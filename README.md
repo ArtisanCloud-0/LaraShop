@@ -1,6 +1,4 @@
-<img width="2480" height="3508" alt="Resume" src="https://github.com/user-attachments/assets/bd7255e2-ccc6-4092-afe7-6506d3af0e98" />
-<img width="2480" height="3508" alt="Cover Later" src="https://github.com/user-attachments/assets/2a6f8bfb-dfe5-4dae-9159-85e864c42ba8" />
-<img width="2480" height="3508" alt="Cover Later ُى" src="https://github.com/user-attachments/assets/66e62738-9db0-4b5d-9635-d4ea45bb4079" />
+<img width="2480" height="3508" alt="Resume" src="https://github.com/user-attachments/assets/4c92ac26-3654-4c51-9104-dde0b4163b26" />
 
 # LaraShop Todo List
 
