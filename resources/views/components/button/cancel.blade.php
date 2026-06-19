@@ -1,0 +1,20 @@
+<div>
+    <a 
+        href="{{ route($target) }}"
+        class="
+            px-4
+            py-2.5
+            text-sm
+            font-medium
+            rounded-lg
+            text-gray-500
+            hover:text-gray-700
+            hover:bg-gray-200/50
+            dark:text-gray-400
+            dark:hover:text-gray-200
+            transition
+        "
+    >
+        Cancel
+    </a>
+</div>
