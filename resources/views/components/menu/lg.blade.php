@@ -5,7 +5,7 @@
             @foreach($links as $link)
                 <a
                     href="{{ route($link['route']) }}" 
-                    @if(Route::currentRouteName() === $link['route']) 
+                    @if(request()->routeIs($link['pattern'])) 
                         aria-current="page"  
                         class="rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white dark:bg-gray-950/50"
                     @else

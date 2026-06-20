@@ -1,10 +1,10 @@
 @php
     $links = [
-        ['name' => 'Dasboard',   'route' => 'panel'],
-        ['name' => 'Categories', 'route' => 'panel.categories'],
-        ['name' => 'Products',   'route' => 'panel.products'],
-        ['name' => 'orders',     'route' => 'panel.orders'],
-        ['name' => 'Reports',    'route' => 'panel.reports'],
+        ['name' => 'Dasboard',   'route' => 'panel',            'pattern' => ['panel']],
+        ['name' => 'Categories', 'route' => 'panel.categories', 'pattern' => ['panel.categories*']],
+        ['name' => 'Products',   'route' => 'panel.products',   'pattern' => ['panel.products*']],
+        ['name' => 'orders',     'route' => 'panel.orders',     'pattern' => ['panel.orders*']],
+        ['name' => 'Reports',    'route' => 'panel.reports',    'pattern' => ['panel.reports*']],
     ];
 
     $profileLinks = [
