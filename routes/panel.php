@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Livewire\Admin\Categories\Index;
 use App\Livewire\Admin\Categories\Create;
+use App\Livewire\Admin\Categories\Edit;
 
 Route::get('/panel', function () {
     return 'Welcome to control panel';
@@ -16,6 +17,8 @@ Route::get('/panel/login', function () {
 Route::livewire('panel/categories', Index::class)->name('panel.categories'); // Show Categories and SubCategories to Manage them
 
 Route::livewire('panel/categories/create', Create::class)->name('panel.categories.create'); // Add new Categories
+
+Route::livewire('panel/categories/{category}/edit', Edit::class)->name('panel.categories.edit'); // Edit Categories
 
 // Products pages
 Route::get('panel/products', function() {

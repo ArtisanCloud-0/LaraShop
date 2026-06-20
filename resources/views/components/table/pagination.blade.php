@@ -1,5 +1,5 @@
 <div>
-        
+
     <div class="max-w-6xl mx-auto my-8 p-6 bg-gray-50 border border-gray-200 rounded-xl shadow-md text-gray-700 dark:text-slate-100 dark:border-slate-800 dark:bg-slate-900">
         
         <div class="flex items-center justify-between mb-6 pb-4 border-b border-gray-300 dark:border-slate-800">
@@ -29,7 +29,7 @@
                         <th class="px-6 py-4 text-right">Actions</th>
                     </tr>
                 </thead>
-                <tbody class="divide-y divide-gray-800 text-sm font-medium text-gray-500 dark:text-slate-300 dark:divide-slate-800">
+                <tbody class="divide-y divide-gray-300 text-sm font-medium text-gray-500 dark:text-slate-300 dark:divide-slate-800">
                     {{ $data }}
                 </tbody>
             </table>
@@ -38,6 +38,7 @@
         <div class="mt-6">
             {{ $paginate->links() }}
         </div>
+
     </div>
 
 </div>

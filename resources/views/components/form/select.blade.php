@@ -37,7 +37,7 @@
         @endforeach
     </select>
 
-    @error("{{ $for }}") 
+    @error("$for") 
         <span class="text-xs text-red-400 mt-1 block">{{ $message }}</span> 
     @enderror
 

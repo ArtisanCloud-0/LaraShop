@@ -14,8 +14,9 @@
         wire:model.defer="{{ $for }}"
         class="
             w-full bg-gray-100/50 border 
-            @error('{{ $for }}') 
-                border-red-500 focus:border-red-500 focus:ring-red-500 
+            @error("$for") 
+                border-red-700 focus:border-red-700 focus:ring-red-700
+                dark:border-red-500 dark:focus:border-red-500 dark:focus:ring-red-500 
             @else 
                 border-gray-300 focus:border-gray-100 focus:ring-gray-300
                 dark:border-gray-800 dark:focus:border-indigo-500 dark:focus:ring-indigo-500
@@ -32,8 +33,8 @@
         placeholder="{{ $placeholder }}"
     >
 
-    @error('{{ $for }}') 
-        <span class="text-xs text-red-400 mt-1 block">{{ $message }}</span> 
+    @error("$for") 
+        <span class="text-xs text-red-700 dark:text-red-400 mt-1 block">{{ $message }}</span> 
     @enderror
 
 </div>
