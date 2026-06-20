@@ -4,6 +4,7 @@ namespace App\Livewire\Admin\Categories;
 
 use Livewire\Component;
 use Livewire\WithPagination;
+use Livewire\Attributes\Title;
 
 use App\Models\Category;
 use App\Actions\Category\DeleteCategoryAction;
@@ -37,6 +38,7 @@ class Index extends Component
     
     }
 
+    #[Title('Manage Categories')]
     public function render()
     {
         return view(

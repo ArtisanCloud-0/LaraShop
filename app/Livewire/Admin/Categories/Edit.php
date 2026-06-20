@@ -4,6 +4,7 @@ namespace App\Livewire\Admin\Categories;
 
 use Livewire\Component;
 use Livewire\Attributes\Validate;
+use Livewire\Attributes\Title;
 
 use App\Models\Category;
 use App\Actions\Category\UpsertCategoryAction;
@@ -86,6 +87,7 @@ class Edit extends Component
     * ====== Rendering the view ======
     * ================================
     */
+    #[Title('Edit Categories')]
     public function render()
     {
 

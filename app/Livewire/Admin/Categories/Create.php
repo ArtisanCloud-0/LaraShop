@@ -4,6 +4,7 @@ namespace App\Livewire\Admin\Categories;
 
 use Livewire\Component;
 use Livewire\Attributes\Validate;
+use Livewire\Attributes\Title;
 
 use App\Models\Category;
 use App\Actions\Category\UpsertCategoryAction;
@@ -62,6 +63,7 @@ class Create extends Component
     * ====== Render the view ======
     * =============================
     **/ 
+    #[Title('New Categories')]
     public function render()
     {
         return view(
