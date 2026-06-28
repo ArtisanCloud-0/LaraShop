@@ -32,7 +32,7 @@ class Index extends Component
         } catch (\Exception $e) {
             
             // Flash any thrown safety guardrail errors (e.g., contains products or children)
-            session()->flash('error', $e->getMessage());
+            session()->flash('error', 'This category have products attached to it, please delete all relative products first');
         
         }
     

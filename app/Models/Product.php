@@ -32,9 +32,9 @@ class Product extends Model
         return $this->belongsTo(Category::class);
     }
 
-    public function skus(): HasMany
+    public function productDetails(): HasMany
     {
-        return $this->hasMany(Sku::class);
+        return $this->hasMany(ProductDetails::class, 'product_id');
     }
 
 }

@@ -16,7 +16,7 @@ return new class extends Migration
             // Protect historical financial ledger data by restricting order ledger removal
             $table->foreignId('order_ledger_id')->constrained()->restrictOnDelete();
             // Restrict on delete protects your accounting tracking if a variant is discontinued
-            $table->foreignId('sku_id')->constrained()->restrictOnDelete();
+            $table->foreignId('product_details_id')->constrained()->restrictOnDelete();
             $table->unsignedInteger('price'); // Saved historical price snapshot at checkout
             $table->unsignedInteger('quantity');
             $table->timestamps();

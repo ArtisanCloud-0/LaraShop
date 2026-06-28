@@ -17,9 +17,10 @@
                     text-sm
                     font-bold
                     rounded-lg
+                    leading-relaxed
 
                     text-emerald-900
-                    bg-emerald-300
+                    bg-emerald-200/50
                     border-emerald-200
                     
                     dark:text-emerald-400
@@ -36,13 +37,14 @@
 
                 <button 
                     class="
-                        px-4
-                        py-1
-                        mx-0
-                        my-0
-                        rounded-full
-                        bg-emerald-50
-                        hover:bg-emerald-100
+                        w-6
+                        h-6
+                        rounded-lg
+                        leading-relaxed
+                        text-emerald-600
+                        hover:text-emerald-800
+                        transition-colors
+                        cursor-pointer
                     "
                     x-on:click="show = !show"
                 >
@@ -67,9 +69,10 @@
                 text-sm
                 font-bold
                 rounded-lg
+                leading-relaxed
 
-                text-red-800
-                bg-red-300
+                text-red-700
+                bg-red-200/50
                 border-red-200
                 
                 dark:text-red-400
@@ -81,18 +84,19 @@
             <div class="flex justify-between">
                 
                 <p>
-                    {{ session('status') }}
+                    {{ session('error') }}
                 </p>
 
                 <button 
                     class="
-                        px-4
-                        py-1
-                        mx-0
-                        my-0
-                        bg-red-50
-                        rounded-full
-                        hover:bg-red-100
+                        w-6
+                        h-6
+                        rounded-lg
+                        leading-relaxed
+                        text-red-600
+                        hover:text-red-800
+                        transition-colors
+                        cursor-pointer
                     "
                     x-on:click="show = !show"
                 >

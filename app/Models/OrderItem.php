@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-#[Fillable(['order_ledger_id', 'sku_id', 'price', 'quantity'])]
+#[Fillable(['order_ledger_id', 'product_details_id', 'price', 'quantity'])]
 class OrderItem extends Model
 {
     /** @use HasFactory<\Database\Factories\OrderItemFactory> */
@@ -48,9 +48,9 @@ class OrderItem extends Model
      * Connect to SKU, but include withTrashed() if you use soft deletes
      * so older orders don't break when a variant is discontinued.
      */
-    public function sku(): BelongsTo
+    public function productDetails(): BelongsTo
     {
-        return $this->belongsTo(Sku::class)->withTrashed();
+        return $this->belongsTo(ProductDetails::class)->withTrashed();
     }
 
 }

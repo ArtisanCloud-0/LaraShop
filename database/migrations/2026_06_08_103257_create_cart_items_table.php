@@ -16,12 +16,12 @@ return new class extends Migration
             // Clean up items automatically if the parent cart container is deleted
             $table->foreignUlid('cart_id')->constrained()->cascadeOnDelete();
             // Restrict on delete prevents a SKU from disappearing if active carts hold it
-            $table->foreignId('sku_id')->constrained()->restrictOnDelete();
+            $table->foreignId('product_details_id')->constrained()->restrictOnDelete();
             $table->unsignedInteger('quantity')->default(1);
             $table->timestamps();
 
             // Prevents multiple rows of the exact same variant in a single cart
-            $table->unique(['cart_id', 'sku_id']);
+            $table->unique(['cart_id', 'product_details_id']);
         });
     }
 

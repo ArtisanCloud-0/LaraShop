@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 
-#[Fillable(['cart_id', 'sku_id', 'quantity'])]
+#[Fillable(['cart_id', 'product_details_id', 'quantity'])]
 class CartItem extends Model
 {
     /** @use HasFactory<\Database\Factories\CartItemFactory> */
@@ -20,9 +20,9 @@ class CartItem extends Model
         return $this->belongsTo(Cart::class);
     }
 
-    public function sku(): BelongsTo
+    public function productDetails(): BelongsTo
     {
-        return $this->belongsTo(Sku::class);
+        return $this->belongsTo(ProductDetails::class);
     }
 
 }
