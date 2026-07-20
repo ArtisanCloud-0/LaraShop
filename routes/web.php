@@ -2,10 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return 'Welcome to Homepage';
-})->middleware('auth');
+use App\Livewire\Store\Welcome;
 
-Route::get('/login', function () {
-    return 'Welcome to Homepage Login';
-})->name('login');
+Route::livewire('/', Welcome::class)->name('home');

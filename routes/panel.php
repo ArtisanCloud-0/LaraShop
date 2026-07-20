@@ -54,6 +54,7 @@ Route::livewire('panel/products/upsert', Upsert::class)->name('panel.products.up
 
 Route::livewire('panel/products/{product}/edit', Upsert::class)->name('panel.products.edit');
 
+// Product Details Management
 Route::livewire('panel/products/{product}/skus', ManageSkus::class)->name('panel.products.skus');
 
 // ==============================================================================================================
