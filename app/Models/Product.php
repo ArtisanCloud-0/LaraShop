@@ -37,4 +37,13 @@ class Product extends Model
         return $this->hasMany(ProductDetails::class, 'product_id');
     }
 
+    /**
+     * Get the main image path.
+     */
+    public function getPrimaryImageAttribute(): ?string
+    {
+        // Returns the first image from the JSON array, or null if empty
+        return !empty($this->images) && is_array($this->images) ? $this->images[0] : null;
+    }
+
 }
