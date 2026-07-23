@@ -46,4 +46,46 @@ class Product extends Model
         return !empty($this->images) && is_array($this->images) ? $this->images[0] : null;
     }
 
+    /**
+     * Get the minimum price formatted or raw (in cents).
+     */
+    public function getMinPriceAttribute(): float | int
+    {
+        $minCents = $this->productDetails->min('price') ?? 0;
+        return $minCents;
+    }
+
+    /**
+     * Get the minimum price formatted or raw (in cents).
+     */
+    public function getMaxPriceAttribute(): float | int
+    {
+        $maxCents = $this->productDetails->max('price') ?? 0;
+        return $maxCents;
+    }
+
+    /**
+     * Get a clean formatted price string for display.
+     */
+    public function getFormattedPriceAttribute(): string
+    {
+        // [ 1 ] Check if the product does not have variants
+        if($this->productDetails->isEmpty()) {
+            return '$0.00';
+        }
+
+        // [ 2 ] Store min & max prices values for easy refreneces
+        $min = $this->min_price;
+        $max = $this->max_price;
+
+        // [ 3 ] If variants have the same price, then show standard single price
+        if($min === $max) {
+            return '$' . number_format($min, 2);
+        }
+
+        // [ 4 ] If deferents then return prices from minimum price
+        return 'From $' . number_format($min, 2);
+
+    }
+
 }

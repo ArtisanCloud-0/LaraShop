@@ -22,7 +22,7 @@ class Welcome extends Component
         // Dispatch event to update navbar/header cart count badge
         $this->dispatch('cart-updated');
 
-        // Optional: Flash a temporary notification
+        // Session updating message
         session()->flash('success', "{$product->name} added to your bag!");
     }
 
