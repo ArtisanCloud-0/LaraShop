@@ -3,35 +3,32 @@
 namespace App\Actions\Cart;
 
 use App\Models\Cart;
-
+use App\Models\CartItem;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
 class RemoveItemFromCartAction
 {
     /**
-     * Create a new class instance.
+     * Remove item by product_details_id from DB or Session cart.
      */
-    public function __construct()
+    public function execute(int $productDetailsId): void
     {
-        //
-    }
-
-    public function execute(int $itemId)
-    {
-        
         if (Auth::check()) {
             $userCart = Cart::where('user_id', Auth::id())->first();
-            
+
             if ($userCart) {
-                $userCart->items()->where('id', $itemId)->delete();
+                CartItem::where('cart_id', $userCart->id)
+                    ->where('product_details_id', $productDetailsId)
+                    ->delete();
             }
         } else {
             $cart = Session::get('cart', []);
-            unset($cart[$itemId]);
-            Session::put('cart', $cart);
+
+            if (isset($cart[$productDetailsId])) {
+                unset($cart[$productDetailsId]);
+                Session::put('cart', $cart);
+            }
         }
-
     }
-
 }

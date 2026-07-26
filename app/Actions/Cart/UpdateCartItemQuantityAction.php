@@ -3,82 +3,50 @@
 namespace App\Actions\Cart;
 
 use App\Models\Cart;
-use App\Models\CartItems;
-
+use App\Models\CartItem;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
 class UpdateCartItemQuantityAction
 {
     /**
-     * Create a new class instance.
+     * Update item quantity by product_details_id for Auth User (DB) or Guest (Session).
      */
-    public function __construct()
+    public function execute(int $productDetailsId, int $newQty): array
     {
-        //
-    }
-
-    /**
-     * Update item quantity for either Auth User (DB) or Guest (Session).
-     */
-    public function execute(int $itemId, int $newQty): array
-    {
-
-        if(Auth::check()) { // If the user is login
-            
-            // [ 1 ] Grap the cart that is belongs to the loged user
+        if (Auth::check()) {
             $userCart = Cart::firstOrCreate(['user_id' => Auth::id()]);
 
-            // [ 2 ] Update the cart
-            if($newQty > 0) {
-                
-                // [ 2-1 ] Update the cart item
+            if ($newQty > 0) {
+                // Update quantity for the given variant ID
                 CartItem::where('cart_id', $userCart->id)
-                    ->where('id', $product_details_id)
+                    ->where('product_details_id', $productDetailsId)
                     ->update(['quantity' => $newQty]);
-
             } else {
-
-                // [ 2-1 ] Delete the cart item
+                // Delete item if quantity drops to zero or less
                 CartItem::where('cart_id', $userCart->id)
-                    ->where('id', $product_details_id)
+                    ->where('product_details_id', $productDetailsId)
                     ->delete();
-
             }
 
-            // [ 3 ] Return fresh cart items formatted as array
             return $userCart->items()
                 ->get()
-                ->keyBy('id')
+                ->keyBy('product_details_id')
                 ->toArray();
-
         } else {
-
-            // [ 1 ] Get the session
             $cart = Session::get('cart', []);
 
-            // [ 2 ] Check if the session have the cart item before
-            if(isset($cart[$itemId])) {
-
-                // [ 2-1 ] If yes, then update the Quantity
-                if($newQty > 0) { 
-                    // Add new Quantity
-                    $cart[$itemId]['qty'] = $newQty;
+            if (isset($cart[$productDetailsId])) {
+                if ($newQty > 0) {
+                    $cart[$productDetailsId]['quantity'] = $newQty;
                 } else {
-                    // Remove item
-                    unset($cart($itemId));
+                    unset($cart[$productDetailsId]);
                 }
 
-                // [ 3 ] Update the session
                 Session::put('cart', $cart);
-
             }
 
-            // [ 4 ] Return new cart
             return $cart;
-
         }
-
     }
-
 }

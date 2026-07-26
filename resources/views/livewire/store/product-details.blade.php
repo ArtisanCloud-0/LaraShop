@@ -25,7 +25,7 @@
             <div class="mt-4 flex items-baseline gap-x-2">
                 @if($activeVariant)
                     <span class="text-2xl font-black text-slate-900 dark:text-white">
-                        ${{ number_format($activeVariant->price / 100, 2) }}
+                        ${{ number_format($activeVariant->price, 2) }}
                     </span>
                     <span class="text-xs font-mono text-slate-400">
                         SKU: {{ $activeVariant->code }}

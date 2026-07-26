@@ -169,20 +169,15 @@ class ProductDetails extends Component
     **/
     public function addToCart(): void
     {
-        if (!$this->activeVariant) {
-            // [ 1 ] Flash error or notify
+        // [ 1 ] Return error if their is no variant or the stock is empty
+        if (!$this->activeVariant || $this->activeVariant->stock < $this->quantity) {
             return;
         }
 
-        if ($this->activeVariant->stock < $this->quantity) {
-            // [ 2 ] Flash out of stock error
-            return;
-        }
+        // [ 2 ] Add items to User || Guest cart
+        resolve(AddToCartAction::class)->execute($this->activeVariant, $this->quantity);
 
-        // [ 3 ] Call your Cart Service or Action
-        resolve(AddToCartAction::class)->execute($this->activeVariant->id, $this->quantity);
-
-        // [ 4 ] Refresh cart items
+        // [ 3 ] Refreshing the cart items in cart.php livewire class inside store folder
         $this->dispatch('cart-updated');
     }
 

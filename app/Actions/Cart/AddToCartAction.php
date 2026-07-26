@@ -3,46 +3,54 @@
 namespace App\Actions\Cart;
 
 use App\Models\Cart;
-use App\Models\Product;
+use App\Models\ProductDetails;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
 class AddToCartAction
 {
     /**
-     * Add product to DB Cart or Session Cart.
+     * Add product variant (ProductDetails) to DB Cart or Session Cart.
      */
-    public function execute(Product $product, int $quantity = 1): void
+    public function execute(ProductDetails $variant, int $quantity = 1): void
     {
         if (Auth::check()) {
             // --- AUTHENTICATED USER (DATABASE) ---
             $cart = Cart::firstOrCreate(['user_id' => Auth::id()]);
 
-            $existingItem = $cart->items()->where('product_id', $product->id)->first();
+            $existingItem = $cart->items()
+                ->where('product_details_id', $variant->id)
+                ->first();
 
             if ($existingItem) {
-                $existingItem->increment('qty', $quantity);
+                $existingItem->increment('quantity', $quantity);
             } else {
                 $cart->items()->create([
-                    'product_id' => $product->id,
-                    'price'      => $product->price,
-                    'qty'        => $quantity,
+                    'product_details_id' => $variant->id,
+                    'quantity'           => $quantity,
                 ]);
             }
         } else {
             // --- GUEST USER (SESSION) ---
             $cart = Session::get('cart', []);
 
-            if (isset($cart[$product->id])) {
-                $cart[$product->id]['qty'] += $quantity;
+            if (isset($cart[$variant->id])) {
+                $cart[$variant->id]['quantity'] += $quantity;
             } else {
-                $cart[$product->id] = [
-                    'id'      => $product->id,
-                    'name'    => $product->name,
-                    'variant' => $product->variant ?? 'Standard',
-                    'price'   => $product->price,
-                    'qty'     => $quantity,
-                    'image'   => $product->primary_image ?? null,
+                // Eager-load parent product if not already loaded for display info
+                $product = $variant->relationLoaded('product') 
+                    ? $variant->product 
+                    : $variant->product()->first();
+
+                $cart[$variant->id] = [
+                    'product_details_id' => $variant->id,
+                    'product_id'         => $variant->product_id,
+                    'name'               => $product?->name ?? 'Product',
+                    'code'               => $variant->code,
+                    'options'            => $variant->options, // Array: ['color' => 'Red', 'size' => 'XL']
+                    'price'              => $variant->price,   // Stored in cents
+                    'quantity'           => $quantity,
+                    'image'              => $product?->primary_image ?? null,
                 ];
             }
 

@@ -8,24 +8,22 @@ use Livewire\Attributes\Layout;
 use App\Actions\Cart\AddToCartAction;
 
 use App\Models\Product As ProductModel;
+use App\Models\ProductDetails;
 
 #[Layout('layouts.store')]
 class Product extends Component
 {
 
-    public function addToCart($productId): void
+    public function addToCart(int $productDetailsId): void
     {
-        // [ 1 ] Grap the specific product data
-        $product = ProductModel::findOrFail($productId);
+        // 1. Fetch the variant (product_details) by ID instead of Product
+        $variant = ProductDetails::findOrFail($productDetailsId);
 
-        // [ 2 ] Add Product data to the database or session cart
-        resolve(AddToCartAction::class)->execute($product);
+        // 2. Execute action to add variant to cart
+        resolve(AddToCartAction::class)->execute($variant, 1);
 
-        // [ 3 ] Update the cart items inthe user view
+        // 3. Dispatch event to update navbar counter & other components
         $this->dispatch('cart-updated');
-
-        // [ 4 ] Send success message to the user
-        session()->flash('status', "{{ $product->name }} added to the bag");
     }
 
     public function render()

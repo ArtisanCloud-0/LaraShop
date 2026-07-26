@@ -22,7 +22,7 @@ class CartItem extends Model
 
     public function productDetails(): BelongsTo
     {
-        return $this->belongsTo(ProductDetails::class);
+        return $this->belongsTo(ProductDetails::class, 'product_details_id');
     }
 
 }

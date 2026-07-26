@@ -39,7 +39,7 @@
                     </a>
 
                     <div class="hidden md:flex items-center gap-6 text-sm font-medium text-slate-600 dark:text-slate-300">
-                        <a href="#" class="hover:text-blue-600 dark:hover:text-blue-400">Shop</a>
+                        <a href="{{ route('products') }}" class="hover:text-blue-600 dark:hover:text-blue-400">Shop</a>
                         <a href="#" class="hover:text-blue-600 dark:hover:text-blue-400">Categories</a>
                         <a href="/about" class="hover:text-blue-600 dark:hover:text-blue-400">About</a>
                     </div>

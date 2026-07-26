@@ -19,14 +19,14 @@
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
             <!-- Items List -->
             <div class="lg:col-span-2 space-y-4">
-                @foreach($cartItems as $item)
+                @foreach($cartItems as $variantId => $item)
                     <div 
                         x-data="{ 
-                            qty: {{ $item['qty'] }},
-                            originalQty: {{ $item['qty'] }},
+                            qty: {{ $item['quantity'] }},
+                            originalQty: {{ $item['quantity'] }},
                             updateBackend() {
                                 if (this.qty !== this.originalQty) {
-                                    $wire.updateQuantity({{ $item['id'] }}, this.qty);
+                                    $wire.updateQuantity({{ $item['product_details_id'] ?? $variantId }}, this.qty);
                                     this.originalQty = this.qty;
                                 }
                             }
@@ -34,20 +34,34 @@
                         @mouseleave="updateBackend()"
                         class="flex items-center gap-4 p-4 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl"
                     >
-                        <div class="w-16 h-16 bg-slate-100 dark:bg-slate-800 rounded-lg flex items-center justify-center text-[8px] font-mono text-slate-400 uppercase shrink-0">
-                            IMG
+                        <!-- Item Image -->
+                        <div class="w-16 h-16 bg-slate-100 dark:bg-slate-800 rounded-lg overflow-hidden shrink-0 flex items-center justify-center text-[8px] font-mono text-slate-400 uppercase">
+                            @if(!empty($item['image']))
+                                <img src="{{ Storage::url($item['image']) }}" alt="{{ $item['name'] }}" class="w-full h-full object-cover">
+                            @else
+                                IMG
+                            @endif
                         </div>
 
                         <div class="flex-1 min-w-0">
                             <h4 class="text-sm font-bold text-slate-900 dark:text-slate-100 truncate">{{ $item['name'] }}</h4>
-                            <p class="text-xs text-slate-400 mt-0.5">{{ $item['variant'] }}</p>
+                            
+                            <!-- Variant Options (e.g., Color: Red | Size: XL) -->
+                            <p class="text-xs text-slate-400 mt-0.5">
+                                @if(!empty($item['options']) && is_array($item['options']))
+                                    {{ implode(' / ', array_map(fn($k, $v) => ucfirst($k) . ': ' . $v, array_keys($item['options']), $item['options'])) }}
+                                @else
+                                    Standard
+                                @endif
+                            </p>
                             
                             <div class="flex items-center justify-between mt-3">
+                                <!-- Price Calculation in Cents converted to Dollars -->
                                 <span class="text-xs font-black text-slate-900 dark:text-white">
                                     $<span x-text="({{ $item['price'] }} * qty).toFixed(2)"></span>
                                 </span>
 
-                                <!-- Inline Alpine Increment/Decrement Controls -->
+                                <!-- Inline Controls -->
                                 <div class="flex items-center gap-4">
                                     <div class="flex items-center border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 rounded-lg overflow-hidden">
                                         <button 
@@ -67,7 +81,7 @@
 
                                     <button 
                                         type="button" 
-                                        wire:click="removeItem({{ $item['id'] }})" 
+                                        wire:click="removeItem({{ $item['product_details_id'] ?? $variantId }})" 
                                         class="text-xs text-red-500 hover:underline font-medium"
                                     >
                                         Remove

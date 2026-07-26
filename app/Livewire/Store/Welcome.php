@@ -7,6 +7,7 @@ use Livewire\Attributes\Layout;
 
 use App\Actions\Cart\AddToCartAction;
 use App\Models\Product;
+use App\Models\ProductDetails;
 
 #[Layout('layouts::store')]
 class Welcome extends Component
@@ -14,26 +15,25 @@ class Welcome extends Component
 
     public function addToCart(int $productId): void
     {
-        $product = Product::findOrFail($productId);
+
+        // Grap the specific product data
+        $variant = ProductDetails::findOrFail($productId);
 
         // Execute the action
-        resolve(AddToCartAction::class)->execute($product);
+        resolve(AddToCartAction::class)->execute($variant, 1);
 
         // Dispatch event to update navbar/header cart count badge
         $this->dispatch('cart-updated');
-
+        
         // Session updating message
-        session()->flash('success', "{$product->name} added to your bag!");
+        session()->flash('success', "1 item added to your bag!");
+        
     }
 
     public function render()
     {
-        // $res = Product::with('category')->with('productDetails')->get();
-
-        // dd($res);
-
         return view('livewire.store.welcome', [
-            'products' => Product::with('category')->get()
+            'products' => Product::with(['category', 'productDetails'])->where('is_visible', true)->get()
         ]);
     }
 }
