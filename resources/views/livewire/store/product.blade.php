@@ -1,6 +1,4 @@
 <div>
-    
-    @dd($products)
 
     <div class="flex flex-col lg:flex-row gap-8 items-start">
         
@@ -117,7 +115,7 @@
                         {{-- Meta specifications naming mappings --}}
                         <div class="mt-4 flex-1">
                             <span class="text-[10px] uppercase font-bold tracking-wider text-slate-400 dark:text-slate-500">{{ $product->category->name }}</span>
-                            <h4 class="text-sm font-bold text-slate-900 dark:text-slate-100 mt-0.5 line-clamp-1">{{ $product->name }}</h4>
+                            <h4 class="text-sm font-bold text-slate-900 dark:text-slate-100 mt-0.5 line-clamp-1"><a href="{{ route('product.details', $product->slug) }}">{{ $product->name }}</a></h4>
                         </div>
 
                         {{-- CTA Purchase Interface Row using Plus SVG --}}
