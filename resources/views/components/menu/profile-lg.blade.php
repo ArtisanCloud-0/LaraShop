@@ -9,22 +9,52 @@
 
     <el-menu anchor="bottom end" popover class="w-48 origin-top-right rounded-md bg-white py-1 shadow-lg outline-1 outline-black/5 transition transition-discrete [--anchor-gap:--spacing(2)] data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in dark:bg-gray-800 dark:shadow-none dark:-outline-offset-1 dark:outline-white/10">
         @foreach($links as $link)
-            <a
-                href="#"
-                class="
-                    block
-                    px-4
-                    py-2
-                    text-sm
-                    text-gray-700
-                    focus:bg-gray-100
-                    focus:outline-hidden 
-                    dark:text-gray-300 
-                    dark:focus:bg-white/5
-                "
-            >
-                {{ $link['name'] }}
-            </a>
+            
+            @if($link['name'] === 'Sign out' || $link['name'] === 'Logout')
+
+                <form action="{{ route('panel.logout') }}" method="POST">
+                    @csrf
+                    <button 
+                        type="submit" 
+                        class="
+                            block
+                            w-full
+                            text-start
+                            px-4
+                            py-2
+                            text-sm
+                            text-gray-700
+                            focus:bg-gray-100
+                            focus:outline-hidden 
+                            dark:text-gray-300 
+                            dark:focus:bg-white/5
+                        "
+                    >
+                        {{ $link['name'] }}
+                    </button>
+                </form>
+            
+            @else
+            
+                <a
+                    href="#"
+                    class="
+                        block
+                        px-4
+                        py-2
+                        text-sm
+                        text-gray-700
+                        focus:bg-gray-100
+                        focus:outline-hidden 
+                        dark:text-gray-300 
+                        dark:focus:bg-white/5
+                    "
+                >
+                    {{ $link['name'] }}
+                </a>
+            
+            @endif
+        
         @endforeach
     </el-menu>
     

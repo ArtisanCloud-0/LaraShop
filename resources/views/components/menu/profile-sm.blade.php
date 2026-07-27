@@ -40,14 +40,36 @@
         </div>
 
         <div class="mt-3 space-y-1 px-2">
+    
             @foreach($links as $link)
-                <a 
-                    href="#" 
-                    class="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-200/50 hover:text-gray-700 dark:text-gray-400 dark:hover:bg-white/5 dark:hover:text-white"
-                >
-                    {{ $link['name'] }}
-                </a>
+
+                @if($link['name'] === 'Sign out' || $link['name'] === 'Logout')
+
+                    <form action="{{ route('panel.logout') }}" method="POST">
+                        @csrf
+                        <button 
+                            type="submit" 
+                            class="block w-full text-start rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-200/50 hover:text-gray-700 dark:text-gray-400 dark:hover:bg-white/5 dark:hover:text-white"
+                        >
+                            {{ $link['name'] }}
+                        </button>
+                    </form>
+                
+                @else
+                
+                    <a 
+                        href="#" 
+                        class="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-200/50 hover:text-gray-700 dark:text-gray-400 dark:hover:bg-white/5 dark:hover:text-white"
+                    >
+                        {{ $link['name'] }}
+                    </a>
+                
+                @endif
+
             @endforeach
+        
         </div>
+    
     </div>
+
 </div>

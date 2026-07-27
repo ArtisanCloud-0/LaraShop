@@ -2,6 +2,10 @@
 
 use Illuminate\Support\Facades\Route;
 
+// Auth
+use App\Livewire\Admin\Auth\Login As AdminLogin;
+use App\Livewire\Admin\Auth\Logout As AdminLogout;
+
 // ==============================================================================================================
 
 // Categories
@@ -18,61 +22,71 @@ use App\Livewire\Admin\Products\ManageSkus;
 
 // ==============================================================================================================
 
-Route::get('/panel', function () {
-    return 'Welcome to control panel';
-})->name('panel');
+Route::prefix('panel')->middleware('guest:panel')->group(function () {
+   
+   // Admin Login Route
+    Route::get('/login', AdminLogin::class)->name('panel.login');
 
-Route::get('/panel/login', function () {
-    return 'Welcome to control panel login';
-})->name('panel.login');
+});
 
-// ==============================================================================================================
+Route::prefix('panel')->middleware(['auth:panel', 'can:access-control-panel'])->group(function () {
 
-// =================
-// Categories pages
-// =================
+    // Admin Logout Route
+    Route::post('/logout', AdminLogout::class)->name('panel.logout');
 
-// Show Categories and SubCategories to Manage them
-Route::livewire('panel/categories', Categories::class)->name('panel.categories'); 
+    Route::get('/', function () {
+        return 'Welcome to control panel';
+    })->name('dashboard');
 
-// Add new Categories
-Route::livewire('panel/categories/create', Create::class)->name('panel.categories.create'); 
+    // ==============================================================================================================
 
-// Edit Categories
-Route::livewire('panel/categories/{category}/edit', Edit::class)->name('panel.categories.edit'); 
+    // =================
+    // Categories pages
+    // =================
 
-// ==============================================================================================================
+    // Show Categories and SubCategories to Manage them
+    Route::livewire('/categories', Categories::class)->name('panel.categories'); 
 
-// ===============
-// Products pages
-// ===============
-// Products View 
-Route::livewire('panel/products', Products::class)->name('panel.products');
+    // Add new Categories
+    Route::livewire('panel/categories/create', Create::class)->name('panel.categories.create'); 
 
-// Add | Edit Products
-Route::livewire('panel/products/upsert', Upsert::class)->name('panel.products.upsert');
+    // Edit Categories
+    Route::livewire('panel/categories/{category}/edit', Edit::class)->name('panel.categories.edit'); 
 
-Route::livewire('panel/products/{product}/edit', Upsert::class)->name('panel.products.edit');
+    // ==============================================================================================================
 
-// Product Details Management
-Route::livewire('panel/products/{product}/skus', ManageSkus::class)->name('panel.products.skus');
+    // ===============
+    // Products pages
+    // ===============
+    // Products View 
+    Route::livewire('/products', Products::class)->name('panel.products');
 
-// ==============================================================================================================
+    // Add | Edit Products
+    Route::livewire('/products/upsert', Upsert::class)->name('panel.products.upsert');
 
-// =============
-// Orders pages
-// =============
-Route::get('panel/orders', function() {
-    //
-})->name('panel.orders');
+    Route::livewire('/products/{product}/edit', Upsert::class)->name('panel.products.edit');
 
-// ==============================================================================================================
+    // Product Details Management
+    Route::livewire('/products/{product}/skus', ManageSkus::class)->name('panel.products.skus');
 
-// ==============
-// Reports pages
-// ==============
-Route::get('panel/reports', function() {
-    //
-})->name('panel.reports');
+    // ==============================================================================================================
 
-// ==============================================================================================================
+    // =============
+    // Orders pages
+    // =============
+    Route::get('panel/orders', function() {
+        //
+    })->name('panel.orders');
+
+    // ==============================================================================================================
+
+    // ==============
+    // Reports pages
+    // ==============
+    Route::get('panel/reports', function() {
+        //
+    })->name('panel.reports');
+
+    // ==============================================================================================================
+
+});
