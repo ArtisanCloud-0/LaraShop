@@ -2,6 +2,11 @@
 
 use Illuminate\Support\Facades\Route;
 
+// Dashboard Panel
+use App\Livewire\Admin\Dashboard;
+
+// ==============================================================================================================
+
 // Auth
 use App\Livewire\Admin\Auth\Login As AdminLogin;
 use App\Livewire\Admin\Auth\Logout As AdminLogout;
@@ -34,9 +39,7 @@ Route::prefix('panel')->middleware(['auth:panel', 'can:access-control-panel'])->
     // Admin Logout Route
     Route::post('/logout', AdminLogout::class)->name('panel.logout');
 
-    Route::get('/', function () {
-        return 'Welcome to control panel';
-    })->name('dashboard');
+    Route::get('/', Dashboard::class)->name('dashboard');
 
     // ==============================================================================================================
 
