@@ -1,10 +1,11 @@
 @php
     $links = [
-        ['name' => 'Dashboard',  'route' => 'dashboard',       'pattern' => ['dashboard']],
-        ['name' => 'Categories', 'route' => 'panel.categories', 'pattern' => ['panel.categories*']],
-        ['name' => 'Products',   'route' => 'panel.products',   'pattern' => ['panel.products*']],
-        ['name' => 'Orders',     'route' => 'panel.orders',     'pattern' => ['panel.orders*']],
-        ['name' => 'Reports',    'route' => 'panel.reports',    'pattern' => ['panel.reports*']],
+        ['name' => 'Dashboard',  'route' => 'dashboard',             'pattern' => ['dashboard']],
+        ['name' => 'Users',      'route' => 'panel.users',           'pattern' => ['panel.users*']],
+        ['name' => 'Categories', 'route' => 'panel.categories',      'pattern' => ['panel.categories*']],
+        ['name' => 'Products',   'route' => 'panel.products',        'pattern' => ['panel.products*']],
+        ['name' => 'Orders',     'route' => 'panel.orders',          'pattern' => ['panel.orders*']],
+        ['name' => 'Reports',    'route' => 'panel.reports',         'pattern' => ['panel.reports*']],
     ];
 
     $profileLinks = [
@@ -216,7 +217,9 @@
 
             <main>
                 <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+
                     {{ $slot }}
+
                 </div>
             </main>
 

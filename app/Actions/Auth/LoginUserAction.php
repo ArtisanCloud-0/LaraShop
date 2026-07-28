@@ -26,7 +26,7 @@ class LoginUserAction {
     	$user = Auth::guard($guard)->user();
 
     	// [ 3 ] Inforce admin role if the loggin to panel guard
-    	if($guard === 'panel' && !$user->isAdmin()) {
+    	if($guard === 'panel' && (!$user->isAdmin() || !$user->isSuperAdmin())) {
 
     		// [ 3-1 ] Logout immediately to destroy invalid admin session
     		Auth::guard($guard)->logout();

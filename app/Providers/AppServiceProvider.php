@@ -24,7 +24,7 @@ class AppServiceProvider extends ServiceProvider
     {
         // Only users with the 'admin' role can access the control panel
         Gate::define('access-control-panel', function (User $user) {
-            return $user->isAdmin();
+            return $user->isAdmin() || $user->isSuperAdmin();
         });
     }
 }

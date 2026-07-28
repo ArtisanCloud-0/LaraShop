@@ -10,6 +10,7 @@ use App\Livewire\Admin\Dashboard;
 // Auth
 use App\Livewire\Admin\Auth\Login As AdminLogin;
 use App\Livewire\Admin\Auth\Logout As AdminLogout;
+use App\Livewire\Admin\Auth\AdminUsers;
 
 // ==============================================================================================================
 
@@ -39,7 +40,15 @@ Route::prefix('panel')->middleware(['auth:panel', 'can:access-control-panel'])->
     // Admin Logout Route
     Route::post('/logout', AdminLogout::class)->name('panel.logout');
 
+    // Control Panel Dashboard
     Route::get('/', Dashboard::class)->name('dashboard');
+
+    // ==============================================================================================================
+
+    // =======================
+    // Create New Admin Users
+    // =======================
+    Route::get('/users', AdminUsers::class)->name('panel.users');
 
     // ==============================================================================================================
 
@@ -48,13 +57,13 @@ Route::prefix('panel')->middleware(['auth:panel', 'can:access-control-panel'])->
     // =================
 
     // Show Categories and SubCategories to Manage them
-    Route::livewire('/categories', Categories::class)->name('panel.categories'); 
+    Route::get('/categories', Categories::class)->name('panel.categories'); 
 
     // Add new Categories
-    Route::livewire('panel/categories/create', Create::class)->name('panel.categories.create'); 
+    Route::livewire('categories/create', Create::class)->name('panel.categories.create'); 
 
     // Edit Categories
-    Route::livewire('panel/categories/{category}/edit', Edit::class)->name('panel.categories.edit'); 
+    Route::livewire('categories/{category}/edit', Edit::class)->name('panel.categories.edit'); 
 
     // ==============================================================================================================
 
