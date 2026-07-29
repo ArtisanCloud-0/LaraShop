@@ -3,6 +3,7 @@
 namespace App\Livewire\Admin\Products;
 
 use Livewire\Component;
+use Livewire\Attributes\Title;
 
 use App\Models\Product;
 use App\Models\Category;
@@ -10,6 +11,7 @@ use App\Models\ProductDetails;
 
 use Livewire\WithPagination;
 
+#[Title('Products Management')]
 class Index extends Component
 {
 

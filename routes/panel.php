@@ -28,6 +28,16 @@ use App\Livewire\Admin\Products\ManageSkus;
 
 // ==============================================================================================================
 
+// Orders
+use App\Livewire\Admin\Orders\Index As Orders;
+
+// ==============================================================================================================
+
+// Reports
+use App\Livewire\Admin\Reports\Index As Reports;
+
+// ==============================================================================================================
+
 Route::prefix('panel')->middleware('guest:panel')->group(function () {
    
    // Admin Login Route
@@ -86,18 +96,14 @@ Route::prefix('panel')->middleware(['auth:panel', 'can:access-control-panel'])->
     // =============
     // Orders pages
     // =============
-    Route::get('panel/orders', function() {
-        //
-    })->name('panel.orders');
+    Route::get('panel/orders', Orders::class)->name('panel.orders');
 
     // ==============================================================================================================
 
     // ==============
     // Reports pages
     // ==============
-    Route::get('panel/reports', function() {
-        //
-    })->name('panel.reports');
+    Route::get('panel/reports', Reports::class)->name('panel.reports');
 
     // ==============================================================================================================
 

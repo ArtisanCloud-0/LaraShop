@@ -2,13 +2,18 @@
 
 namespace App\Actions\Order;
 
+use App\Models\OrderLedger As Order;
+
 class UpdateOrderStatusAction
 {
-    /**
-     * Create a new class instance.
-     */
-    public function __construct()
+    
+    public function execute(Order $order, OrderStatus|string $status): Order
     {
-        //
+        $order->update([
+            'status' => $status,
+        ]);
+
+        return $order;
     }
+
 }
