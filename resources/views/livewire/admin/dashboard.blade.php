@@ -76,11 +76,11 @@
     <div class="mt-8 grid grid-cols-1 lg:grid-cols-3 gap-8">
 
         <!-- Recent Orders -->
-        <div class="lg:col-span-2 bg-white dark:bg-gray-800 rounded-2xl border border-gray-200/50 dark:border-gray-700/50 shadow-sm p-6">
+        <div class="lg:col-span-2 bg-white dark:bg-slate-800 rounded-2xl border border-slate-200/50 dark:border-slate-700/50 shadow-sm p-6">
             <div class="flex items-center justify-between mb-6">
                 <div>
-                    <h3 class="text-base font-bold text-gray-900 dark:text-white">Recent Orders</h3>
-                    <p class="text-xs text-gray-500 dark:text-gray-400">Latest transactions across your store</p>
+                    <h3 class="text-base font-bold text-slate-900 dark:text-white">Recent Orders</h3>
+                    <p class="text-xs text-slate-500 dark:text-slate-400">Latest transactions across your store</p>
                 </div>
                 <a href="{{ route('panel.orders') }}" class="text-xs font-bold text-indigo-600 dark:text-indigo-400 hover:underline">
                     View all orders &rarr;
@@ -90,7 +90,7 @@
             <div class="overflow-x-auto">
                 <table class="w-full text-left text-xs">
                     <thead>
-                        <tr class="border-b border-gray-100 dark:border-gray-700/60 text-gray-400 uppercase tracking-wider font-semibold">
+                        <tr class="border-b border-slate-100 dark:border-slate-700/60 text-slate-400 uppercase tracking-wider font-semibold">
                             <th class="pb-3">Order</th>
                             <th class="pb-3">Customer</th>
                             <th class="pb-3">Status</th>
@@ -98,10 +98,10 @@
                             <th class="pb-3 text-right">Action</th>
                         </tr>
                     </thead>
-                    <tbody class="divide-y divide-gray-100 dark:divide-gray-700/40 text-gray-700 dark:text-gray-300">
+                    <tbody class="divide-y divide-slate-100 dark:divide-slate-700/40 text-slate-700 dark:text-slate-300">
                         @forelse($recentOrders as $order)
                             <tr>
-                                <td class="py-3 font-medium text-gray-900 dark:text-white">#{{ $order->order_number }}</td>
+                                <td class="py-3 font-medium text-slate-900 dark:text-white">#{{ $order->order_number }}</td>
                                 <td class="py-3">{{ $order->user->name ?? 'Guest User' }}</td>
                                 <td class="py-3">
                                     <span class="px-2 py-0.5 rounded-full text-[10px] font-bold border {{ $order->status->badgeColor() }}">
@@ -115,7 +115,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="5" class="py-4 text-center text-gray-400">No recent orders recorded yet.</td>
+                                <td colspan="5" class="py-4 text-center text-slate-400">No recent orders recorded yet.</td>
                             </tr>
                         @endforelse
                     </tbody>
@@ -164,8 +164,7 @@
                                             formatter: () => this.labels[0] || 'N/A'
                                         }
                                     }
-                                }
-                            }
+                                }                            }
                         },
                         dataLabels: { enabled: false },
                         legend: { position: 'bottom', fontSize: '12px', labels: { colors: '#9ca3af' } },
@@ -178,12 +177,12 @@
             }"
             x-init="renderChart()"
             wire:ignore
-            class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200/50 dark:border-gray-700/50 shadow-sm p-6 flex flex-col justify-between"
+            class="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200/50 dark:border-slate-700/50 shadow-sm p-6 flex flex-col justify-between"
         >
             <div class="flex items-center justify-between mb-4">
                 <div>
-                    <h3 class="text-base font-bold text-gray-900 dark:text-white">Sales by Category</h3>
-                    <p class="text-xs text-gray-500 dark:text-gray-400">Revenue share breakdown</p>
+                    <h3 class="text-base font-bold text-slate-900 dark:text-white">Sales by Category</h3>
+                    <p class="text-xs text-slate-500 dark:text-slate-400">Revenue share breakdown</p>
                 </div>
             </div>
 
@@ -191,9 +190,9 @@
         </div>
 
         <!-- Top Selling Products Sidebar -->
-        <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200/50 dark:border-gray-700/50 shadow-sm p-6">
-            <h3 class="text-base font-bold text-gray-900 dark:text-white mb-1">Top Selling Products</h3>
-            <p class="text-xs text-gray-500 dark:text-gray-400 mb-6">Most popular items</p>
+        <div class="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200/50 dark:border-slate-700/50 shadow-sm p-6">
+            <h3 class="text-base font-bold text-slate-900 dark:text-white mb-1">Top Selling Products</h3>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mb-6">Most popular items</p>
 
             <div class="space-y-4">
                 @forelse($topProducts as $prod)
@@ -203,14 +202,14 @@
                                 {{ strtoupper(substr($prod->name, 0, 2)) }}
                             </div>
                             <div>
-                                <p class="text-xs font-bold text-gray-900 dark:text-white">{{ $prod->name }}</p>
-                                <p class="text-[10px] text-gray-500 dark:text-gray-400">{{ $prod->total_sales }} unit sales</p>
+                                <p class="text-xs font-bold text-slate-900 dark:text-white">{{ $prod->name }}</p>
+                                <p class="text-[10px] text-slate-500 dark:text-slate-400">{{ $prod->total_sales }} unit sales</p>
                             </div>
                         </div>
-                        <span class="text-xs font-black text-gray-900 dark:text-white">${{ number_format($prod->avg_price, 2) }}</span>
+                        <span class="text-xs font-black text-slate-900 dark:text-white">${{ number_format($prod->avg_price, 2) }}</span>
                     </div>
                 @empty
-                    <p class="text-xs text-gray-400 text-center py-4">No top products recorded.</p>
+                    <p class="text-xs text-slate-400 text-center py-4">No top products recorded.</p>
                 @endforelse
             </div>
         </div>
@@ -257,12 +256,12 @@
             }"
             x-init="renderChart()"
             wire:ignore
-            class="mt-0 lg:col-span-2 bg-white dark:bg-gray-800 rounded-2xl border border-gray-200/50 dark:border-gray-700/50 shadow-sm p-6"
+            class="mt-0 lg:col-span-2 bg-white dark:bg-slate-800 rounded-2xl border border-slate-200/50 dark:border-slate-700/50 shadow-sm p-6"
         >
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
                 <div>
-                    <h3 class="text-base font-bold text-gray-900 dark:text-white">Revenue & Sales Trend</h3>
-                    <p class="text-xs text-gray-500 dark:text-gray-400">Past 7 days earnings and order counts</p>
+                    <h3 class="text-base font-bold text-slate-900 dark:text-white">Revenue & Sales Trend</h3>
+                    <p class="text-xs text-slate-500 dark:text-slate-400">Past 7 days earnings and order counts</p>
                 </div>
             </div>
 

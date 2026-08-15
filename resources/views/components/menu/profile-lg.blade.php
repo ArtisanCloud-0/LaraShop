@@ -37,7 +37,11 @@
             @else
             
                 <a
-                    href="#"
+                    @if($link['name'] === 'Profile')
+                        href="{{ route($link['route'], Auth::guard('panel')->user()->id??1) }}"
+                    @else
+                        href="{{ route($link['route']) }}"
+                    @endif
                     class="
                         block
                         px-4

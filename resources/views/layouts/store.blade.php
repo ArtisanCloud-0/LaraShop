@@ -34,8 +34,9 @@
                 {{-- Logo & Links --}}
                 <div class="flex items-center gap-8">
 
-                    <a href="/" class="text-xl font-bold tracking-tight text-slate-900 dark:text-white">
-                        LaraShop<span class="text-blue-600">.</span>
+                    <a href="/" class="flex items-center gap-2.5 text-lg font-bold tracking-tight text-white">
+                        <x-logo class="h-8 w-auto" />
+                        <span>LaraShop<span class="text-indigo-500">.</span></span>
                     </a>
 
                     <div class="hidden md:flex items-center gap-6 text-sm font-medium text-slate-600 dark:text-slate-300">

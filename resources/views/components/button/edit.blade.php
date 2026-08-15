@@ -12,18 +12,13 @@
             items-center
             transition-colors
             
-            bg-blue-700
-            text-gray-100
-            border-blue-500
-            hover:bg-blue-600/95
-            hover:text-gray-50
-            hover:border-blue-500/50
-            
-            dark:bg-slate-950
-            dark:text-slate-400
-            dark:border-slate-800
-            dark:hover:text-indigo-400
-            dark:hover:border-indigo-900/50
+            bg-inhret
+            border-slate-400
+            hover:text-blue-500
+
+            dark:text-slate-500
+            dark:border-slate-500
+            dark:hover:text-blue-400
         "
         title="Edit Category"
     >

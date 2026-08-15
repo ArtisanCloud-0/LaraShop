@@ -3,22 +3,31 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
-#[Fillable(['code', 'price', 'stock', 'options', 'product_id'])]
 class ProductDetails extends Model
 {
     /** @use HasFactory<\Database\Factories\ProductDetailsFactory> */
-    use HasFactory;
-    
+    use HasFactory, SoftDeletes;
+
+    protected $table = 'product_details';
+
+    protected $fillable = [
+        'code',
+        'price',
+        'stock',
+        'options',
+        'product_id',
+    ];
+
     protected function casts(): array
     {
         return [
-            'options' => 'array', // Dynamically decodes variation specs like {"size": "XL"}
-            'price' => 'integer',
-            'stock' => 'integer',
+            'options' => 'array',
+            'price'   => 'integer',
+            'stock'   => 'integer',
         ];
     }
 
@@ -26,5 +35,4 @@ class ProductDetails extends Model
     {
         return $this->belongsTo(Product::class);
     }
-
 }

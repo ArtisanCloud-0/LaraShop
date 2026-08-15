@@ -7,7 +7,7 @@
                     href="{{ route($link['route']) }}" 
                     @if(request()->routeIs($link['pattern'])) 
                         aria-current="page"  
-                        class="rounded-md bg-slate-950 px-3 py-2 text-sm font-medium text-white dark:text-slate-800 dark:bg-slate-400"
+                        class="rounded-md bg-slate-950 px-3 py-2 text-sm font-medium text-white dark:text-slate-800 dark:bg-blue-400/80"
                     @else
                         class="rounded-md px-3 py-2 text-sm font-medium text-gray-500 hover:bg-gray-200/55 hover:text-gray-700 dark:hover:bg-white/5 dark:hover:text-white dark:text-gray-300"
                     @endif  

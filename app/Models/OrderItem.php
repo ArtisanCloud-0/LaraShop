@@ -8,11 +8,17 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-#[Fillable(['order_ledger_id', 'product_details_id', 'price', 'quantity'])]
 class OrderItem extends Model
 {
     /** @use HasFactory<\Database\Factories\OrderItemFactory> */
     use HasFactory;
+
+    protected $fillable = [
+        'order_ledger_id',
+        'product_details_id',
+        'price',
+        'quantity',
+    ];
 
     protected function casts(): array
     {

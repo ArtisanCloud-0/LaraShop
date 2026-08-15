@@ -77,7 +77,7 @@
                                     @if(count($product->productDetails) > 0)
                                         <a 
                                             href="{{ route('panel.products.skus', $product->id) }}"
-                                            class="p-2 rounded-md leading-relaxed transition-colors border border-slate-300 hover:border-slate-800 dark:hover:border-slate-100 bg-slate-200/50 text-slate-800 hover:bg-slate-950 hover:text-slate-200 hover:border-slate-800 bg-slate-200 text-slate-800 hover:bg-slate-950 hover:text-slate-200"
+                                            class="p-2 rounded-md leading-relaxed transition-colors shadow bg-inhret border border-slate-300 dark:border-slate-500 text-slate-500 hover:text-blue-600 dark:hover:text-blue-400"
                                             title="Edit Variants" 
                                         >
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4">

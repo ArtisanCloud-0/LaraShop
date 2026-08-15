@@ -11,6 +11,8 @@ use App\Models\CartItem as CartItemModel;
 use App\Actions\Cart\RemoveItemFromCartAction;
 use App\Actions\Cart\UpdateCartItemQuantityAction;
 
+use App\Services\Cart\CartService;
+
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
@@ -81,6 +83,18 @@ class Cart extends Component
     public function handleCartUpdated(): void
     {
         $this->loadCartItems();
+    }
+
+    public function proceedToCheckout(CartService $cartService)
+    {
+        $items = $cartService->getItems();
+
+        if (empty($items)) {
+            session()->flash('error', 'Your shopping bag is empty.');
+            return;
+        }
+
+        return redirect()->route('checkout');
     }
 
     public function render()

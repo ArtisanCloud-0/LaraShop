@@ -19,13 +19,13 @@
                 type="search" 
                 wire:model.live.debounce.300ms="search" 
                 placeholder="Search order # or customer..." 
-                class="rounded-xl border-gray-200 dark:border-gray-700/60 dark:bg-gray-800/80 text-xs text-gray-900 dark:text-white px-3 py-2 w-full sm:w-60 focus:ring-2 focus:ring-indigo-500"
+                class="rounded-xl border-slate-300 dark:border-gray-700/60 bg-white dark:bg-gray-800/80 text-xs text-gray-900 dark:text-white px-3 py-2 w-full sm:w-60 focus:ring-2 focus:ring-indigo-500"
             >
 
             <!-- Status Filter Dropdown -->
             <select 
                 wire:model.live="statusFilter"
-                class="rounded-xl border-gray-200 dark:border-gray-700/60 dark:bg-gray-800/80 text-xs text-gray-900 dark:text-white px-3 py-2 focus:ring-2 focus:ring-indigo-500"
+                class="rounded-xl border-gray-200 dark:border-gray-700/60 bg-white dark:bg-gray-800/80 text-xs text-gray-900 dark:text-white px-3 py-2 focus:ring-2 focus:ring-indigo-500"
             >
                 <option value="all">All Statuses</option>
                 @foreach(\App\Enums\OrderStatus::cases() as $status)
@@ -109,7 +109,7 @@
                         <label class="text-xs font-semibold text-gray-400">Status:</label>
                         <select 
                             wire:change="updateStatus({{ $selectedOrder->id }}, $event.target.value)"
-                            class="rounded-lg border-gray-200 dark:border-gray-700 dark:bg-gray-900 text-xs text-gray-900 dark:text-white px-2.5 py-1.5 focus:ring-2 focus:ring-indigo-500"
+                            class="rounded-lg border-gray-200 dark:border-gray-700 bg-slate-100 dark:bg-gray-900 text-xs text-gray-900 dark:text-white px-2.5 py-1.5 focus:ring-2 focus:ring-indigo-500"
                         >
                             @foreach(\App\Enums\OrderStatus::cases() as $status)
                                 <option value="{{ $status->value }}" @selected($selectedOrder->status === $status)>

@@ -19,6 +19,7 @@ return new class extends Migration
             $table->unsignedInteger('price'); // Stored in cents (integer format)
             $table->integer('stock')->default(0);
             $table->json('options')->nullable(); // For dynamic variants e.g. {"size": "XL"}
+            $table->timestamp('deleted_at')->useCurrent();
             $table->timestamps();
         });
     }

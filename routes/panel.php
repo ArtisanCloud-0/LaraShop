@@ -8,9 +8,10 @@ use App\Livewire\Admin\Dashboard;
 // ==============================================================================================================
 
 // Auth
+use App\Livewire\Admin\Auth\Profile;
+use App\Livewire\Admin\Auth\AdminUsers;
 use App\Livewire\Admin\Auth\Login As AdminLogin;
 use App\Livewire\Admin\Auth\Logout As AdminLogout;
-use App\Livewire\Admin\Auth\AdminUsers;
 
 // ==============================================================================================================
 
@@ -38,6 +39,11 @@ use App\Livewire\Admin\Reports\Index As Reports;
 
 // ==============================================================================================================
 
+// Settings
+use App\Livewire\Admin\Settings\Settings;
+
+// ==============================================================================================================
+
 Route::prefix('panel')->middleware('guest:panel')->group(function () {
    
    // Admin Login Route
@@ -59,6 +65,8 @@ Route::prefix('panel')->middleware(['auth:panel', 'can:access-control-panel'])->
     // Create New Admin Users
     // =======================
     Route::get('/users', AdminUsers::class)->name('panel.users');
+
+    Route::get('/profile/{user:id}', Profile::class)->name('panel.profile');
 
     // ==============================================================================================================
 
@@ -96,14 +104,21 @@ Route::prefix('panel')->middleware(['auth:panel', 'can:access-control-panel'])->
     // =============
     // Orders pages
     // =============
-    Route::get('panel/orders', Orders::class)->name('panel.orders');
+    Route::get('/orders', Orders::class)->name('panel.orders');
 
     // ==============================================================================================================
 
     // ==============
     // Reports pages
     // ==============
-    Route::get('panel/reports', Reports::class)->name('panel.reports');
+    Route::get('/reports', Reports::class)->name('panel.reports');
+
+    // ==============================================================================================================
+
+    // ==============
+    // Settingd pages
+    // ==============
+    Route::get('/settings', Settings::class)->name('panel.settings');
 
     // ==============================================================================================================
 

@@ -109,7 +109,7 @@
                         </div>
                     </div>
 
-                    <a href="#" class="w-full h-11 bg-blue-600 hover:bg-blue-500 text-white rounded-lg text-xs font-bold uppercase tracking-wider shadow-md transition flex items-center justify-center">
+                    <a href="{{ route('checkout') }}" class="w-full h-11 bg-blue-600 hover:bg-blue-500 text-white rounded-lg text-xs font-bold uppercase tracking-wider shadow-md transition flex items-center justify-center">
                         Proceed to Checkout
                     </a>
                 </div>
