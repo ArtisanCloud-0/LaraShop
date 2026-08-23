@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App\Services;
 
@@ -6,23 +6,24 @@ use App\Enums\OrderStatus;
 
 use App\Models\User;
 use App\Models\Product;
-use App\Models\OrderLedger As Order;
+use App\Models\OrderLedger as Order;
 
 use Illuminate\Support\Facades\DB;
 
-class DashboardService {
+class DashboardService
+{
 
-	public function getMetrics(): array
+    public function getMetrics(): array
     {
         return [
             'totalRevenue' => (float) Order::whereIn('status', [OrderStatus::PAID, OrderStatus::SHIPPED])->sum('total_amount'),
             'ordersCount' => Order::count(),
             'customersCount' => User::where('role', 'customer')->count(),
-            
+
             // Count parent products whose combined variant stock in product_details is under 5
             'lowStockCount' => Product::query()
                 ->withSum('productDetails as total_stock', 'stock')
-                ->having('total_stock', '<', 5)
+                ->having('total_stock', '<', 10)
                 ->count(),
         ];
     }
@@ -71,10 +72,10 @@ class DashboardService {
         $days = collect(range(6, 0))->map(fn($daysAgo) => now()->subDays($daysAgo)->format('Y-m-d'));
 
         $orders = Order::select(
-                DB::raw('DATE(created_at) as date'),
-                DB::raw('COUNT(*) as count'),
-                DB::raw('SUM(total_amount) as revenue')
-            )
+            DB::raw('DATE(created_at) as date'),
+            DB::raw('COUNT(*) as count'),
+            DB::raw('SUM(total_amount) as revenue')
+        )
             ->where('created_at', '>=', now()->subDays(6)->startOfDay())
             ->groupBy('date')
             ->get()
@@ -96,5 +97,4 @@ class DashboardService {
             'orders' => $ordersData,
         ];
     }
-
 }
