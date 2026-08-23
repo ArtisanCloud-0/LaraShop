@@ -20,9 +20,10 @@
             w-full bg-gray-50 focus:bg-white border 
             placeholder:text-gray-400
             dark:placeholder:text-slate-300
-            @error('$for') 
-                text-red-700 border-red-700 focus:border-red-700 focus:ring-red-700
-                dark:text-red-700 dark:border-red-500 dark:focus:border-red-500 dark:focus:ring-red-500 
+            ring-1
+            @error($for) 
+                text-red-700 ring-red-600
+                dark:text-red-700 dark:ring-red-300 
             @else 
                 border-gray-300 focus:border-gray-100 focus:ring-gray-300
                 dark:border-gray-800 dark:focus:border-indigo-500 dark:focus:ring-indigo-500

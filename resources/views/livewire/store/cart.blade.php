@@ -70,7 +70,7 @@
                                             class="px-2.5 py-1 text-slate-500 hover:text-slate-900 dark:hover:text-white text-xs font-black select-none transition hover:bg-slate-100 dark:hover:bg-slate-800"
                                         >-</button>
                                         
-                                        <span x-text="qty" class="px-2 font-mono text-xs font-bold text-slate-900 dark:text-white min-w-[20px] text-center"></span>
+                                        <span x-text="qty" class="px-2 font-mono text-xs font-bold text-slate-900 dark:text-white min-w-5 text-center"></span>
                                         
                                         <button 
                                             type="button" 

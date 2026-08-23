@@ -20,7 +20,7 @@
             </div>
         </div>
         <!-- Elegant Visual Background Accents -->
-        <div class="absolute right-0 bottom-0 top-0 w-1/2 bg-gradient-to-l from-blue-500/5 dark:from-blue-500/10 to-transparent pointer-events-none hidden md:block"></div>
+        <div class="absolute right-0 bottom-0 top-0 w-1/2 bg-linear-to-l from-blue-500/5 dark:from-blue-500/10 to-transparent pointer-events-none hidden md:block"></div>
     </div>
 
     <!-- 🗂️ DEPARTMENTS & LIFESTYLE CATEGORIES QUICK-SELECTOR -->

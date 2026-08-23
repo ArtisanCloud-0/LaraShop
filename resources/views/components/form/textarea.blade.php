@@ -21,7 +21,7 @@
                 dark:bg-gray-950/50
                 dark:focus:bg-gray-950
                 border focus:bg-white
-                border-gray-300 focus:border-gray-100 focus:ring-gray-300
+                border-gray-300 focus:border-gray-100
                 dark:border-gray-800 dark:focus:border-indigo-500 dark:focus:ring-indigo-500
                 placeholder:text-gray-400
                 dark:placeholder:text-slate-300

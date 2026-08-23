@@ -60,7 +60,7 @@
     </div>
 
     {{-- Quick Actions Banner --}}
-    <div class="p-6 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-2xl text-white flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-lg">
+    <div class="p-6 bg-linear-to-r from-blue-600 to-indigo-600 rounded-2xl text-white flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-lg">
         <div>
             <h3 class="text-lg font-bold">Ready to add new products?</h3>
             <p class="text-xs text-blue-100 mt-1">
@@ -186,7 +186,7 @@
                 </div>
             </div>
 
-            <div x-ref="donutContainer" class="flex items-center justify-center min-h-[250px]"></div>
+            <div x-ref="donutContainer" class="flex items-center justify-center min-h-62.5"></div>
         </div>
 
         <!-- Top Selling Products Sidebar -->
@@ -198,7 +198,7 @@
                 @forelse($topProducts as $prod)
                     <div class="flex items-center justify-between gap-3">
                         <div class="flex items-center gap-3">
-                            <div class="size-10 rounded-lg bg-indigo-500/10 text-indigo-500 flex-shrink-0 flex items-center justify-center font-bold text-xs">
+                            <div class="size-10 rounded-lg bg-indigo-500/10 text-indigo-500 shrink-0 flex items-center justify-center font-bold text-xs">
                                 {{ strtoupper(substr($prod->name, 0, 2)) }}
                             </div>
                             <div>
@@ -265,7 +265,7 @@
                 </div>
             </div>
 
-            <div x-ref="areaContainer" class="min-h-[260px]"></div>
+            <div x-ref="areaContainer" class="min-h-65"></div>
         </div>
 
 </div>
