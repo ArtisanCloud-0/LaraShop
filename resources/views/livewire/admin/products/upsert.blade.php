@@ -46,12 +46,13 @@
                 placeholder="You can write it as plantext or use HTML markup langages tags"
             ></x-form>
 
-            <x-form.file-multi
+            {{-- <x-form.file-multi
                 for="new_images"
                 label="Product Media Portfolio (JSON Cast)"
                 filesTypes="PNG, JPG or WEBP up to 2MB"
                 :images="$images"
-            ></x-form>
+                :newImages="$new_images"
+            /> --}}
 
             <div class="flex items-center justify-end gap-x-4 pt-4 border-t border-gray-200 dark:border-slate-800">
                 

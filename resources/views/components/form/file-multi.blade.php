@@ -1,5 +1,10 @@
-@props(['for' => $for, 'label' => $label, 'filesTypes' => $filesTypes, 'images' => [], 'new_images' => []])
-
+@props([
+    'for' => '', 
+    'label' => '', 
+    'filesTypes' => '', 
+    'images' => [], 
+    'newImages' => []
+])
 <div>
 
     <div class="mt-6 p-4 border border-gray-200 dark:border-slate-800 rounded-lg bg-gray-50 focus:bg-gray-50 dark:bg-slate-950 focus:dark:bg-slate-800">
@@ -33,8 +38,8 @@
                 </div>
             @endforeach
 
-            @if ($new_images)
-                @foreach($new_images as $tempImage)
+            @if ($newImages)
+                @foreach($newImages as $tempImage)
                     <div class="relative aspect-square border border-indigo-400/40 rounded-lg overflow-hidden bg-gray-100 dark:bg-slate-900 opacity-70">
                         <img src="{{ $tempImage->temporaryUrl() }}" class="object-cover w-full h-full">
                         <div class="absolute bottom-0 inset-x-0 bg-indigo-600 text-[10px] text-center text-white py-0.5 font-sans">Pending Save</div>

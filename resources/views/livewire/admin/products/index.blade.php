@@ -31,6 +31,7 @@
                         <th class="px-6 py-4">Category</th>
                         <th class="px-6 py-4">Visibility</th>
                         <th class="px-6 py-4">Registered SKU Variants Matrix</th>
+                        <th class="pr-6 py-4">Total Stock</th>
                         <th class="px-6 py-4 text-right">Actions</th>
                     </tr>
                 </thead>
@@ -54,12 +55,14 @@
                                 </div>
                             </td>
 
+                            <!-- Item Category -->
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <span class="px-2.5 py-1 text-xs font-medium rounded-full bg-gray-100 dark:bg-slate-900 text-gray-800 dark:text-slate-300 border border-gray-200 dark:border-slate-800">
                                     {{ $product->category->name }}
                                 </span>
                             </td>
 
+                            <!-- Show in the market (Visiability) -->
                             <td class="px-6 py-4 whitespace-nowrap">
                                 @if($product->is_visible)
                                     <span class="inline-flex items-center gap-x-1.5 text-xs font-semibold text-green-600 dark:text-green-400">
@@ -72,6 +75,7 @@
                                 @endif
                             </td>
 
+                            <!-- Variant Details -->
                             <td class="px-6 py-4">
                                 <div class="flex flex-wrap gap-2 max-w-md">
                                     @if(count($product->productDetails) > 0)
@@ -111,6 +115,26 @@
                                 </div>
                             </td>
 
+                            <!-- Total Stock -->
+                            <td>
+                                <div 
+                                    class="py-1 px-6 w-fit rounded-2xl text-center ring-1 {{ 
+                                        $product->total_stock > 20 
+                                        ? 
+                                        'bg-green-100 dark:bg-green-950/40 text-green-900 dark:text-green-400' 
+                                        : 
+                                        ($product->total_stock > 10
+                                        ?
+                                        'bg-amber-100 dark:bg-amber-950/40 text-amber-900 dark:text-amber-400' 
+                                        :
+                                        'bg-red-100 dark:bg-red-950/40 text-red-900 dark:text-red-300')
+                                    }}"
+                                >
+                                    {{ $product->total_stock }}
+                                </div>
+                            </td>
+
+                            <!-- Action -->
                             <td class="px-6 py-4 whitespace-nowrap text-right font-medium space-x-1">
                                 <a href="{{ route('panel.products.edit', $product->id) }}" 
                                    class="inline-flex items-center p-2 bg-white dark:bg-slate-950 border border-gray-200 dark:border-slate-800 text-gray-500 hover:text-indigo-500 dark:hover:text-indigo-400 rounded-lg shadow-sm transition-colors"

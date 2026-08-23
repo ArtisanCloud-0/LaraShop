@@ -10,32 +10,32 @@ use App\Livewire\Admin\Dashboard;
 // Auth
 use App\Livewire\Admin\Auth\Profile;
 use App\Livewire\Admin\Auth\AdminUsers;
-use App\Livewire\Admin\Auth\Login As AdminLogin;
-use App\Livewire\Admin\Auth\Logout As AdminLogout;
+use App\Livewire\Admin\Auth\Login as AdminLogin;
+use App\Livewire\Admin\Auth\Logout as AdminLogout;
 
 // ==============================================================================================================
 
 // Categories
-use App\Livewire\Admin\Categories\Index As Categories;
+use App\Livewire\Admin\Categories\Index as Categories;
 use App\Livewire\Admin\Categories\Create;
 use App\Livewire\Admin\Categories\Edit;
 
 // ==============================================================================================================
 
 // Products
-use App\Livewire\Admin\Products\Index As Products;
+use App\Livewire\Admin\Products\Index as Products;
 use App\Livewire\Admin\Products\Upsert;
 use App\Livewire\Admin\Products\ManageSkus;
 
 // ==============================================================================================================
 
 // Orders
-use App\Livewire\Admin\Orders\Index As Orders;
+use App\Livewire\Admin\Orders\Index as Orders;
 
 // ==============================================================================================================
 
 // Reports
-use App\Livewire\Admin\Reports\Index As Reports;
+use App\Livewire\Admin\Reports\Index as Reports;
 
 // ==============================================================================================================
 
@@ -45,10 +45,9 @@ use App\Livewire\Admin\Settings\Settings;
 // ==============================================================================================================
 
 Route::prefix('panel')->middleware('guest:panel')->group(function () {
-   
-   // Admin Login Route
-    Route::get('/login', AdminLogin::class)->name('panel.login');
 
+    // Admin Login Route
+    Route::get('/login', AdminLogin::class)->name('panel.login');
 });
 
 Route::prefix('panel')->middleware(['auth:panel', 'can:access-control-panel'])->group(function () {
@@ -75,13 +74,13 @@ Route::prefix('panel')->middleware(['auth:panel', 'can:access-control-panel'])->
     // =================
 
     // Show Categories and SubCategories to Manage them
-    Route::get('/categories', Categories::class)->name('panel.categories'); 
+    Route::get('/categories', Categories::class)->name('panel.categories');
 
     // Add new Categories
-    Route::livewire('categories/create', Create::class)->name('panel.categories.create'); 
+    Route::livewire('categories/create', Create::class)->name('panel.categories.create');
 
     // Edit Categories
-    Route::livewire('categories/{category}/edit', Edit::class)->name('panel.categories.edit'); 
+    Route::livewire('categories/{category}/edit', Edit::class)->name('panel.categories.edit');
 
     // ==============================================================================================================
 

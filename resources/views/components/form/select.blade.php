@@ -1,4 +1,4 @@
-@props(['options' => $options, 'for' => $for, 'label' => $label])
+@props(['options' => [], 'for' => '', 'label' => ''])
 <div>
     
     <label
@@ -31,7 +31,8 @@
                 border-gray-300 focus:border-gray-100 focus:ring-gray-300
                 dark:border-gray-800 dark:focus:border-indigo-500 dark:focus:ring-indigo-500
             @enderror 
-            dark:bg-gray-950
+            dark:bg-gray-950/50
+            dark:focus:bg-gray-950
             dark:text-gray-100
             transition-colors
         "

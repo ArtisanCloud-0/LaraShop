@@ -6,8 +6,6 @@ use Livewire\Component;
 use Livewire\Attributes\Title;
 
 use App\Models\Product;
-use App\Models\Category;
-use App\Models\ProductDetails;
 
 use Livewire\WithPagination;
 
@@ -38,9 +36,9 @@ class Index extends Component
         return view('livewire.admin.products.index', [
             // Eager load category and skus relations to completely avoid N+1 query bottle-necks
             'products' => Product::with(['category', 'productDetails'])
+                ->withSum('productDetails as total_stock', 'stock')
                 ->latest()
-                ->paginate(10)
-            // 'products' => Product::paginate(10)
+                ->paginate(5)
         ]);
     }
 }

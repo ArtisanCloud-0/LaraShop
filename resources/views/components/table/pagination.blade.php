@@ -1,3 +1,4 @@
+@props(['title', 'note', 'columns', 'paginate'])
 <div>
 
     <div class="max-w-6xl mx-auto my-8 p-6 bg-gray-50 border border-gray-200 rounded-xl shadow-md text-gray-700 dark:text-slate-100 dark:border-slate-800 dark:bg-slate-900">

@@ -1,4 +1,8 @@
-@props(['for' => $for, 'label' => $label, 'placeholder' => $placeholder])
+@props([
+    'for' => null,
+    'label' => '',
+    'placeholder' => '',
+])
 <div>
 
     <label
@@ -16,7 +20,7 @@
             w-full bg-gray-50 focus:bg-white border 
             placeholder:text-gray-400
             dark:placeholder:text-slate-300
-            @error("$for") 
+            @error('$for') 
                 text-red-700 border-red-700 focus:border-red-700 focus:ring-red-700
                 dark:text-red-700 dark:border-red-500 dark:focus:border-red-500 dark:focus:ring-red-500 
             @else 
@@ -26,12 +30,11 @@
             rounded-lg
             px-4
             py-2.5
-            text-gray-500
             focus:outline-none
             focus:ring-2
-            dark:bg-gray-950
-            dark:text-gray-100
-                transition-colors
+            dark:bg-gray-950/50
+            dark:focus:bg-gray-950
+            transition-colors
         "
         placeholder="{{ $placeholder }}"
     >

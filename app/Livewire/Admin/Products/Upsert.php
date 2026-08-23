@@ -38,7 +38,7 @@ class Upsert extends Component
     **/
     public function mount(?Product $product = null)
     {
-        if($product && $product->exists) {                      // If the model is provided the it's update process
+        if ($product && $product->exists) {                      // If the model is provided the it's update process
             $this->product = $product;                          // Current product 
             $this->isEditMode = true;                           // Turn on form for updating
             $this->name = $product->name;                       // Product name
@@ -46,7 +46,8 @@ class Upsert extends Component
             $this->descripiton = $product->descripiton ?? '';   // Product description
             $this->is_visible = $product->is_visible;           // Is it visible or not
             $this->images = $product->images ?? [];             // Product main image and thumbs
-        } else {}
+        } else {
+        }
     }
 
     /* 
@@ -72,7 +73,7 @@ class Upsert extends Component
 
         // [ 2 ] if the action is insert || update then execute
         try {
-            
+
             // [ 2-1 ] Process new images if any are selected
             if (!empty($this->new_images)) {
                 foreach ($this->new_images as $image) {
@@ -100,9 +101,8 @@ class Upsert extends Component
 
             // [ 2-5 ] Redirect to products main page
             return redirect()->route('panel.products');
+        } catch (\Exception $ex) {
 
-        } catch(\Exception $ex) {
-            
             // [ 2-1 ] Show error messages if not able to update record
             session()->flash('error', $ex);
             // session()->flash('error', 'Product '. $product['name'] .' data failed to update! because: ' . $ex);

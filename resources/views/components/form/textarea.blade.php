@@ -1,4 +1,4 @@
-@props(['for' => $for, 'label' => $label, 'placeholder' => $placeholder])
+@props(['for' => '', 'label' => '', 'placeholder' => ''])
 
 <div>
 
@@ -17,7 +17,9 @@
             class="
                 w-full
                 bg-gray-50
-                dark:bg-slate-950
+                dark:text-slate-100
+                dark:bg-gray-950/50
+                dark:focus:bg-gray-950
                 border focus:bg-white
                 border-gray-300 focus:border-gray-100 focus:ring-gray-300
                 dark:border-gray-800 dark:focus:border-indigo-500 dark:focus:ring-indigo-500

@@ -25,17 +25,14 @@ class Index extends Component
         try {
             // [ 2-1 ] Hand the model instance to the safety-gated action class
             $deleteAction->execute($category);
-            
+
             // [ 2-2 ] Flash success message
             session()->flash('status', 'Category cleared successfully from record mappings.');
-
         } catch (\Exception $e) {
-            
+
             // Flash any thrown safety guardrail errors (e.g., contains products or children)
             session()->flash('error', 'This category have products attached to it, please delete all relative products first');
-        
         }
-    
     }
 
     #[Title('Manage Categories')]
