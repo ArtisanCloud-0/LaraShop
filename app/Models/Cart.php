@@ -9,12 +9,14 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 use Illuminate\Database\Eloquent\Attributes\Fillable;
+use Illuminate\Database\Eloquent\Concerns\HasUlids;
 
-#[Fillable(['user_id', 'guest_token'])]
 class Cart extends Model
 {
     /** @use HasFactory<\Database\Factories\CartFactory> */
-    use HasFactory;
+    use HasFactory, HasUlids;
+
+    protected $fillable = ['user_id', 'guest_token'];
 
     public function user(): BelongsTo
     {
@@ -25,5 +27,4 @@ class Cart extends Model
     {
         return $this->hasMany(CartItem::class);
     }
-
 }

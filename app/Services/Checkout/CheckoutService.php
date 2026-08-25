@@ -11,47 +11,56 @@ use Illuminate\Support\Str;
 
 class CheckoutService
 {
-	
-	public function processCheckout(array $cartItems, ?int $userId = null): OrderLedger
+
+    public function processCheckout(array $cartItems, ?int $userId = null, ?array $guestInfo = null): OrderLedger
     {
-        // Using database transactions with closure inherit
-        return DB::transaction(function () use ($cartItems, $userId) {
-            
+        return DB::transaction(function () use ($cartItems, $userId, $guestInfo) {
             $totalAmount = 0;
 
-            // [ 1 ] Create Order Parent Record (user_id can safely be null)
+            // Create Order Parent Record
             $order = OrderLedger::create([
                 'order_number' => 'ORD-' . strtoupper(Str::random(8)),
                 'user_id'      => $userId,
+                'guest_name'   => $guestInfo['name'] ?? null,  // Add guest name
+                'guest_email'  => $guestInfo['email'] ?? null, // Add guest email
                 'status'       => OrderStatus::PAID,
                 'total_amount' => 0,
             ]);
 
-            // [ 2 ] Attach items & deduct variant stock in product_details
             foreach ($cartItems as $item) {
-                $detail = ProductDetails::findOrFail($item['product_details_id']);
+                // Standardize key extraction for both arrays and Eloquent models
+                $productDetailsId = is_array($item)
+                    ? ($item['product_details_id'] ?? $item['id'] ?? null)
+                    : ($item->product_details_id ?? $item->id ?? null);
 
-                // Deduct stock safely
-                $detail->decrement('stock', $item['quantity']);
+                $quantity = is_array($item)
+                    ? ($item['quantity'] ?? 1)
+                    : ($item->quantity ?? 1);
 
-                $subtotal = $detail->price * $item['quantity'];
+                if (!$productDetailsId) {
+                    continue;
+                }
+
+                $detail = ProductDetails::findOrFail($productDetailsId);
+
+                dd($detail);
+
+                $detail->decrement('stock', $quantity);
+
+                $subtotal = $detail->price * $quantity;
                 $totalAmount += $subtotal;
 
                 OrderItem::create([
                     'order_ledger_id'    => $order->id,
                     'product_details_id' => $detail->id,
-                    'quantity'           => $item['quantity'],
+                    'quantity'           => $quantity,
                     'price'              => $detail->price,
                 ]);
             }
 
-            // [ 3 ] Update total amount
             $order->update(['total_amount' => $totalAmount]);
 
-            // [ 4 ] Return Order
             return $order;
-
         });
     }
-
 }

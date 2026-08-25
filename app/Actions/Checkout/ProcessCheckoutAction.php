@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App\Actions\Checkout;
 
@@ -7,12 +7,11 @@ use App\Services\Checkout\CheckoutService;
 
 class ProcessCheckoutAction
 {
-    
+
     public function __construct(protected CheckoutService $checkoutService) {}
 
-    public function execute(array $cartItems, ?int $userId = null): OrderLedger
+    public function execute(array $cartItems, ?int $userId = null, ?array $guestInfo = null): OrderLedger
     {
-        return $this->checkoutService->processCheckout($cartItems, $userId);
+        return $this->checkoutService->processCheckout($cartItems, $userId, $guestInfo);
     }
-
 }

@@ -7,12 +7,20 @@ use App\Livewire\Store\Cart;
 use App\Livewire\Store\Product;
 use App\Livewire\Store\ProductDetails;
 
-use App\Livewire\Checkout\Index As Checkout;
+use App\Livewire\Checkout\Index as Checkout;
 use App\Livewire\Checkout\OrderSuccess;
 
-Route::get('/login', function() {
-    //
-})->name('login');
+use App\Livewire\Store\Auth\Reg;
+use App\Livewire\Store\Auth\Login;
+
+// Login to store
+Route::get('/login', Login::class)->name('login');
+
+// Reset Password
+Route::get('/reset', function () {})->name('reset.password');
+
+// Create new Larashop account
+Route::get('/register', Reg::class)->name('register');
 
 // Homepage Route
 Route::get('/', Welcome::class)->name('home');

@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
@@ -13,7 +14,7 @@ return new class extends Migration
     {
         Schema::create('carts', function (Blueprint $table) {
             // Using a non-sequential ULID tracking code for guest cart security
-            $table->ulid('id')->primary();
+            $table->ulid('id')->primary(); // Remove invalid integer default(...)
             $table->foreignId('user_id')->nullable()->constrained()->cascadeOnDelete();
             $table->string('guest_token')->nullable()->index();
             $table->timestamps();

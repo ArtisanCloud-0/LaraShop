@@ -4,7 +4,9 @@ namespace App\Livewire\Checkout;
 
 use App\Models\OrderLedger;
 use Livewire\Component;
+use Livewire\Attributes\Layout;
 
+#[Layout('layouts.checkout')]
 class OrderSuccess extends Component
 {
     public OrderLedger $order;

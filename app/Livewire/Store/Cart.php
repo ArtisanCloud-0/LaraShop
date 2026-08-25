@@ -3,8 +3,8 @@
 namespace App\Livewire\Store;
 
 use Livewire\Component;
-use Livewire\Attributes\On; 
-use Livewire\Attributes\Layout; 
+use Livewire\Attributes\On;
+use Livewire\Attributes\Layout;
 
 use App\Models\Cart as CartModel;
 use App\Models\CartItem as CartItemModel;
@@ -29,15 +29,16 @@ class Cart extends Component
     public function loadCartItems(): void
     {
         if (Auth::check()) {
-            // Eager-load variant and its parent product
-            $userCart = CartModel::with(['items.variant.product'])
+            // 1. Eager-load variant AND its nested parent product
+            $userCart = CartModel::with(['items.productDetails.product'])
                 ->where('user_id', Auth::id())
                 ->first();
 
             if ($userCart) {
-                // Map database models into a standard array format matching session carts
+                // 2. Map database items to array
                 $this->cartItems = $userCart->items->mapWithKeys(function (CartItemModel $item) {
-                    $variant = $item->variant;
+                    // Match the relationship property name defined in CartItemModel
+                    $variant = $item->productDetails;
                     $product = $variant?->product;
 
                     return [
@@ -45,7 +46,7 @@ class Cart extends Component
                             'product_details_id' => $item->product_details_id,
                             'name'               => $product?->name ?? 'Product',
                             'options'            => $variant?->options ?? [],
-                            'price'              => $variant?->price ?? 0, // Cents
+                            'price'              => $variant?->price ?? 0,
                             'quantity'           => $item->quantity,
                             'image'              => $product?->primary_image ?? null,
                         ]
@@ -63,20 +64,18 @@ class Cart extends Component
     {
         resolve(UpdateCartItemQuantityAction::class)->execute($variantId, $newQty);
         $this->loadCartItems();
-        
+
         // Notify the navbar counter to re-render
         $this->dispatch('cart-updated');
-
     }
 
     public function removeItem(int $variantId): void
     {
         resolve(RemoveItemFromCartAction::class)->execute($variantId);
         $this->loadCartItems();
-        
+
         // Notify the navbar counter to re-render
         $this->dispatch('cart-updated');
-        
     }
 
     #[On('cart-updated')]

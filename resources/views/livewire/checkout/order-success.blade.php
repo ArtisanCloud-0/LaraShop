@@ -97,15 +97,10 @@
             </a>
 
             @auth
-                <a 
-                    href="{{ route('admin.orders.index') }}" 
-                    class="w-full sm:w-auto px-6 py-3 bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-300 font-bold text-xs rounded-xl text-center transition"
-                >
-                    Track in Admin Panel &rarr;
-                </a>
+                
             @else
                 <a 
-                    href="{{ route('login') }}" 
+                    href="{{ route('register') }}" 
                     class="w-full sm:w-auto px-6 py-3 bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-300 font-bold text-xs rounded-xl text-center transition"
                 >
                     Create Account to Track Orders

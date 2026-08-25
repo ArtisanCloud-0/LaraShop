@@ -17,7 +17,18 @@
 
                 <!-- Customer Details Card -->
                 <div class="bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800/80 rounded-2xl p-6 shadow-xl space-y-4">
-                    <h3 class="text-sm font-bold text-slate-600 dark:text-white mb-2">Customer & Shipping Information</h3>
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-sm font-bold text-slate-600 dark:text-white">Customer & Shipping Information</h3>
+                        @guest
+                            <span class="text-[10px] bg-amber-500/10 text-amber-500 px-2.5 py-0.5 rounded-full border border-amber-500/20 font-semibold">
+                                Guest Checkout
+                            </span>
+                        @else
+                            <span class="text-[10px] bg-indigo-500/10 text-indigo-400 px-2.5 py-0.5 rounded-full border border-indigo-500/20 font-semibold">
+                                Authenticated Account
+                            </span>
+                        @endguest
+                    </div>
                     
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
@@ -26,7 +37,7 @@
                                 type="text" 
                                 wire:model="name"
                                 @auth disabled @endauth
-                                class="w-full bg-slate-50 dark:bg-slate-950/60 border border-slate-300 dark:border-slate-800 rounded-xl px-4 py-2.5 text-xs text-slate-600 dark:text-slate-400 @auth cursor-not-allowed @endauth"
+                                class="w-full bg-slate-50 dark:bg-slate-950/60 border border-slate-300 dark:border-slate-800 rounded-xl px-4 py-2.5 text-xs text-slate-600 dark:text-slate-400 @auth cursor-not-allowed opacity-75 @endauth"
                                 placeholder="John Doe"
                             >
                             @error('name') <span class="text-red-400 text-[11px] mt-1 block">{{ $message }}</span> @enderror
@@ -37,7 +48,7 @@
                                 type="email" 
                                 wire:model="email"
                                 @auth disabled @endauth
-                                class="w-full bg-slate-50 dark:bg-slate-950/60 border border-slate-300 dark:border-slate-800 rounded-xl px-4 py-2.5 text-xs text-slate-600 dark:text-slate-400 @auth cursor-not-allowed @endauth"
+                                class="w-full bg-slate-50 dark:bg-slate-950/60 border border-slate-300 dark:border-slate-800 rounded-xl px-4 py-2.5 text-xs text-slate-600 dark:text-slate-400 @auth cursor-not-allowed opacity-75 @endauth"
                                 placeholder="guest@example.com"
                             >
                             @error('email') <span class="text-red-400 text-[11px] mt-1 block">{{ $message }}</span> @enderror
@@ -73,16 +84,24 @@
                 <div>
                     <h3 class="text-sm font-bold text-slate-600 dark:text-white mb-4">Order Summary</h3>
 
-                    {{-- Cart Items Breakdown --}}
+                    {{-- Dynamic Cart Items Breakdown (Auth DB or Guest Session) --}}
+                    @php
+                        $activeCart = Auth::check() 
+                            ? $this->cartItems 
+                            : session()->get('cart', []);
+                        
+                        $subtotal = array_reduce($activeCart, fn($acc, $i) => $acc + ($i['price'] * $i['quantity']), 0);
+                    @endphp
+
                     <div class="divide-y divide-slate-300 dark:divide-slate-800 max-h-60 overflow-y-auto mb-4 pr-1">
-                        @forelse(session()->get('cart', []) as $item)
+                        @forelse($activeCart as $item)
                             <div class="py-3 flex items-center justify-between gap-3 text-xs">
                                 <div class="truncate">
                                     <p class="font-bold text-slate-500 dark:text-white truncate">{{ $item['name'] ?? 'Custom Product' }}</p>
                                     <p class="text-[10px] text-slate-600 dark:text-slate-400">Qty: {{ $item['quantity'] }}</p>
                                 </div>
                                 <span class="font-bold text-slate-500 dark:text-white shrink-0">
-                                    ${{ number_format($item['price'] * $item['quantity'], 2) }}
+                                    ${{ number_format(($item['price'] * $item['quantity']), 2) }}
                                 </span>
                             </div>
                         @empty
@@ -91,11 +110,6 @@
                     </div>
 
                     {{-- Totals --}}
-                    @php
-                        $cartItems = session()->get('cart', []);
-                        $subtotal = array_reduce($cartItems, fn($acc, $i) => $acc + ($i['price'] * $i['quantity']), 0);
-                    @endphp
-
                     <div class="space-y-2 pt-4 border-t border-slate-300 dark:border-slate-800 text-xs">
                         <div class="flex justify-between text-slate-600 dark:text-slate-400">
                             <span>Subtotal</span>
@@ -116,6 +130,7 @@
                 <button 
                     type="submit" 
                     wire:loading.attr="disabled"
+                    @if(empty($activeCart)) disabled @endif
                     class="w-full py-3.5 bg-indigo-600 hover:bg-indigo-500 disabled:opacity-50 text-white font-bold text-xs rounded-xl shadow-lg shadow-indigo-600/20 text-center transition flex items-center justify-center gap-2"
                 >
                     <span wire:loading.remove>Place Order & Pay</span>

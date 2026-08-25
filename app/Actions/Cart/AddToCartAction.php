@@ -38,8 +38,8 @@ class AddToCartAction
                 $cart[$variant->id]['quantity'] += $quantity;
             } else {
                 // Eager-load parent product if not already loaded for display info
-                $product = $variant->relationLoaded('product') 
-                    ? $variant->product 
+                $product = $variant->relationLoaded('product')
+                    ? $variant->product
                     : $variant->product()->first();
 
                 $cart[$variant->id] = [

@@ -14,7 +14,7 @@ class CartService
     public function getItems(): array
     {
         if (Auth::check()) {
-            $cart = Cart::with('items.productDetail.product')
+            $cart = Cart::with('items.productDetails')
                 ->where('user_id', Auth::id())
                 ->first();
 
@@ -23,8 +23,8 @@ class CartService
             return $cart->items->map(function ($item) {
                 return [
                     'product_detail_id' => $item->product_detail_id,
-                    'name'              => $item->productDetail->product->name ?? 'Product',
-                    'price'             => $item->productDetail->price,
+                    'name'              => $item->productDetails->product->name ?? 'Product',
+                    'price'             => $item->productDetails->price,
                     'quantity'          => $item->quantity,
                 ];
             })->toArray();
