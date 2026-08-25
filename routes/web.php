@@ -12,9 +12,13 @@ use App\Livewire\Checkout\OrderSuccess;
 
 use App\Livewire\Store\Auth\Reg;
 use App\Livewire\Store\Auth\Login;
+use App\Livewire\Store\Auth\LogoutSession;
 
 // Login to store
 Route::get('/login', Login::class)->name('login');
+
+// Logout to store
+Route::get('/logout', LogoutSession::class)->name('logout');
 
 // Reset Password
 Route::get('/reset', function () {})->name('reset.password');

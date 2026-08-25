@@ -22,7 +22,7 @@
             placeholder:text-slate-400
             dark:placeholder:text-slate-300
             ring-1
-            @error($for) 
+            @error('{{ $for }}') 
                 text-red-700 ring-red-600
                 dark:text-red-700 dark:ring-red-300 
             @else 

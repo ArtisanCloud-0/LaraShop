@@ -134,7 +134,7 @@
               >
               @else
               <a
-                href="#"
+                href="{{ route('logout') }}"
                 class="hover:text-orange-500 dark:hover:text-orange-300 {{ request()->routeIs('register')? 'text-orange-500 dark:text-orange-300': '' }}"
                 >User</a
               >

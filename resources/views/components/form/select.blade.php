@@ -24,7 +24,7 @@
             text-gray-500
             placeholder:text-gray-400
             dark:placeholder:text-slate-300
-            @error("$for") 
+            @error('{{ $for }}') 
                 text-red-700 border-red-700 focus:border-red-700 focus:ring-red-700
                 dark:text-red-300 dark:border-red-500 dark:focus:border-red-500 dark:focus:ring-red-500 
             @else 

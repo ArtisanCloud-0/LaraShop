@@ -51,10 +51,11 @@ class Reg extends Component
         resolve(MergeGuestCartWithUserCartService::class)->mergeItems($user->id);
 
         // [ 4 ] Login the use
-        Auth::login($user);
+        // Auth::login($user);
 
-        // [ 4 ] Redirect the user home
-        return redirect()->to(route('home'));
+        // [ 5 ] Redirect the user home
+        // return redirect()->to(route('home'));
+        return redirect()->to(route('login'));
     }
 
     public function render()

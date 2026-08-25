@@ -4,23 +4,24 @@
   <div class="flex justify-center mb-5">
     <img class="max-w-80" src="{{ asset('PNG/Artboard 1.png') }}" alt="" />
   </div>
-  <form>
+
+  <form wire:submit.prevent="login">
     <!-- Email -->
     <div class="mb-8">
-      <x-form.input>
-        <x-slot:for>{{ "email" }}</x-slot:for>
-        <x-slot:type>{{ "email" }}</x-slot:type>
-        <x-slot:placeholder>{{ "Enter Email" }}</x-slot:placeholder>
-      </x-form.input>
+      <x-form.input
+        for="email"
+        type="email"
+        placeholder="Enter Email"
+      ></x-form.input>
     </div>
 
     <!-- Password -->
     <div class="mb-5">
-      <x-form.input>
-        <x-slot:for>{{ "password" }}</x-slot:for>
-        <x-slot:type>{{ "password" }}</x-slot:type>
-        <x-slot:placeholder>{{ "Enter Password" }}</x-slot:placeholder>
-      </x-form.input>
+      <x-form.input
+        for="password"
+        type="password"
+        placeholder="Enter Password"
+      ></x-form.input>
     </div>
 
     <div class="block sm:flex sm:justify-between mb-3">
