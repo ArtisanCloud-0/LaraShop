@@ -1,76 +1,200 @@
 <div>
-    
-    <!-- 🌟 HERO MARKETING ARRIVALS BANNER -->
-    <div class="relative overflow-hidden rounded-2xl bg-white border border-slate-200 dark:bg-slate-900 dark:border-slate-800 transition-colors duration-200 mb-12 shadow-sm">
-        <div class="px-6 py-12 sm:px-12 sm:py-20 max-w-2xl relative z-10">
-            <span class="text-xs font-bold tracking-widest uppercase text-blue-600 dark:text-blue-400">New Season Collection 2026</span>
-            <h1 class="text-4xl sm:text-6xl font-black tracking-tight text-slate-900 dark:text-white mt-3 leading-tight">
-                Refined Styles. <br class="hidden sm:block"/>Made to Wear.
-            </h1>
-            <p class="mt-4 text-sm sm:text-base text-slate-500 dark:text-slate-400 leading-relaxed">
-                Discover a curated collection of modern essentials designed for men and women. From precision-crafted watches to classic everyday wardrobe layers, explore pieces engineered to last.
+  <div class="space-y-12 mb-10">
+    {{-- Hero Banner Grid --}}
+    <div class="grid grid-cols-1 gap-6 lg:grid-cols-3">
+      {{-- Main Hero (Spans 2 columns on large screens) --}}
+      <div
+        class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 p-8 text-white shadow-2xl lg:col-span-2 lg:p-12 flex flex-col justify-between min-h-[380px]"
+      >
+        {{-- Decorative Gradient Background Blur --}}
+        <div
+          class="absolute -right-20 -top-20 h-72 w-72 rounded-full bg-orange-500/20 blur-3xl"
+        ></div>
+        <div
+          class="absolute -left-20 -bottom-20 h-72 w-72 rounded-full bg-amber-500/10 blur-3xl"
+        ></div>
+
+        <div class="relative z-10 max-w-xl space-y-4">
+          <span
+            class="inline-flex items-center gap-1.5 rounded-full bg-orange-500/10 px-3 py-1 text-xs font-semibold text-orange-400 border border-orange-500/20"
+          >
+            <svg
+              class="w-3.5 h-3.5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M13 10V3L4 14h7v7l9-11h-7z"
+              />
+            </svg>
+            New Season Arrivals
+          </span>
+          <h1 class="text-3xl font-extrabold tracking-tight sm:text-5xl">
+            Discover Quality Products, Crafted for You<span
+              class="text-orange-500"
+              >.</span
+            >
+          </h1>
+          <p class="text-sm text-slate-300 sm:text-base">
+            Explore our curated collection of top-rated items with exclusive
+            discounts and fast doorstep delivery.
+          </p>
+        </div>
+
+        <div class="relative z-10 pt-6 flex flex-wrap items-center gap-4">
+          <a
+            href="{{ route('products') }}"
+            class="inline-flex items-center gap-2 rounded-xl bg-orange-600 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-orange-600/30 transition hover:bg-orange-500 focus:outline-none"
+          >
+            <span>Shop All Collection</span>
+            <svg
+              class="w-4 h-4"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M14 5l7 7m0 0l-7 7m7-7H3"
+              />
+            </svg>
+          </a>
+          <a
+            href="{{ route('products', ['featured' => 1]) }}"
+            class="rounded-xl border border-slate-700 bg-slate-800/50 px-6 py-3 text-sm font-semibold text-slate-200 backdrop-blur transition hover:bg-slate-800 hover:text-white"
+          >
+            View Featured
+          </a>
+        </div>
+      </div>
+
+      {{-- Side Callout Cards --}}
+      <div class="flex flex-col gap-6">
+        {{-- Hot Deal Card --}}
+        <div
+          class="relative flex-1 overflow-hidden rounded-3xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900 flex flex-col justify-between"
+        >
+          <div class="space-y-2">
+            <span
+              class="text-[11px] font-bold uppercase tracking-wider text-orange-500"
+              >Limited Offer</span
+            >
+            <h3 class="text-xl font-bold text-slate-900 dark:text-slate-100">
+              Special Weekly Discounts
+            </h3>
+            <p class="text-xs text-slate-500 dark:text-slate-400">
+              Save up to 40% on select items this week only.
             </p>
-            <div class="mt-8 flex flex-wrap gap-4">
-                <a href="#catalog" class="px-5 py-3 bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold uppercase tracking-wider rounded-lg shadow-sm transition">
-                    Shop The Collection
-                </a>
-                <a href="/about" class="px-5 py-3 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs font-bold uppercase tracking-wider rounded-lg transition">
-                    Learn Our Story
-                </a>
-            </div>
+          </div>
+          <div class="pt-4">
+            <a
+              href="{{ route('products') }}"
+              class="inline-flex items-center gap-1.5 text-xs font-bold text-orange-600 hover:text-orange-500 dark:text-orange-400"
+            >
+              <span>Browse Deals</span>
+              <svg
+                class="w-3.5 h-3.5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M9 5l7 7-7 7"
+                />
+              </svg>
+            </a>
+          </div>
         </div>
-        <!-- Elegant Visual Background Accents -->
-        <div class="absolute right-0 bottom-0 top-0 w-1/2 bg-linear-to-l from-blue-500/5 dark:from-blue-500/10 to-transparent pointer-events-none hidden md:block"></div>
-    </div>
 
-    <!-- 🗂️ DEPARTMENTS & LIFESTYLE CATEGORIES QUICK-SELECTOR -->
-    <div class="mb-10">
-        <div class="flex items-center justify-between mb-4">
-            <h2 class="text-sm font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">Browse Departments</h2>
-        </div>
-        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
-            @php
-                $departments = [
-                    'Men\'s Apparel' => '34 Items',
-                    'Women\'s Apparel' => '42 Items',
-                    'Luxury Watches' => '18 Items',
-                    'Fine Accessories' => '25 Items'
-                ];
-            @endphp
-            @foreach($departments as $name => $count)
-                <a href="#" class="group p-5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl transition hover:border-blue-500 dark:hover:border-blue-400 flex flex-col justify-between h-24 shadow-sm">
-                    <span class="text-sm font-bold text-slate-800 dark:text-slate-200 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-                        {{ $name }}
-                    </span>
-                    <span class="text-[10px] self-start font-mono font-bold bg-slate-50 dark:bg-slate-950 px-2 py-0.5 border border-slate-200 dark:border-slate-800 rounded-md text-slate-400">
-                        {{ $count }}
-                    </span>
-                </a>
-            @endforeach
-        </div>
-    </div>
-
-    <!-- 📦 PRIMARY PRODUCT SHOWCASE GRID -->
-    <div id="catalog" class="scroll-mt-20">
-        <div class="flex items-center justify-between pb-4 mb-6 border-b border-slate-200 dark:border-slate-800">
-            <div>
-                <h3 class="text-lg font-black text-slate-900 dark:text-slate-100">Featured Trends & Essentials</h3>
-                <p class="text-xs text-slate-400 mt-0.5">Select a variant size or color right from the product layout card.</p>
-            </div>
-            
-            <!-- Structural Counter Anchor using Eye SVG -->
-            <span class="inline-flex items-center gap-x-1.5 text-xs text-slate-400 font-medium">
-                <svg class="w-4 h-4 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
-                </svg>
-                Showing 8 New Styles
+        {{-- Support & Quality Card --}}
+        <div
+          class="relative flex-1 overflow-hidden rounded-3xl border border-slate-200 bg-gradient-to-br from-orange-500 to-amber-600 p-6 text-white shadow-sm flex flex-col justify-between"
+        >
+          <div class="space-y-2">
+            <span
+              class="text-[11px] font-bold uppercase tracking-wider text-orange-100"
+              >Why LaraShop?</span
+            >
+            <h3 class="text-xl font-bold">Fast Delivery & Verified Quality</h3>
+            <p class="text-xs text-orange-100/90">
+              Guaranteed authentic items backed by direct customer support.
+            </p>
+          </div>
+          <div class="pt-4">
+            <span
+              class="inline-flex items-center gap-2 rounded-lg bg-white/10 px-3 py-1.5 text-xs font-medium backdrop-blur"
+            >
+              <svg
+                class="w-4 h-4 text-orange-200"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M5 13l4 4L19 7"
+                />
+              </svg>
+              100% Secure Checkout
             </span>
+          </div>
         </div>
+      </div>
+    </div>
+  </div>
 
-        <!-- Product Cards Grid Loop Layout -->
-        <x-card.products :products="$products"></x-card.products>
+  <!-- 📦 PRIMARY PRODUCT SHOWCASE GRID -->
+  <div id="catalog" class="scroll-mt-20">
+    <div
+      class="flex items-center justify-between pb-4 mb-6 border-b border-slate-200 dark:border-slate-800"
+    >
+      <div>
+        <h3 class="text-lg font-black text-slate-900 dark:text-slate-100">
+          Featured Trends & Essentials
+        </h3>
+        <p class="text-xs text-slate-400 mt-0.5">
+          Select a variant size or color right from the product layout card.
+        </p>
+      </div>
 
+      <!-- Structural Counter Anchor using Eye SVG -->
+      <span
+        class="inline-flex items-center gap-x-1.5 text-xs text-slate-400 font-medium"
+      >
+        <svg
+          class="w-4 h-4 text-blue-500"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          stroke-width="1.5"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z"
+          />
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
+          />
+        </svg>
+        Showing 8 New Styles
+      </span>
     </div>
 
+    <!-- Product Cards Grid Loop Layout -->
+    <x-card.products :products="$products"></x-card.products>
+  </div>
 </div>
