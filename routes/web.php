@@ -9,7 +9,7 @@ use App\Livewire\Store\ProductDetails;
 
 use App\Livewire\Checkout\Index as Checkout;
 use App\Livewire\Checkout\OrderSuccess;
-
+use App\Livewire\Store\About;
 use App\Livewire\Store\Auth\Reg;
 use App\Livewire\Store\Auth\Login;
 use App\Livewire\Store\Auth\LogoutSession;
@@ -28,6 +28,9 @@ Route::get('/register', Reg::class)->name('register');
 
 // Homepage Route
 Route::get('/', Welcome::class)->name('home');
+
+// About Route
+Route::get('/about', About::class)->name('about');
 
 // Cart Bag Route
 Route::get('/cart', Cart::class)->name('cart');

@@ -146,7 +146,7 @@
               </div>
 
               <a
-                href="#"
+                href="{{ route('about') }}"
                 class="hover:text-orange-500 dark:hover:text-orange-300"
                 >About</a
               >
@@ -284,7 +284,7 @@
               </div>
             </div>
 
-            <a href="#" class="block py-1.5 text-slate-700 dark:text-slate-200 hover:text-orange-500">About</a>
+            <a href="{{ route('about') }}" class="block py-1.5 text-slate-700 dark:text-slate-200 hover:text-orange-500">About</a>
 
             {{-- Mobile User Authentication Links --}}
             <div class="pt-4 border-t border-slate-200 dark:border-slate-800">

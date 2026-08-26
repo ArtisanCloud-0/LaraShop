@@ -4,7 +4,7 @@
     <div class="grid grid-cols-1 gap-6 lg:grid-cols-3">
       {{-- Main Hero (Spans 2 columns on large screens) --}}
       <div
-        class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 p-8 text-white shadow-2xl lg:col-span-2 lg:p-12 flex flex-col justify-between min-h-[380px]"
+        class="relative overflow-hidden rounded-3xl bg-linear-to-br from-slate-100 via-slate-50 to-slate-100 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 p-8 dark:text-white shadow-2xl lg:col-span-2 lg:p-12 flex flex-col justify-between min-h-95"
       >
         {{-- Decorative Gradient Background Blur --}}
         <div
@@ -39,7 +39,7 @@
               >.</span
             >
           </h1>
-          <p class="text-sm text-slate-300 sm:text-base">
+          <p class="text-sm text-slate-600 dark:text-slate-300 sm:text-base">
             Explore our curated collection of top-rated items with exclusive
             discounts and fast doorstep delivery.
           </p>
@@ -67,7 +67,7 @@
           </a>
           <a
             href="{{ route('products', ['featured' => 1]) }}"
-            class="rounded-xl border border-slate-700 bg-slate-800/50 px-6 py-3 text-sm font-semibold text-slate-200 backdrop-blur transition hover:bg-slate-800 hover:text-white"
+            class="rounded-xl border border-slate-200 bg-slate-100 text-slate-600 dark:border-slate-700 dark:bg-slate-800/50 px-6 py-3 text-sm font-semibold text-slate-200 backdrop-blur transition hover:bg-slate-800 hover:text-white dark:hover:bg-slate-800 dark:hover:text-white"
           >
             View Featured
           </a>
