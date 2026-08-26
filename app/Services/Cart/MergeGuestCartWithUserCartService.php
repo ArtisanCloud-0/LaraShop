@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\DB;
 
 class MergeGuestCartWithUserCartService
 {
-    public function mergeItems(int $userID): void
+    public function mergeItems(int $userID, array $guestCartItems = []): void
     {
         $sessionCart = session()->get('cart', []);
 

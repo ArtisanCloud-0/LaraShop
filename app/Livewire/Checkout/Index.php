@@ -24,14 +24,12 @@ class Index extends Component
             $this->email = auth()->user()->email;
         }
 
-        // Fetch items via CartService (handles DB cart for Auth, Session for Guests)
         $this->cartItems = $cartService->getItems();
     }
 
-    public function placeOrder()
+    public function placeOrder(ProcessCheckoutAction $action, CartService $cartService)
     {
-        // Refresh cart items state prior to checkout execution
-        $this->cartItems = resolve(CartService::class)->getItems();
+        $this->cartItems = $cartService->getItems();
 
         if (empty($this->cartItems)) {
             session()->flash('error', 'Your shopping bag is empty.');
@@ -45,8 +43,8 @@ class Index extends Component
             ]);
         }
 
-        // Process order with user_id or guest fallback details
-        $order = resolve(ProcessCheckoutAction::class)->execute(
+        // Dispatch background checkout job
+        $action->execute(
             $this->cartItems,
             auth()->id(),
             auth()->check() ? null : [
@@ -55,10 +53,11 @@ class Index extends Component
             ]
         );
 
-        // Clear active cart (DB or Session)
-        resolve(CartService::class)->clearCart();
+        // Immediately clear cart so user cannot submit twice
+        $cartService->clearCart();
 
-        return redirect()->route('order.success', $order->id);
+        session()->flash('status', 'Your order is being processed!');
+        return redirect()->route('home');
     }
 
     public function render()

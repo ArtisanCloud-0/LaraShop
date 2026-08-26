@@ -22,7 +22,7 @@ class CartService
 
             return $cart->items->map(function ($item) {
                 return [
-                    'product_detail_id' => $item->product_detail_id,
+                    'product_details_id' => $item->product_details_id,
                     'name'              => $item->productDetails->product->name ?? 'Product',
                     'price'             => $item->productDetails->price,
                     'quantity'          => $item->quantity,

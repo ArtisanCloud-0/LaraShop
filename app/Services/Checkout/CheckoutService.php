@@ -28,32 +28,25 @@ class CheckoutService
             ]);
 
             foreach ($cartItems as $item) {
-                // Standardize key extraction for both arrays and Eloquent models
-                $productDetailsId = is_array($item)
-                    ? ($item['product_details_id'] ?? $item['id'] ?? null)
-                    : ($item->product_details_id ?? $item->id ?? null);
+                // Extract ID safely regardless of key variation or model structure
+                $variantId = is_array($item)
+                    ? ($item['product_details_id'] ?? $item['product_detail_id'] ?? $item['id'] ?? null)
+                    : ($item->product_details_id ?? $item->product_detail_id ?? $item->id ?? null);
 
-                $quantity = is_array($item)
-                    ? ($item['quantity'] ?? 1)
-                    : ($item->quantity ?? 1);
-
-                if (!$productDetailsId) {
+                if (!$variantId) {
                     continue;
                 }
 
-                $detail = ProductDetails::findOrFail($productDetailsId);
+                $detail = ProductDetails::findOrFail($variantId);
+                $detail->decrement('stock', $item['quantity']);
 
-                dd($detail);
-
-                $detail->decrement('stock', $quantity);
-
-                $subtotal = $detail->price * $quantity;
+                $subtotal = $detail->price * $item['quantity'];
                 $totalAmount += $subtotal;
 
                 OrderItem::create([
                     'order_ledger_id'    => $order->id,
                     'product_details_id' => $detail->id,
-                    'quantity'           => $quantity,
+                    'quantity'           => $item['quantity'],
                     'price'              => $detail->price,
                 ]);
             }
