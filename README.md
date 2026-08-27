@@ -5,7 +5,7 @@ https://github.com/user-attachments/assets/ceec670e-38a5-4757-917f-dd4beff23580
 
 ---
 
-# LaraShop Market — Enterprise E-Commerce Platform
+# LaraShop Market — Laravel/Livewire E-Commerce Platform
 
 [![Laravel](https://img.shields.io/badge/Laravel-13.x-FF2D20?style=for-the-badge&logo=laravel&logoColor=white)](https://laravel.com)
 [![Livewire](https://img.shields.io/badge/Livewire-4.x-4E5BA6?style=for-the-badge&logo=livewire&logoColor=white)](https://livewire.laravel.com)
