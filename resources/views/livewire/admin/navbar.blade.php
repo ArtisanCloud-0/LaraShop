@@ -113,7 +113,7 @@
             </div>
 
             {{-- Desktop Right Navigation (Theme Toggle, Notifications & Profile) --}}
-            <div class="hidden md:block">
+            <div class="hidden lg:block">
 
                 <div class="ml-4 flex items-center gap-x-3">
 
@@ -154,7 +154,7 @@
             </div>
 
             {{-- Mobile Toggle Button --}}
-            <div class="-mr-2 flex items-center gap-x-2 md:hidden">
+            <div class="-mr-2 flex items-center gap-x-2 lg:hidden">
                 {{-- Mobile Theme Toggle Icon --}}
                 <button 
                     type="button" 
@@ -192,7 +192,7 @@
     </div>
 
     {{-- Mobile Menu Container --}}
-    <el-disclosure id="mobile-menu" hidden class="block md:hidden border-t border-gray-200/50 dark:border-gray-800">
+    <el-disclosure id="mobile-menu" hidden class="block lg:hidden border-t border-gray-200/50 dark:border-gray-800">
         
         {{-- Mobile Search Input --}}
         <div class="px-4 pt-3 pb-1 sm:hidden">

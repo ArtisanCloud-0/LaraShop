@@ -147,7 +147,7 @@
 
               <a
                 href="{{ route('about') }}"
-                class="hover:text-orange-500 dark:hover:text-orange-300"
+                class="hover:text-orange-500 dark:hover:text-orange-300 {{ request()->routeIs('about') ? 'text-orange-500 dark:text-orange-300' : '' }}"
                 >About</a
               >
             </div>
@@ -174,7 +174,7 @@
             {{-- Desktop Auth Links / Profile Dropdown --}}
             <div class="hidden md:flex items-center gap-4 text-sm font-medium">
               @guest
-                <a href="{{ route('login') }}" class="text-slate-600 hover:text-orange-500 dark:text-slate-300 dark:hover:text-orange-300">Sign in</a>
+                <a href="{{ route('login') }}" class="text-slate-600 hover:text-orange-500 dark:text-slate-300 dark:hover:text-orange-300 {{ request()->routeIs('login') ? 'text-orange-500 dark:text-orange-300' : '' }}">Sign in</a>
                 <a href="{{ route('register') }}" class="rounded-xl bg-orange-600 px-3.5 py-1.5 text-xs font-semibold text-white shadow-md hover:bg-orange-500">Sign up</a>
               @else
                 <div class="relative" x-data="{ userMenuOpen: false }" @click.outside="userMenuOpen = false">
@@ -284,7 +284,7 @@
               </div>
             </div>
 
-            <a href="{{ route('about') }}" class="block py-1.5 text-slate-700 dark:text-slate-200 hover:text-orange-500">About</a>
+            <a href="{{ route('about') }}" class="block py-1.5 text-slate-700 dark:text-slate-200 hover:text-orange-500 {{ request()->routeIs('about') ? 'text-orange-500 dark:text-orange-300' : '' }}">About</a>
 
             {{-- Mobile User Authentication Links --}}
             <div class="pt-4 border-t border-slate-200 dark:border-slate-800">

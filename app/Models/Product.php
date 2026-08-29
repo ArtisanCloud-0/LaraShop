@@ -10,11 +10,13 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 
-#[Fillable(['name', 'slug', 'images', 'category_id', 'description', 'is_visible'])]
 class Product extends Model
 {
     /** @use HasFactory<\Database\Factories\ProductFactory> */
     use HasFactory;
+
+
+    protected $fillable = ['name', 'slug', 'images', 'category_id', 'description', 'is_visible'];
 
     /**
      * Define modern Laravel 13 attribute casting behavior.
@@ -70,7 +72,7 @@ class Product extends Model
     public function getFormattedPriceAttribute(): string
     {
         // [ 1 ] Check if the product does not have variants
-        if($this->productDetails->isEmpty()) {
+        if ($this->productDetails->isEmpty()) {
             return '$0.00';
         }
 
@@ -79,13 +81,11 @@ class Product extends Model
         $max = $this->max_price;
 
         // [ 3 ] If variants have the same price, then show standard single price
-        if($min === $max) {
+        if ($min === $max) {
             return '$' . number_format($min, 2);
         }
 
         // [ 4 ] If deferents then return prices from minimum price
         return 'From $' . number_format($min, 2);
-
     }
-
 }

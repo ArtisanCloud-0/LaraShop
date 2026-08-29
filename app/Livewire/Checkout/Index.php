@@ -47,10 +47,19 @@ class Index extends Component
         $action->execute(
             $this->cartItems,
             auth()->id(),
-            auth()->check() ? null : [
-                'name'  => $this->name,
-                'email' => $this->email,
-            ]
+            auth()->check()
+                ?
+                [
+                    'name'  => Auth()->user()?->name,
+                    'email' => Auth()->user()?->email,
+                    'phone' => Auth()->user()?->phone ?? null,
+                ]
+                :
+                [
+                    'name'  => $this->name,
+                    'email' => $this->email,
+                    'phone' => $this->phone ?? null,
+                ]
         );
 
         // Immediately clear cart so user cannot submit twice

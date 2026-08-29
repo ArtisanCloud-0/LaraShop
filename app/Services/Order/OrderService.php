@@ -2,7 +2,7 @@
 
 namespace App\Services\Order;
 
-use App\Models\OrderLedger As Order;
+use App\Models\OrderLedger as Order;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 class OrderService
@@ -14,10 +14,10 @@ class OrderService
             ->when($search, function ($query) use ($search) {
                 $query->where(function ($q) use ($search) {
                     $q->where('order_number', 'like', "%{$search}%")
-                      ->orWhereHas('user', function ($u) use ($search) {
-                          $u->where('name', 'like', "%{$search}%")
-                            ->orWhere('email', 'like', "%{$search}%");
-                      });
+                        ->orWhereHas('user', function ($u) use ($search) {
+                            $u->where('name', 'like', "%{$search}%")
+                                ->orWhere('email', 'like', "%{$search}%");
+                        });
                 });
             })
             ->when($status !== 'all', function ($query) use ($status) {

@@ -34,14 +34,14 @@ class OrderItem extends Model
     protected function subtotal(): Attribute
     {
         return Attribute::make(
-            get: fn () => $this->price * $this->quantity,
+            get: fn() => $this->price * $this->quantity,
         );
     }
 
     protected function formattedSubtotal(): Attribute
     {
         return Attribute::make(
-            get: fn () => '$' . number_format($this->subtotal / 100, 2),
+            get: fn() => '$' . number_format($this->subtotal / 100, 2),
         );
     }
 
@@ -58,5 +58,4 @@ class OrderItem extends Model
     {
         return $this->belongsTo(ProductDetails::class)->withTrashed();
     }
-
 }

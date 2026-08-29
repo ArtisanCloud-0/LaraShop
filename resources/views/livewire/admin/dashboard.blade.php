@@ -3,7 +3,7 @@
     {{-- Header Greeting --}}
     <div>
         <h2 class="text-2xl font-black text-slate-900 dark:text-white tracking-tight">
-            Welcome back, {{ auth('panel')->user()->name ?? auth()->user()->name ?? 'Admin' }} 👋
+            Welcome back, {{ auth('panel')->user()->name ?? auth()->user()->name ?? 'Admin' }}
         </h2>
         <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">
             Here is what's happening with LaraShop store today.
