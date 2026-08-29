@@ -193,4 +193,12 @@ class CheckoutService
 
         return $orderNumber;
     }
+
+    public function getOrderByNumber(): ?OrderLedger
+    {
+        return OrderLedger::query()
+            ->with(['items.productDetails.product'])
+            ->orderBy('id', 'desc')
+            ->first(); // Retrieve the order by its order number along with its associated items and product details
+    }
 }

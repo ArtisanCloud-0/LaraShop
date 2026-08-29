@@ -37,7 +37,10 @@ Route::get('/cart', Cart::class)->name('cart');
 
 // Checkout & Order Success Routes
 Route::get('/checkout', Checkout::class)->name('checkout');
-Route::get('/order/success/{orderId}', OrderSuccess::class)->name('order.success');
+
+// Order Success Route
+Route::get('/order/success/{orderNumber}', OrderSuccess::class)
+    ->name('order.success');
 
 // Products Main Page
 Route::get('/product', Product::class)->name('products');

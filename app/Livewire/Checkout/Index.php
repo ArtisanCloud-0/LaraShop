@@ -8,6 +8,7 @@ use Livewire\Attributes\Layout;
 
 use App\Services\Cart\CartService;
 use App\Actions\Checkout\ProcessCheckoutAction;
+use App\Services\Checkout\CheckoutService;
 
 #[Title('Complete your order process')]
 #[Layout('layouts.checkout')]
@@ -66,7 +67,7 @@ class Index extends Component
         $cartService->clearCart();
 
         session()->flash('status', 'Your order has been placed successfully!');
-        return redirect()->route('home');
+        return redirect()->route('order.success', ['orderNumber' => resolve(CheckoutService::class)->getOrderByNumber()?->order_number]);
     }
 
     public function render()
