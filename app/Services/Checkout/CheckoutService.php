@@ -108,7 +108,7 @@ class CheckoutService
                     'product_name' => $detail->product->name,
                     'sku' => $detail->sku,
                     'quantity' => $quantity,
-                    'price' => $totalAmount, // Store the total amount for this item in cents
+                    'price' => $unitPrice, // Store the unit price for this item in cents
                     'subtotal' => $subtotal,
                 ];
 

@@ -65,7 +65,7 @@ class Index extends Component
         // Immediately clear cart so user cannot submit twice
         $cartService->clearCart();
 
-        session()->flash('status', 'Your order is being processed!');
+        session()->flash('status', 'Your order has been placed successfully!');
         return redirect()->route('home');
     }
 
