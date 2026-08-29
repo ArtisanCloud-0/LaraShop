@@ -6,7 +6,7 @@ use Livewire\Component;
 use Livewire\Attributes\Layout;
 
 use App\Models\Product;
-use App\Models\ProductDetails As ProductVariant;
+use App\Models\ProductDetails as ProductVariant;
 
 use App\Actions\Cart\AddToCartAction;
 
@@ -72,9 +72,9 @@ class ProductDetails extends Component
     public function extractVariantAttributes(): void
     {
         foreach ($this->product->ProductDetails as $variant) {
-            
+
             // [ 1 ] Check if their is no variant
-            if(!is_array($variant->options)) {
+            if (!is_array($variant->options)) {
                 continue;
             }
 
@@ -82,15 +82,14 @@ class ProductDetails extends Component
             foreach ($variant->options as $key => $value) {
 
                 // [ 2-1 ] If the attribute key is not exsist then keep it empty
-                if(!isset($this->variantAttributes[$key])) {
-                    $this->variantAttributes[$key] = []; 
-                } 
-
-                // [ 2-2 ] The value is not exsist in the attribute list then added it
-                if(!in_array($value, $this->variantAttributes[$key], true)) {
-                    $this->variantAttributes[$key][] = $value;
+                if (!isset($this->variantAttributes[$key])) {
+                    $this->variantAttributes[$key] = [];
                 }
 
+                // [ 2-2 ] The value is not exsist in the attribute list then added it
+                if (!in_array($value, $this->variantAttributes[$key], true)) {
+                    $this->variantAttributes[$key][] = $value;
+                }
             }
         }
     }
@@ -107,13 +106,10 @@ class ProductDetails extends Component
     **/
     public function setDefaultSelections(): void
     {
-        // [ 1 ] Holding the first value from product variant model
-        $defaultVariant = $this->product->ProductDetails->first();
+        $defaultVariant = $this->product->ProductDetails->first(); // Get the first variant of the product to use as the default selection
 
-        // [ 2 ] Check if their is at least one variant and the variant data is an array
-        if ($defaultVariant && is_array($defaultVariant->oprions)) {
-            // [ 3 ] Put the values in the UI
-            $this->selectedOptions = $defaultVariant->options;
+        if ($defaultVariant && is_array($defaultVariant->options)) { // Check if the default variant exists and has options
+            $this->selectedOptions = $defaultVariant->options; // Set the selected options to the options of the default variant
         }
     }
 
@@ -130,15 +126,14 @@ class ProductDetails extends Component
     public function resolveActiveVariant(): void
     {
         $this->activeVariant = $this->product->ProductDetails->first(function ($variant) {
-            
+
             // [ 1 ] If the selected variant is not an array return error feedback
-            if(!is_array($variant->options)) {
+            if (!is_array($variant->options)) {
                 return false;
             }
 
             // [ 2 ] Compare array key-value pairs
             return empty(array_diff_assoc($this->selectedOptions, $variant->options)) && empty(array_diff_assoc($variant->options, $this->selectedOptions));
-
         });
     }
 
