@@ -31,28 +31,13 @@
                     </div>
                     
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-500 dark:text-slate-300 mb-1.5">Full Name</label>
-                            <input 
-                                type="text" 
-                                wire:model="name"
-                                @auth disabled @endauth
-                                class="w-full bg-slate-50 dark:bg-slate-950/60 border border-slate-300 dark:border-slate-800 rounded-xl px-4 py-2.5 text-xs text-slate-600 dark:text-slate-400 @auth cursor-not-allowed opacity-75 @endauth"
-                                placeholder="John Doe"
-                            >
-                            @error('name') <span class="text-red-400 text-[11px] mt-1 block">{{ $message }}</span> @enderror
-                        </div>
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-500 dark:text-slate-300 mb-1.5">Email Address</label>
-                            <input 
-                                type="email" 
-                                wire:model="email"
-                                @auth disabled @endauth
-                                class="w-full bg-slate-50 dark:bg-slate-950/60 border border-slate-300 dark:border-slate-800 rounded-xl px-4 py-2.5 text-xs text-slate-600 dark:text-slate-400 @auth cursor-not-allowed opacity-75 @endauth"
-                                placeholder="guest@example.com"
-                            >
-                            @error('email') <span class="text-red-400 text-[11px] mt-1 block">{{ $message }}</span> @enderror
-                        </div>
+
+                        <x-form.input for="name" label="Full Name" placeholder="John Doe" />
+
+                        <x-form.input for="email" label="Email Address" placeholder="john.doe@example.com" />
+
+                        <x-form.input for="phone" label="Phone Number" placeholder="(123) 456-7890" />
+                        
                     </div>
                     
                 </div>
@@ -63,9 +48,6 @@
 
                     <div class="p-4 rounded-xl bg-indigo-600/90 dark:bg-indigo-500/10 border border-indigo-500/30 flex items-center justify-between">
                         <div class="flex items-center gap-3">
-                            <div class="size-8 rounded-lg bg-indigo-700 dark:bg-indigo-600/20 text-indigo-400 flex items-center justify-center font-bold text-xs">
-                                ⚡
-                            </div>
                             <div>
                                 <p class="text-xs font-bold text-white">Instant Simulated Checkout</p>
                                 <p class="text-[10px] text-slate-200 dark:text-slate-400">Processes order immediately & deducts inventory</p>

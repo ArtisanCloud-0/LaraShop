@@ -8,7 +8,7 @@ use Livewire\Attributes\Layout;
 
 use App\Services\Cart\CartService;
 use App\Actions\Checkout\ProcessCheckoutAction;
-use App\Services\Checkout\CheckoutService;
+use App\Models\OrderLedger;
 
 #[Title('Complete your order process')]
 #[Layout('layouts.checkout')]
@@ -16,13 +16,16 @@ class Index extends Component
 {
     public string $name = '';
     public string $email = '';
+    public string $phone = '';
     public array $cartItems = [];
+    protected ?OrderLedger $order = null;
 
     public function mount(CartService $cartService)
     {
         if (auth()->check()) {
             $this->name = auth()->user()->name;
             $this->email = auth()->user()->email;
+            $this->phone = auth()->user()->phone ?? '';
         }
 
         $this->cartItems = $cartService->getItems();
@@ -41,25 +44,26 @@ class Index extends Component
             $this->validate([
                 'name'  => 'required|string|max:255',
                 'email' => 'required|email|max:255',
+                'phone' => 'nullable|string|max:255',
             ]);
         }
 
         // Dispatch background checkout job
-        $action->execute(
+        $this->order = $action->execute(
             $this->cartItems,
             auth()->id(),
             auth()->check()
                 ?
                 [
-                    'name'  => Auth()->user()?->name,
-                    'email' => Auth()->user()?->email,
-                    'phone' => Auth()->user()?->phone ?? null,
+                    'name'  => auth()->user()?->name,
+                    'email' => auth()->user()?->email,
+                    'phone' => auth()->user()?->phone ?? '',
                 ]
                 :
                 [
                     'name'  => $this->name,
                     'email' => $this->email,
-                    'phone' => $this->phone ?? null,
+                    'phone' => $this->phone ?? '',
                 ]
         );
 
@@ -69,8 +73,8 @@ class Index extends Component
         session()->flash('status', 'Your order has been placed successfully!');
         return redirect()
             ->route('order.success', [
-                'orderNumber' => resolve(CheckoutService::class)->getOrderByNumber()?->order_number,
-                'publicToken' => resolve(CheckoutService::class)->getOrderByNumber()?->public_token
+                'orderNumber' => $this->order->order_number,
+                'publicToken' => $this->order->public_token,
             ]);
     }
 
