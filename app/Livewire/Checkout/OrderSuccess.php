@@ -5,8 +5,10 @@ namespace App\Livewire\Checkout;
 use App\Models\OrderLedger;
 use Livewire\Component;
 use Livewire\Attributes\Layout;
+use Livewire\Attributes\Title;
 
 #[Layout('layouts.checkout')]
+#[Title('Order Success | LaraShop - Your One-Stop Shop for All Your Needs')]
 class OrderSuccess extends Component
 {
     public OrderLedger $order;
