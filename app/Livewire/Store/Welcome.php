@@ -9,7 +9,7 @@ use App\Actions\Cart\AddToCartAction;
 use App\Models\Product;
 use App\Models\ProductDetails;
 
-#[Layout('layouts::store')]
+#[Layout('layouts.store')]
 class Welcome extends Component
 {
 
@@ -20,14 +20,13 @@ class Welcome extends Component
         $variant = ProductDetails::findOrFail($productId);
 
         // Execute the action
-        resolve(AddToCartAction::class)->execute($variant, 1);
+        resolve(AddToCartAction::class)->execute($variant->id, 1);
 
         // Dispatch event to update navbar/header cart count badge
         $this->dispatch('cart-updated');
-        
+
         // Session updating message
         session()->flash('success', "1 item added to your bag!");
-        
     }
 
     public function render()

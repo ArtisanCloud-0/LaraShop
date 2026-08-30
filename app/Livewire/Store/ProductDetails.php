@@ -170,7 +170,7 @@ class ProductDetails extends Component
         }
 
         // [ 2 ] Add items to User || Guest cart
-        resolve(AddToCartAction::class)->execute($this->activeVariant, $this->quantity);
+        resolve(AddToCartAction::class)->execute($this->activeVariant->id, $this->quantity);
 
         // [ 3 ] Refreshing the cart items in cart.php livewire class inside store folder
         $this->dispatch('cart-updated');
