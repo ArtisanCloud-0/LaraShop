@@ -26,7 +26,8 @@
                 placeholder:text-slate-400
                 dark:placeholder:text-slate-300
                 rounded-lg
-                p-4
+                px-3
+                py-2
                 focus:ring-2
                 focus:ring-slate-300
                 outline-none

@@ -15,8 +15,8 @@
             w-full
             border
             rounded-lg
-            px-4
-            py-3
+            px-3
+            py-2
             focus:outline-none
             focus:ring-2
             bg-slate-50 
