@@ -5,7 +5,7 @@
     <div>
 
         <label 
-            class="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-2"
+            class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2"
         >
             Product Detailed Description
         </label>
@@ -16,19 +16,19 @@
             placeholder="{{ $placeholder }}" 
             class="
                 w-full
-                bg-gray-50
+                bg-slate-50
                 dark:text-slate-100
-                dark:bg-gray-950/50
-                dark:focus:bg-gray-950
+                dark:bg-slate-900
+                dark:focus:bg-slate-950
                 border focus:bg-white
-                border-gray-300 focus:border-gray-100
-                dark:border-gray-800 dark:focus:border-indigo-500 dark:focus:ring-indigo-500
-                placeholder:text-gray-400
+                border-slate-300 focus:border-slate-100
+                dark:border-slate-800 dark:focus:border-indigo-500 dark:focus:ring-indigo-500
+                placeholder:text-slate-400
                 dark:placeholder:text-slate-300
                 rounded-lg
                 p-4
                 focus:ring-2
-                focus:ring-gray-300
+                focus:ring-slate-300
                 outline-none
                 transition-colors
             "

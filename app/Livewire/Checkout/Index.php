@@ -67,7 +67,11 @@ class Index extends Component
         $cartService->clearCart();
 
         session()->flash('status', 'Your order has been placed successfully!');
-        return redirect()->route('order.success', ['orderNumber' => resolve(CheckoutService::class)->getOrderByNumber()?->order_number]);
+        return redirect()
+            ->route('order.success', [
+                'orderNumber' => resolve(CheckoutService::class)->getOrderByNumber()?->order_number,
+                'publicToken' => resolve(CheckoutService::class)->getOrderByNumber()?->public_token
+            ]);
     }
 
     public function render()

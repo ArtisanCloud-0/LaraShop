@@ -60,6 +60,10 @@ class OrderLedger extends Model
     {
         parent::boot(); // Call the parent boot method to ensure any inherited boot logic is executed
 
+        static::creating(function (OrderLedger $order) {
+            $order->public_token ??= bin2hex(random_bytes(32)); // Generate a unique public token if not already set
+        });
+
         static::updating(function (OrderLedger $order): void { // Hook into the updating event to enforce business rules
             $originalStatus = $order->getOriginal('status'); // Get the original status before the update
             $immutableStatuses = [OrderStatus::COMPLETED, OrderStatus::CANCELLED,]; // Define statuses that should not be modified

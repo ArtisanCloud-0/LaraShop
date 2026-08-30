@@ -34,8 +34,10 @@
             py-2.5
             focus:outline-none
             focus:ring-2
-            dark:bg-slate-950/40
-            dark:focus:bg-slate-900
+            dark:text-slate-200
+            dark:ring-slate-700
+            dark:bg-slate-900
+            dark:focus:bg-slate-950/50
             transition-colors
         "
         placeholder="{{ $placeholder }}"

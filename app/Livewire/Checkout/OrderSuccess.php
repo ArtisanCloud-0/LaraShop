@@ -11,11 +11,11 @@ class OrderSuccess extends Component
 {
     public OrderLedger $order;
 
-    public function mount(string $orderNumber): void
+    public function mount(string $orderNumber, string $publicToken): void
     {
-        $query = OrderLedger::with([
-            'items.productDetails.product',
-        ])->where('order_number', $orderNumber); // Find the order by its order number
+        $query = OrderLedger::with(['items.productDetails.product',]) // Eager load related models to avoid N+1 query issues
+            ->where('order_number', $orderNumber) // Filter by the provided order number
+            ->where('public_token', $publicToken); // Ensure the public token matches for security
 
         // Authenticated customers can only view their own orders.
         if (auth()->check()) { // Check if the user is authenticated

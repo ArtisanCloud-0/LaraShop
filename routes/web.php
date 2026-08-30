@@ -39,7 +39,7 @@ Route::get('/cart', Cart::class)->name('cart');
 Route::get('/checkout', Checkout::class)->name('checkout');
 
 // Order Success Route
-Route::get('/order/success/{orderNumber}', OrderSuccess::class)
+Route::get('/order/success/{orderNumber}/{publicToken}', OrderSuccess::class)
     ->name('order.success');
 
 // Products Main Page
