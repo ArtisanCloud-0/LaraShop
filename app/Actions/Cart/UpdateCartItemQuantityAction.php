@@ -4,49 +4,76 @@ namespace App\Actions\Cart;
 
 use App\Models\Cart;
 use App\Models\CartItem;
+use App\Models\ProductDetails;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use InvalidArgumentException;
 
 class UpdateCartItemQuantityAction
 {
-    /**
-     * Update item quantity by product_details_id for Auth User (DB) or Guest (Session).
-     */
-    public function execute(int $productDetailsId, int $newQty): array
+    public function execute(int $variantId, int $newQty): void
     {
-        if (Auth::check()) {
-            $userCart = Cart::firstOrCreate(['user_id' => Auth::id()]);
+        if ($newQty < 1) {
+            throw new InvalidArgumentException(
+                'Quantity must be at least 1.'
+            );
+        } // Validate quantity
 
-            if ($newQty > 0) {
-                // Update quantity for the given variant ID
-                CartItem::where('cart_id', $userCart->id)
-                    ->where('product_details_id', $productDetailsId)
-                    ->update(['quantity' => $newQty]);
-            } else {
-                // Delete item if quantity drops to zero or less
-                CartItem::where('cart_id', $userCart->id)
-                    ->where('product_details_id', $productDetailsId)
-                    ->delete();
+        $variant = ProductDetails::query()
+            ->findOrFail($variantId); // Ensure the variant exists
+
+        if ($variant->stock < 1) {
+            throw new InvalidArgumentException(
+                'This product is out of stock.'
+            );
+        } // Check if the variant is in stock
+
+        if ($newQty > $variant->stock) {
+            throw new InvalidArgumentException(
+                "Only {$variant->stock} item(s) available."
+            );
+        } // Validate that the new quantity does not exceed available stock
+
+        if (Auth::check()) { // Authenticated user cart
+            $cart = Cart::query()
+                ->where('user_id', Auth::id())
+                ->first(); // Retrieve the authenticated user's cart
+
+            if (!$cart) { // If the cart does not exist, throw an exception
+                throw new InvalidArgumentException(
+                    'Shopping cart not found.'
+                );
             }
 
-            return $userCart->items()
-                ->get()
-                ->keyBy('product_details_id')
-                ->toArray();
-        } else {
-            $cart = Session::get('cart', []);
+            $cartItem = CartItem::query()
+                ->where('cart_id', $cart->id)
+                ->where('product_details_id', $variantId)
+                ->first(); // Retrieve the specific cart item for the given variant
 
-            if (isset($cart[$productDetailsId])) {
-                if ($newQty > 0) {
-                    $cart[$productDetailsId]['quantity'] = $newQty;
-                } else {
-                    unset($cart[$productDetailsId]);
-                }
-
-                Session::put('cart', $cart);
+            if (!$cartItem) { // If the cart item does not exist, throw an exception
+                throw new InvalidArgumentException(
+                    'Cart item not found.'
+                );
             }
 
-            return $cart;
+            $cartItem->update([
+                'quantity' => $newQty,
+            ]); // Update the quantity of the existing cart item
+
+            return; // Exit the function after handling the authenticated user's cart
         }
+
+        // Guest cart
+        $cart = Session::get('cart', []);
+
+        if (!isset($cart[$variantId])) { // If the cart item does not exist in the guest cart, throw an exception
+            throw new InvalidArgumentException(
+                'Cart item not found.'
+            );
+        }
+
+        $cart[$variantId]['quantity'] = $newQty; // Update the quantity of the existing cart item in the guest cart
+
+        Session::put('cart', $cart); // Save the updated guest cart in the session
     }
 }

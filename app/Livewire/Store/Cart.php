@@ -62,11 +62,16 @@ class Cart extends Component
 
     public function updateQuantity(int $variantId, int $newQty): void
     {
-        resolve(UpdateCartItemQuantityAction::class)->execute($variantId, $newQty);
-        $this->loadCartItems();
+        try {
+            resolve(UpdateCartItemQuantityAction::class)
+                ->execute($variantId, $newQty); // Update the quantity of the cart item
 
-        // Notify the navbar counter to re-render
-        $this->dispatch('cart-updated');
+            $this->loadCartItems(); // Refresh the cart items after updating the quantity
+
+            $this->dispatch('cart-updated'); // Notify the navbar counter to re-render
+        } catch (\InvalidArgumentException $e) {
+            session()->flash('error', $e->getMessage()); // Display error message to the user
+        }
     }
 
     public function removeItem(int $variantId): void

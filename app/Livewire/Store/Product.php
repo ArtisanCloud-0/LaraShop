@@ -65,7 +65,7 @@ class Product extends Component
     public function addToCart(int $productDetailsId): void
     {
         $variant = ProductDetails::findOrFail($productDetailsId);
-        resolve(AddToCartAction::class)->execute($variant, 1);
+        resolve(AddToCartAction::class)->execute($variant->id, 1);
         $this->dispatch('cart-updated');
     }
 
