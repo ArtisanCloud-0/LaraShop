@@ -41,6 +41,12 @@
             });
         </script>
 
+        <link
+            rel="icon"
+            type="image/svg+xml"
+            href="{{ asset('SVG/Artboard 1 copy 2.svg') }}"
+        />
+
         @vite(['resources/css/app.css', 'resources/js/app.js']) @livewireStyles
     </head>
     <body class="h-full antialiased">

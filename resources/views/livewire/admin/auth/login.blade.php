@@ -6,15 +6,10 @@
         
         {{-- Brand Header --}}
         <div class="text-center border-b border-slate-300/50 dark:border-slate-400/50 pb-5 mb-10">
-            <div class="inline-flex items-center gap-x-2">
-                <span class="text-3xl font-black tracking-tight text-slate-800 dark:text-white">
-                    LaraShop<span class="text-blue-800 dark:text-blue-500">.</span>
-                </span>
-                <span class="px-2 py-0.5 text-[10px] font-mono font-bold tracking-widest text-blue-500 dark:text-blue-400 bg-blue-500/10 border border-blue-500/20 rounded uppercase">
-                    Admin
-                </span>
+            <div class="flex items-center justify-center">
+                <img class=" block h-45 w-auto" src="{{ asset('PNG/Artboard 1.png') }}" alt="logo">
             </div>
-            <h2 class="mt-4 text-xl font-bold text-slate-500 dark:text-slate-200">
+            <h2 class="mt-2 text-xl font-bold text-slate-500 dark:text-slate-200">
                 Control Panel Access
             </h2>
             <p class="mt-1 text-xs text-slate-500/80 dark:text-slate-400">
