@@ -2,28 +2,48 @@
 
 namespace App\Livewire\Admin;
 
-use Livewire\Component;
-
 use App\Services\Search\GlobalSearchService;
+use Livewire\Component;
 
 class Navbar extends Component
 {
+    /*
+    |--------------------------------------------------------------------------
+    | Search State
+    |--------------------------------------------------------------------------
+    */
 
-    // Search Variables
     public string $searchQuery = '';
-    public array $searchResults = [];
 
-    // Execute Search Operation
-    public function updateSearchQuery(GlobalSearchService $searchService)
+    public array $searchResults = [
+        'products' => [],
+        'orders'   => [],
+        'users'    => [],
+    ];
+
+    /*
+    |--------------------------------------------------------------------------
+    | Search Handler
+    |--------------------------------------------------------------------------
+    |
+    | Livewire automatically calls this method whenever the
+    | $searchQuery property is updated.
+    |
+    */
+
+    public function updatedSearchQuery(): void
     {
-        $this->searchResults = $searchService->search($this->searchQuery);
+        $this->searchResults = resolve(GlobalSearchService::class)->search($this->searchQuery);
     }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Render
+    |--------------------------------------------------------------------------
+    */
 
     public function render()
     {
-
         return view('livewire.admin.navbar');
-
     }
-
 }
