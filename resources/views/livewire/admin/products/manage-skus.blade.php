@@ -9,47 +9,129 @@
             <a href="{{ route('panel.products') }}" class="text-xs font-semibold text-gray-500 dark:text-slate-400 hover:underline">← Back to Products</a>
         </div>
 
-        @if (session()->has('sku_status'))
-            <div class="mb-6 p-4 bg-green-100 dark:bg-green-950/40 border border-green-300 dark:border-green-900 text-green-800 dark:text-green-400 text-sm rounded-lg">
-                {{ session('sku_status') }}
-            </div>
-        @endif
+        <x-message.session />
 
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
             
-            <div class="p-5 bg-white dark:bg-slate-950 border border-gray-200 dark:border-slate-855 rounded-xl h-fit">
+            <div class="p-5 bg-white dark:bg-slate-950 border border-gray-200 dark:border-slate-800 rounded-xl h-fit">
                 <h3 class="text-sm font-bold text-gray-900 dark:text-slate-200 uppercase tracking-wider mb-4">
                     {{ $isEditMode ? 'Edit SKU Specifications' : 'Add New Variant SKU' }}
                 </h3>
 
                 <form wire:submit.prevent="saveSku" class="space-y-4">
-                    <div>
-                        <label class="block text-xs font-medium text-gray-700 dark:text-slate-300 mb-1">SKU Unique Code</label>
-                        <input type="text" wire:model.defer="code" placeholder="TSHIRT-SLATE-XL"
-                            class="w-full bg-gray-50 dark:bg-slate-900 border border-gray-300 dark:border-slate-800 text-gray-900 dark:text-slate-100 text-sm rounded-md px-3 py-2 outline-none focus:ring-2 focus:ring-indigo-500">
-                        @error('code') <span class="text-xs text-red-500 mt-1 block">{{ $message }}</span> @enderror
-                    </div>
+                    <!-- Variant SKU Form Fields -->
+                    <x-form.input
+                        for="code"
+                        label="SKU Unique Code"
+                        placeholder="TSHIRT-SLATE-XL"
+                        type="text"
+                    />
 
-                    <div>
-                        <label class="block text-xs font-medium text-gray-700 dark:text-slate-300 mb-1">Retail Price ($)</label>
-                        <input type="number" step="0.01" wire:model.defer="price" placeholder="29.99"
-                            class="w-full bg-gray-50 dark:bg-slate-900 border border-gray-300 dark:border-slate-800 text-gray-900 dark:text-slate-100 text-sm rounded-md px-3 py-2 outline-none focus:ring-2 focus:ring-indigo-500">
-                        @error('price') <span class="text-xs text-red-500 mt-1 block">{{ $message }}</span> @enderror
-                    </div>
+                    <!-- Variant Price Form Field -->
+                    <x-form.input
+                        for="price"
+                        label="Retail Price ($)"
+                        placeholder="29.99"
+                        type="number"
+                        step="0.01"
+                    />
 
-                    <div>
-                        <label class="block text-xs font-medium text-gray-700 dark:text-slate-300 mb-1">Stock Level</label>
-                        <input type="number" wire:model.defer="stock" placeholder="100"
-                            class="w-full bg-gray-50 dark:bg-slate-900 border border-gray-300 dark:border-slate-800 text-gray-900 dark:text-slate-100 text-sm rounded-md px-3 py-2 outline-none focus:ring-2 focus:ring-indigo-500">
-                        @error('stock') <span class="text-xs text-red-500 mt-1 block">{{ $message }}</span> @enderror
-                    </div>
+                    <!-- Variant Stock Level Form Field -->
+                    <x-form.input
+                        for="stock"
+                        label="Stock Level"
+                        placeholder="100"
+                        type="number"
+                    />
 
-                    <div>
-                        <label class="block text-xs font-medium text-gray-700 dark:text-slate-300 mb-1">Dynamic Attributes (Comma separated)</label>
-                        <input type="text" wire:model.defer="options_raw" placeholder="Color: Slate, Size: XL"
-                            class="w-full bg-gray-50 dark:bg-slate-900 border border-gray-300 dark:border-slate-800 text-gray-900 dark:text-slate-100 text-sm rounded-md px-3 py-2 outline-none focus:ring-2 focus:ring-indigo-500">
-                        <span class="text-[10px] text-gray-400 mt-1 block">Formats automatically into JSON storage payload.</span>
-                        @error('options_raw') <span class="text-xs text-red-500 mt-1 block">{{ $message }}</span> @enderror
+                    <!-- Variant Dynamic Attributes Form Field -->
+                    <x-form.input
+                        for="options_raw"
+                        label="Dynamic Attributes (Comma separated)"
+                        placeholder="Color: Slate, Size: XL"
+                        type="text"
+                    />
+
+                    <!-- Variant Multi-Image Upload Field -->
+                    <div class="space-y-2">
+                        <label class="block text-xs font-medium text-gray-700 dark:text-slate-300">
+                            Variant Gallery Images (Up to 5)
+                        </label>
+
+                        <div class="relative border-2 border-dashed border-gray-300 dark:border-slate-800 rounded-lg p-4 text-center hover:border-indigo-500 transition cursor-pointer">
+                            <input 
+                                type="file" 
+                                wire:model="new_images" 
+                                multiple 
+                                accept="image/png,image/jpeg,image/webp" 
+                                class="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                            >
+                            <div class="space-y-1">
+                                <svg class="mx-auto h-8 w-8 text-gray-400 dark:text-slate-500" stroke="currentColor" fill="none" viewBox="0 0 48 48">
+                                    <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                                <p class="text-xs text-gray-600 dark:text-slate-400">
+                                    <span class="font-semibold text-indigo-600 dark:text-indigo-400">Upload files</span> or drag and drop
+                                </p>
+                                <p class="text-[10px] text-gray-400 dark:text-slate-500">PNG, JPG, WEBP up to 2MB each</p>
+                            </div>
+                        </div>
+
+                        <!-- Upload Loading State -->
+                        <div wire:loading wire:target="new_images" class="text-xs text-indigo-500 font-medium animate-pulse">
+                            Processing images...
+                        </div>
+
+                        @error('new_images') 
+                            <p class="text-xs text-red-500 mt-1">{{ $message }}</p> 
+                        @enderror
+                        @error('new_images.*') 
+                            <p class="text-xs text-red-500 mt-1">{{ $message }}</p> 
+                        @enderror
+
+                        <!-- Preview Newly Selected Temporary Images -->
+                        @if (!empty($new_images))
+                            <div class="mt-2">
+                                <span class="text-[11px] font-semibold text-gray-500 dark:text-slate-400 block mb-1">New Staged Images:</span>
+                                <div class="flex flex-wrap gap-2">
+                                    @foreach ($new_images as $index => $file)
+                                        <div class="relative w-12 h-12 rounded border border-gray-200 dark:border-slate-800 overflow-hidden group">
+                                            <img src="{{ $file->temporaryUrl() }}" class="w-full h-full object-cover">
+                                            <button 
+                                                type="button" 
+                                                wire:click="removeTemporaryImage({{ $index }})" 
+                                                class="absolute inset-0 bg-red-900/80 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition"
+                                                title="Remove"
+                                            >
+                                                &times;
+                                            </button>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div>
+                        @endif
+
+                        <!-- Preview Existing Saved Images (When Editing) -->
+                        @if ($isEditMode && !empty($images))
+                            <div class="mt-2">
+                                <span class="text-[11px] font-semibold text-gray-500 dark:text-slate-400 block mb-1">Saved Variant Images:</span>
+                                <div class="flex flex-wrap gap-2">
+                                    @foreach ($images as $index => $path)
+                                        <div class="relative w-12 h-12 rounded border border-gray-200 dark:border-slate-800 overflow-hidden group">
+                                            <img src="{{ asset('storage/' . $path) }}" class="w-full h-full object-cover">
+                                            <button 
+                                                type="button" 
+                                                wire:click="removeExistingImage({{ $index }})" 
+                                                class="absolute inset-0 bg-red-900/80 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition"
+                                                title="Delete Saved Image"
+                                            >
+                                                &times;
+                                            </button>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div>
+                        @endif
                     </div>
 
                     <div class="flex items-center justify-end gap-x-2 pt-2 border-t border-gray-100 dark:border-slate-900">
@@ -67,6 +149,7 @@
                 <table class="w-full text-left border-collapse">
                     <thead>
                         <tr class="bg-gray-100 dark:bg-slate-900 text-xs font-semibold uppercase tracking-wider text-gray-600 dark:text-slate-400 border-b border-gray-200 dark:border-slate-800">
+                            <th class="px-4 py-3">Variant</th>
                             <th class="px-4 py-3">SKU Code</th>
                             <th class="px-4 py-3">Price</th>
                             <th class="px-4 py-3">Stock Level</th>
@@ -74,9 +157,18 @@
                             <th class="px-4 py-3 text-right">Actions</th>
                         </tr>
                     </thead>
-                    <tbody class="text-sm divide-y divide-gray-100 dark:divide-slate-850 text-gray-700 dark:text-slate-300">
+                    <tbody class="text-sm divide-y divide-gray-100 dark:divide-slate-800 text-gray-700 dark:text-slate-300">
                         @forelse($product->productDetails as $sku)
                             <tr wire:key="sku-table-row-{{ $sku->id }}" class="hover:bg-gray-50/50 dark:hover:bg-slate-900/30 transition-colors">
+                                <td class="px-4 py-3">
+                                    <div class="w-10 h-10 rounded border border-slate-200 dark:border-slate-800 overflow-hidden bg-slate-100 dark:bg-slate-900 flex items-center justify-center">
+                                        @if(!empty($sku->images) && isset($sku->images[0]))
+                                            <img src="{{ asset('storage/' . $sku->images[0]) }}" class="w-full h-full object-cover">
+                                        @else
+                                            <span class="text-[9px] text-slate-400 uppercase font-bold">No Img</span>
+                                        @endif
+                                    </div>
+                                </td>
                                 <td class="px-4 py-3 font-mono font-bold text-gray-900 dark:text-slate-200">{{ $sku->code }}</td>
                                 <td class="px-4 py-3 text-indigo-600 dark:text-indigo-400 font-semibold">${{ $sku->price }}</td>
                                 <td class="px-4 py-3">
@@ -96,7 +188,6 @@
                                             <span class="text-gray-400 italic text-xs">-</span>
                                         @endif
                                     </div>
-
                                 </td>
                                 <td class="px-4 py-3 text-right space-x-1 whitespace-nowrap">
                                     <button wire:click="editSku({{ $sku->id }})" class="p-1 text-gray-500 hover:text-indigo-500 dark:hover:text-indigo-400 rounded transition" title="Edit Variant">
@@ -109,7 +200,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="5" class="px-4 py-8 text-center text-xs text-gray-400 italic">No SKU variants recorded yet for this product mapping context.</td>
+                                <td colspan="6" class="px-4 py-8 text-center text-xs text-gray-400 italic">No SKU variants recorded yet for this product mapping context.</td>
                             </tr>
                         @endforelse
                     </tbody>

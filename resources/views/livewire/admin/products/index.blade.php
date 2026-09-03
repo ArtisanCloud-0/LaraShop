@@ -42,8 +42,8 @@
                             <td class="px-6 py-4">
                                 <div class="flex items-center gap-x-4">
                                     <div class="w-12 h-12 rounded-lg bg-gray-100 dark:bg-slate-900 border border-gray-200 dark:border-slate-800 overflow-hidden shrink-0">
-                                        @if(!empty($product->images) && isset($product->images[0]))
-                                            <img src="{{ asset('storage/' . $product->images[0]) }}" class="w-full h-full object-cover">
+                                        @if($product->primary_image)
+                                            <img src="{{ asset('storage/' . $product->primary_image) }}" class="w-full h-full object-cover">
                                         @else
                                             <div class="w-full h-full flex items-center justify-center text-[10px] uppercase font-bold text-gray-400">No Img</div>
                                         @endif
@@ -130,7 +130,7 @@
                                         'bg-red-100 dark:bg-red-950/40 text-red-900 dark:text-red-300')
                                     }}"
                                 >
-                                    {{ $product->total_stock }}
+                                    {{ $product->total_stock ?? 0 }}
                                 </div>
                             </td>
 

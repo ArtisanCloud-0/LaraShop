@@ -12,15 +12,15 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('product_details', function (Blueprint $table) {
-            $table->id();
-            // Cascade on delete means if the core product is wiped, its variants go with it
-            $table->foreignId('product_id')->constrained()->cascadeOnDelete();
-            $table->string('code')->unique(); // e.g., TSHIRT-RED-XL
-            $table->unsignedInteger('price'); // Stored in cents (integer format)
-            $table->integer('stock')->default(0);
-            $table->json('options')->nullable(); // For dynamic variants e.g. {"size": "XL"}
-            $table->softDeletes();
-            $table->timestamps();
+            $table->id(); // Primary key
+            $table->foreignId('product_id')->constrained()->cascadeOnDelete(); // Foreign key referencing products table
+            $table->string('code')->unique(); // Unique code for the product detail
+            $table->unsignedInteger('price'); // Price of the product detail
+            $table->integer('stock')->default(0); // Stock quantity for the product detail
+            $table->json('options')->nullable(); // Optional JSON field for product options
+            $table->json('images')->nullable(); // Optional JSON field for product images
+            $table->softDeletes(); // Soft delete functionality
+            $table->timestamps(); // Created at and updated at timestamps
         });
     }
 

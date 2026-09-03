@@ -3,9 +3,10 @@
 namespace App\Livewire\Admin;
 
 use Livewire\Component;
-
+use Livewire\Attributes\Title;
 use App\Services\DashboardService;
 
+#[Title('Dashboard')]
 class Dashboard extends Component
 {
     public function render()

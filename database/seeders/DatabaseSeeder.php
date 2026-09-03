@@ -78,50 +78,34 @@ class DatabaseSeeder extends Seeder
         ];
 
         /*
-         * Placeholder images.
-         *
-         * These are remote placeholder URLs, so the seeded products
-         * immediately have something useful to display in the product
-         * cards without requiring uploaded image files.
-         *
-         * The Product model already casts "images" to an array and
-         * exposes the first image as "primary_image".
+         * Remote placeholder URLs for products and variants.
          */
-        $placeholderImages = [
-            'https://placehold.co/800x800/png?text=LaraShop+T-Shirt+1',
-            'https://placehold.co/800x800/png?text=LaraShop+T-Shirt+2',
-            'https://placehold.co/800x800/png?text=LaraShop+T-Shirt+3',
-            'https://placehold.co/800x800/png?text=LaraShop+T-Shirt+4',
-            'https://placehold.co/800x800/png?text=LaraShop+T-Shirt+5',
-            'https://placehold.co/800x800/png?text=LaraShop+T-Shirt+6',
-            'https://placehold.co/800x800/png?text=LaraShop+T-Shirt+7',
-            'https://placehold.co/800x800/png?text=LaraShop+T-Shirt+8',
+        $placeholderCovers = [
+            'https://placehold.co/800x800/png?text=LaraShop+Cover+1',
+            'https://placehold.co/800x800/png?text=LaraShop+Cover+2',
+            'https://placehold.co/800x800/png?text=LaraShop+Cover+3',
+            'https://placehold.co/800x800/png?text=LaraShop+Cover+4',
+            'https://placehold.co/800x800/png?text=LaraShop+Cover+5',
+            'https://placehold.co/800x800/png?text=LaraShop+Cover+6',
+            'https://placehold.co/800x800/png?text=LaraShop+Cover+7',
+            'https://placehold.co/800x800/png?text=LaraShop+Cover+8',
+        ];
+
+        $variantImages = [
+            'https://placehold.co/800x800/png?text=Variant+Angle+1',
+            'https://placehold.co/800x800/png?text=Variant+Angle+2',
         ];
 
         foreach (range(1, 8) as $i) {
             /*
-             * Create the parent product.
+             * Create parent product using `cover_image` instead of `images`.
              */
             $product = Product::create([
                 'category_id' => $subCategory->id,
-
                 'name' => "Custom T-Shirt #{$i}",
-
-                'slug' => "custom-t-shirt-{$i}-"
-                    . Str::lower(Str::random(5)),
-
-                /*
-                 * Product images are stored as an array because the
-                 * Product model casts this field to an array.
-                 */
-                'images' => [
-                    $placeholderImages[$i - 1],
-                ],
-
-                'description' => "A demo product for LaraShop. "
-                    . "This product is seeded for demonstration "
-                    . "and portfolio purposes.",
-
+                'slug' => "custom-t-shirt-{$i}-" . Str::lower(Str::random(5)),
+                'cover_image' => $placeholderCovers[$i - 1],
+                'description' => "A demo product for LaraShop. This product is seeded for demonstration and portfolio purposes.",
                 'is_visible' => true,
             ]);
 
@@ -129,24 +113,17 @@ class DatabaseSeeder extends Seeder
              * Create 2-4 variants for each product.
              */
             $variantCount = rand(2, 4);
-
             $usedCodes = [];
 
             for ($v = 0; $v < $variantCount; $v++) {
                 $color = $colors[array_rand($colors)];
                 $size = $sizes[array_rand($sizes)];
 
-                $code = "TSHIRT_{$i}_{$color}_{$size}_"
-                    . strtoupper(Str::random(4));
+                $code = "TSHIRT_{$i}_{$color}_{$size}_" . strtoupper(Str::random(4));
 
-                /*
-                 * Avoid duplicate variant codes.
-                 */
                 if (
                     in_array($code, $usedCodes, true) ||
-                    ProductDetails::withTrashed()
-                    ->where('code', $code)
-                    ->exists()
+                    ProductDetails::withTrashed()->where('code', $code)->exists()
                 ) {
                     $v--;
                     continue;
@@ -154,21 +131,21 @@ class DatabaseSeeder extends Seeder
 
                 $usedCodes[] = $code;
 
+                /*
+                 * Create variant SKU with its own images array.
+                 */
                 $variant = ProductDetails::create([
                     'product_id' => $product->id,
-
                     'code' => $code,
-
-                    /*
-                     * Money is stored in cents.
-                     */
                     'price' => rand(25, 80) * 100,
-
                     'stock' => rand(10, 50),
-
                     'options' => [
                         'Color' => ucfirst(strtolower($color)),
                         'Size' => $size,
+                    ],
+                    'images' => [
+                        $variantImages[0],
+                        $variantImages[1],
                     ],
                 ]);
 
@@ -185,42 +162,19 @@ class DatabaseSeeder extends Seeder
         foreach (range(1, 15) as $i) {
             $user = $customers->random();
 
-            /*
-             * Customer information is copied into the order as a
-             * historical snapshot.
-             */
             $order = OrderLedger::create([
-                'order_number' => 'ORD-'
-                    . strtoupper(Str::random(8)),
-
+                'order_number' => 'ORD-' . strtoupper(Str::random(8)),
                 'user_id' => $user->id,
-
                 'customer_name' => $user->name,
-
                 'customer_email' => $user->email,
-
-                /*
-                 * User factory may not provide a phone number,
-                 * therefore this remains nullable in the order.
-                 */
                 'customer_phone' => null,
-
-                /*
-                 * Seeded orders are not actually paid through a
-                 * payment gateway.
-                 */
                 'status' => OrderStatus::PENDING,
-
                 'total_amount' => 0,
-
                 'payment_gateway' => null,
             ]);
 
             $total = 0;
 
-            /*
-             * Select 1-3 different variants.
-             */
             $selectedVariants = $allVariants
                 ->shuffle()
                 ->take(rand(1, 3));
@@ -228,10 +182,6 @@ class DatabaseSeeder extends Seeder
             foreach ($selectedVariants as $variant) {
                 $quantity = rand(1, 3);
 
-                /*
-                 * Make sure the seeded order doesn't claim more
-                 * inventory than exists.
-                 */
                 $quantity = min(
                     $quantity,
                     $variant->stock
@@ -241,35 +191,24 @@ class DatabaseSeeder extends Seeder
                     continue;
                 }
 
-                $subtotal = $variant->price * $quantity;
+                /*
+                 * Access raw price integer if model mutator converts to float
+                 */
+                $rawPrice = is_numeric($variant->getRawOriginal('price'))
+                    ? (int) $variant->getRawOriginal('price')
+                    : (int) round(((float) $variant->price) * 100);
 
+                $subtotal = $rawPrice * $quantity;
                 $total += $subtotal;
 
-                /*
-                 * This matches the actual order_items migration:
-                 *
-                 * order_ledger_id
-                 * product_details_id
-                 * price
-                 * quantity
-                 */
                 OrderItem::create([
                     'order_ledger_id' => $order->id,
-
                     'product_details_id' => $variant->id,
-
-                    /*
-                     * Historical unit price snapshot.
-                     */
-                    'price' => $variant->price,
-
+                    'price' => $rawPrice,
                     'quantity' => $quantity,
                 ]);
             }
 
-            /*
-             * Update the final order total after creating the items.
-             */
             $order->update([
                 'total_amount' => $total,
             ]);

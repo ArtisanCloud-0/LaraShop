@@ -4,86 +4,74 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Product extends Model
 {
-    /** @use HasFactory<\Database\Factories\ProductFactory> */
-    use HasFactory;
+    use HasFactory; // Enables factory methods for testing and seeding
 
+    protected $fillable = [
+        'name',
+        'slug',
+        'category_id',
+        'description',
+        'is_visible',
+        'cover_image',
+    ]; // Mass assignment protection for the model's attributes
 
-    protected $fillable = ['name', 'slug', 'images', 'category_id', 'description', 'is_visible'];
-
-    /**
-     * Define modern Laravel 13 attribute casting behavior.
-     */
     protected function casts(): array
-    {
+    { // Casts the 'is_visible' attribute to a boolean when accessed or set
         return [
-            'images' => 'array', // Forces JSON to act as a sequential array automatically
             'is_visible' => 'boolean',
+            'cover_image' => 'string',
         ];
     }
 
     public function category(): BelongsTo
     {
-        return $this->belongsTo(Category::class);
+        return $this->belongsTo(Category::class); // Defines a relationship indicating that each product belongs to a single category
     }
 
     public function productDetails(): HasMany
     {
-        return $this->hasMany(ProductDetails::class, 'product_id');
+        return $this->hasMany(ProductDetails::class, 'product_id'); // Defines a relationship indicating that each product can have multiple product details (variants)
     }
 
-    /**
-     * Get the main image path.
-     */
     public function getPrimaryImageAttribute(): ?string
     {
-        // Returns the first image from the JSON array, or null if empty
-        return !empty($this->images) && is_array($this->images) ? $this->images[0] : null;
+        if ($this->cover_image) { // If a cover image is set for the product, return it as the primary image
+            return $this->cover_image;
+        }
+
+        $firstVariant = $this->productDetails->first(fn($detail) => !empty($detail->images)); // Find the first product detail that has images
+
+        return $firstVariant?->images[0] ?? null; // Return the first image of the first variant with images, or null if none exist
     }
 
-    /**
-     * Get the minimum price formatted or raw (in cents).
-     */
-    public function getMinPriceAttribute(): float | int
+    public function getMinPriceAttribute(): int|float
     {
-        $minCents = $this->productDetails->min('price') ?? 0;
-        return $minCents;
+        return $this->productDetails->min('price') ?? 0; // Returns the minimum price among the product's details, or 0 if there are no details
     }
 
-    /**
-     * Get the minimum price formatted or raw (in cents).
-     */
-    public function getMaxPriceAttribute(): float | int
+    public function getMaxPriceAttribute(): int|float
     {
-        $maxCents = $this->productDetails->max('price') ?? 0;
-        return $maxCents;
+        return $this->productDetails->max('price') ?? 0; // Returns the maximum price among the product's details, or 0 if there are no details
     }
 
-    /**
-     * Get a clean formatted price string for display.
-     */
     public function getFormattedPriceAttribute(): string
     {
-        // [ 1 ] Check if the product does not have variants
-        if ($this->productDetails->isEmpty()) {
+        if ($this->productDetails->isEmpty()) { // If there are no product details, return a default price format
             return '$0.00';
         }
 
-        // [ 2 ] Store min & max prices values for easy refreneces
-        $min = $this->min_price;
-        $max = $this->max_price;
+        $min = $this->min_price; // Get the minimum price from the product details
+        $max = $this->max_price; // Get the maximum price from the product details
 
-        // [ 3 ] If variants have the same price, then show standard single price
-        if ($min === $max) {
-            return '$' . number_format($min, 2);
+        if ($min === $max) { // If the minimum and maximum prices are the same, return a single formatted price
+            return '$' . number_format($min / 100, 2);
         }
 
-        // [ 4 ] If deferents then return prices from minimum price
-        return 'From $' . number_format($min, 2);
+        return 'From $' . number_format($min / 100, 2); // If the prices vary, return a formatted string indicating the starting price
     }
 }

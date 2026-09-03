@@ -2,35 +2,30 @@
 
 namespace App\View\Components\form;
 
-use Closure;
-use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
+use Illuminate\View\View;
 
 class FileMulti extends Component
 {
 
-    public string $for = '';
-    public string $label = '';
-    public array $images = [];
-    public array $new_images = [];
-    public string $filesTypes = '';
+    public string $for; // The name of the input field
+    public string $label; // The label for the input field
+    public array $images = []; // The existing images to display in the component
+    public array $newImages = []; // The new images to display in the component
 
-    /**
-     * Create a new component instance.
-     */
-    public function __construct(string $for, string $label, array $images,  array $new_images, string $filesTypes)
-    {
+    public function __construct(
+        string $for,
+        string $label,
+        array $images,
+        array $newImages,
+    ) {
         $this->for = $for;
         $this->label = $label;
         $this->images = $images;
-        $this->new_images = $new_images;
-        $this->filesTypes = $filesTypes;
-    }
+        $this->newImages = $newImages;
+    } // Initialize the component with the required properties
 
-    /**
-     * Get the view / contents that represent the component.
-     */
-    public function render(): View|Closure|string
+    public function render(): View
     {
         return view('components.form.file-multi');
     }
