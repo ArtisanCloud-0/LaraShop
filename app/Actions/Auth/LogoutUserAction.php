@@ -8,19 +8,18 @@ class LogoutUserAction
 {
 
 	/**
-     * Invalidate session and log out current user from a specific guard.
-     */	
+	 * Invalidate session and log out current user from a specific guard.
+	 */
 	public function execute(string $guard = 'web'): void
 	{
-	
-		// [ 1 ] Logout the specific guard ('panel' || 'web')
+
 		Auth::guard($guard)->logout();
 
-		// [ 2 ] Clear out session data associated with this request
-		session()->invalidate();
+		// Forget the specific authentication state key for this guard in session
+		session()->forget(Auth::guard($guard)->getName());
 
-		// [ 3 ] Regenerate CSRF token for security
+		// Regenerate session ID and CSRF token safely
+		session()->regenerate();
 		session()->regenerateToken();
-	
 	}
 }

@@ -38,13 +38,18 @@ class ProductDetails extends Model
     }
 
     /**
-     * Store price in cents, return float for display.
+     * Store price in cents.
+     *
+     * The database always stores an integer number of cents.
+     * Formatting should only happen at the presentation layer.
      */
     protected function price(): Attribute
     {
-        return Attribute::make( // Defines a custom accessor and mutator for the 'price' attribute to handle storage in cents and display as a float
-            get: fn(int $value) => number_format($value / 100, 2, '.', ''), // Converts the stored integer value (in cents) to a formatted float string for display
-            set: fn(float|string $value) => (int) round(((float) $value) * 100), // Converts the input float or string value to an integer (in cents) for storage in the database
+        return Attribute::make(
+            get: fn(int $value): int => $value,
+
+            set: fn(int|float|string $value): int =>
+            (int) round(((float) $value) * 100),
         );
     }
 }

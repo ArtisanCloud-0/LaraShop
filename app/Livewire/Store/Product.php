@@ -6,6 +6,7 @@ use Livewire\Component;
 use Livewire\WithPagination;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Url;
+
 use App\Actions\Cart\AddToCartAction;
 use App\Models\Product as ProductModel;
 use App\Models\ProductDetails;
@@ -28,107 +29,278 @@ class Product extends Component
     #[Url]
     public string $sortBy = 'newest';
 
-    public function updatingCategory()
+
+    /*
+    |--------------------------------------------------------------------------
+    | Reset pagination whenever a filter changes
+    |--------------------------------------------------------------------------
+    */
+
+    public function updatingCategory(): void
     {
         $this->resetPage();
     }
-    public function updatingProductLines()
+
+    public function updatingProductLines(): void
     {
         $this->resetPage();
     }
-    public function updatingSelectedSizes()
+
+    public function updatingSelectedSizes(): void
     {
         $this->resetPage();
     }
-    public function updatingSortBy()
+
+    public function updatingSortBy(): void
     {
         $this->resetPage();
     }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Reset Filters
+    |--------------------------------------------------------------------------
+    */
 
     public function resetFilters(): void
     {
-        $this->reset(['category', 'productLines', 'selectedSizes', 'sortBy']);
+        $this->reset([
+            'category',
+            'productLines',
+            'selectedSizes',
+            'sortBy',
+        ]);
+
+        $this->sortBy = 'newest';
+
         $this->resetPage();
     }
 
+
+    /*
+    |--------------------------------------------------------------------------
+    | Toggle Size
+    |--------------------------------------------------------------------------
+    */
+
     public function toggleSize(string $size): void
     {
-        if (in_array($size, $this->selectedSizes)) {
-            $this->selectedSizes = array_values(array_diff($this->selectedSizes, [$size]));
+        if (in_array($size, $this->selectedSizes, true)) {
+
+            $this->selectedSizes = array_values(
+                array_diff(
+                    $this->selectedSizes,
+                    [$size]
+                )
+            );
         } else {
+
             $this->selectedSizes[] = $size;
-            $this->selectedSizes = array_values($this->selectedSizes);
         }
+
         $this->resetPage();
     }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Add Product Variant To Cart
+    |--------------------------------------------------------------------------
+    */
 
     public function addToCart(int $productDetailsId): void
     {
         $variant = ProductDetails::findOrFail($productDetailsId);
-        resolve(AddToCartAction::class)->execute($variant->id, 1);
+
+        resolve(AddToCartAction::class)
+            ->execute($variant->id, 1);
+
         $this->dispatch('cart-updated');
-        $this->dispatch('toast', message: 'Item added to cart.', type: 'success');
+
+        $this->dispatch(
+            'toast',
+            message: 'Item added to cart.',
+            type: 'success'
+        );
     }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Products Query
+    |--------------------------------------------------------------------------
+    */
 
     public function render()
     {
         $query = ProductModel::query()
-            ->with(['category', 'productDetails'])
+            ->with([
+                'category.parent',
+                'productDetails',
+            ])
             ->where('is_visible', true);
 
-        // Filter by main category from URL
+
+        /*
+        |--------------------------------------------------------------------------
+        | Main Category
+        |--------------------------------------------------------------------------
+        */
+
         $query->when($this->category, function ($q) {
+
             $q->whereHas('category', function ($catQuery) {
-                $catQuery->where('slug', $this->category)
-                    ->orWhereHas('parent', fn($pq) => $pq->where('slug', $this->category));
+
+                $catQuery
+                    ->where('slug', $this->category)
+
+                    ->orWhereHas('parent', function ($parentQuery) {
+                        $parentQuery->where(
+                            'slug',
+                            $this->category
+                        );
+                    });
             });
         });
 
-        // Filter by Product Line (Matches both slug and name to prevent UI mismatches)
+
+        /*
+        |--------------------------------------------------------------------------
+        | Product Line
+        |--------------------------------------------------------------------------
+        |
+        | Product Line = Parent Category.
+        |
+        */
+
         $query->when(!empty($this->productLines), function ($q) {
+
             $q->whereHas('category', function ($catQuery) {
-                $catQuery->whereIn('slug', $this->productLines)
-                    ->orWhereIn('name', $this->productLines);
+
+                $catQuery
+                    ->whereIn(
+                        'slug',
+                        $this->productLines
+                    )
+
+                    ->orWhereHas('parent', function ($parentQuery) {
+
+                        $parentQuery->whereIn(
+                            'slug',
+                            $this->productLines
+                        );
+                    });
             });
         });
 
-        // Filter by Sizes stored in the JSON options column (Handles all JSON quoting variants)
+
+        /*
+        |--------------------------------------------------------------------------
+        | Size
+        |--------------------------------------------------------------------------
+        |
+        | Database JSON:
+        |
+        | {
+        |     "Color": "Green",
+        |     "Size": "M"
+        | }
+        |
+        */
+
         $query->when(!empty($this->selectedSizes), function ($q) {
-            $q->whereHas('productDetails', function ($detailQuery) {
-                $detailQuery->where(function ($sub) {
-                    foreach ($this->selectedSizes as $size) {
-                        $sub->orWhere('options->size', $size)
-                            ->orWhereRaw("LOWER(JSON_UNQUOTE(JSON_EXTRACT(options, '$.size'))) = ?", [strtolower($size)]);
-                    }
-                });
-            });
+
+            $q->whereHas(
+                'productDetails',
+                function ($detailQuery) {
+
+                    $detailQuery->where(
+                        function ($subQuery) {
+
+                            foreach (
+                                $this->selectedSizes
+                                as $size
+                            ) {
+
+                                $subQuery->orWhereRaw(
+                                    "LOWER(JSON_UNQUOTE(JSON_EXTRACT(options, '$.Size'))) = ?",
+                                    [strtolower($size)]
+                                );
+                            }
+                        }
+                    );
+                }
+            );
         });
 
-        // Sorting Logic
+
+        /*
+        |--------------------------------------------------------------------------
+        | Sorting
+        |--------------------------------------------------------------------------
+        */
+
         match ($this->sortBy) {
-            'price_asc'  => $query->orderBy(
+
+            'price_asc' => $query->orderBy(
                 ProductDetails::select('price')
-                    ->whereColumn('product_id', 'products.id')
+                    ->whereColumn(
+                        'product_id',
+                        'products.id'
+                    )
                     ->orderBy('price', 'asc')
                     ->limit(1),
                 'asc'
             ),
+
             'price_desc' => $query->orderBy(
                 ProductDetails::select('price')
-                    ->whereColumn('product_id', 'products.id')
+                    ->whereColumn(
+                        'product_id',
+                        'products.id'
+                    )
                     ->orderBy('price', 'desc')
                     ->limit(1),
                 'desc'
             ),
-            default      => $query->latest(),
+
+            default => $query->latest(),
         };
 
-        $availableCategories = Category::whereNull('parent_id')->where('is_visible', true)->get();
+
+        /*
+        |--------------------------------------------------------------------------
+        | Product Line Choices
+        |--------------------------------------------------------------------------
+        */
+
+        $availableCategories = Category::query()
+            ->whereNull('parent_id')
+            ->where('is_visible', true)
+            ->orderBy('name')
+            ->get();
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | View
+        |--------------------------------------------------------------------------
+        */
 
         return view('livewire.store.product', [
-            'products'            => $query->paginate(12),
-            'activeCategory'      => $this->category ? Category::where('slug', $this->category)->first() : null,
+
+            'products' => $query->paginate(8),
+
+            'activeCategory' => $this->category
+                ? Category::where(
+                    'slug',
+                    $this->category
+                )->first()
+                : null,
+
             'availableCategories' => $availableCategories,
+
         ]);
     }
 }

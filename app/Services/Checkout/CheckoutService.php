@@ -108,7 +108,7 @@ class CheckoutService
                     'product_name' => $detail->product->name,
                     'sku' => $detail->sku,
                     'quantity' => $quantity,
-                    'price' => $unitPrice, // Store the unit price for this item in cents
+                    'price' => $unitPrice,
                     'subtotal' => $subtotal,
                 ];
 
@@ -194,11 +194,11 @@ class CheckoutService
         return $orderNumber;
     }
 
-    public function getOrderByNumber(): ?OrderLedger
+    public function getOrderByNumber(string $orderNumber): ?OrderLedger
     {
         return OrderLedger::query()
             ->with(['items.productDetails.product'])
-            ->orderBy('id', 'desc')
-            ->first(); // Retrieve the order by its order number along with its associated items and product details
+            ->where('order_number', $orderNumber)
+            ->first();
     }
 }

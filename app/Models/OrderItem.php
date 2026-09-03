@@ -16,6 +16,8 @@ class OrderItem extends Model
     protected $fillable = [
         'order_ledger_id',
         'product_details_id',
+        'product_name',
+        'sku',
         'price',
         'quantity',
     ];
