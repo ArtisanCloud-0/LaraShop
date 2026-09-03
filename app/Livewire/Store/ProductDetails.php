@@ -174,6 +174,9 @@ class ProductDetails extends Component
 
         // [ 3 ] Refreshing the cart items in cart.php livewire class inside store folder
         $this->dispatch('cart-updated');
+
+        // [ 4 ] Show toast message
+        $this->dispatch('toast', message: 'Item added to cart.', type: 'success');
     }
 
     /*

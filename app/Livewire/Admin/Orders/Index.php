@@ -2,7 +2,7 @@
 
 namespace App\Livewire\Admin\Orders;
 
-use App\Models\OrderLedger As Order;
+use App\Models\OrderLedger as Order;
 
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -23,8 +23,14 @@ class Index extends Component
     public ?Order $selectedOrder = null;
     public bool $showDetailsModal = false;
 
-    public function updatedSearch() { $this->resetPage(); }
-    public function updatedStatusFilter() { $this->resetPage(); }
+    public function updatedSearch()
+    {
+        $this->resetPage();
+    }
+    public function updatedStatusFilter()
+    {
+        $this->resetPage();
+    }
 
     public function viewOrder(int $orderId)
     {
@@ -39,12 +45,11 @@ class Index extends Component
         resolve(UpdateOrderStatusAction::class)->execute($order, $status);
 
         if ($this->selectedOrder && $this->selectedOrder->id === $orderId) {
-        
+
             $this->selectedOrder->refresh();
-        
         }
 
-        session()->flash('status', "Order #{$order->order_number} status updated to " . ucfirst($status));
+        $this->dispatch('toast', message: "Order #{$order->order_number} status updated to " . ucfirst($status), type: 'success');
     }
 
     public function closeModal()

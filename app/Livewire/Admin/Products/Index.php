@@ -25,9 +25,9 @@ class Index extends Component
             $product = Product::findOrFail($id);
             $product->delete();
 
-            session()->flash('status', 'Product record successfully removed from registry.');
+            $this->dispatch('toast', message: 'Product record successfully removed from registry.', type: 'success');
         } catch (\Exception $e) {
-            $this->addError('delete_failure', 'Cannot delete product: Verify that no orders or dependencies rely on this record layout.');
+            $this->dispatch('toast', message: 'Unable to delete product.', type: 'error');
         }
     }
 

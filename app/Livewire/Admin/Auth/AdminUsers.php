@@ -66,7 +66,7 @@ class AdminUsers extends Component
 
         resolve(RegisterUserAction::class)->execute($validated, $user);
 
-        session()->flash('status', $this->editingUserId ? 'Admin updated successfully.' : 'New admin created successfully.');
+        $this->dispatch('toast', message: $this->editingUserId ? 'Admin updated successfully.' : 'New admin created successfully.', type: 'success');
 
         $this->closeModal();
     }
@@ -76,17 +76,14 @@ class AdminUsers extends Component
         try {
 
             $user = User::findOrFail($userId);
-            
+
             resolve(DeleteUserAction::class)->execute($user, auth()->user());
-            
-            session()->flash('status', 'Admin user removed.');
-        
+
+            $this->dispatch('toast', message: 'Admin user removed.', type: 'success');
         } catch (\Exception $e) {
-        
-            session()->flash('error', $e->getMessage());
-        
+
+            $this->dispatch('toast', message: 'Unable to delete admin user.', type: 'error');
         }
-    
     }
 
     public function closeModal()

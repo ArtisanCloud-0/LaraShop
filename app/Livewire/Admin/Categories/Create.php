@@ -8,6 +8,7 @@ use Livewire\Attributes\Title;
 
 use App\Models\Category;
 use App\Actions\Category\UpsertCategoryAction;
+use Exception;
 
 class Create extends Component
 {
@@ -15,7 +16,7 @@ class Create extends Component
     * ====================================
     * ====== Validate incoming data ======
     * ====================================
-    **/ 
+    **/
     #[Validate('string')]
     #[Validate('required', message: 'Category name is required, please fill it')]
     #[Validate('unique:' . Category::class, message: 'Category name is unique can not be repeated', onUpdate: false)]
@@ -32,7 +33,7 @@ class Create extends Component
     * ======================================
     * ====== Saving the category data ======
     * ======================================
-    **/ 
+    **/
     public function save(UpsertCategoryAction $action)
     {
         // [ 1 ] Validate the incoming data
@@ -40,21 +41,19 @@ class Create extends Component
 
         // [ 2 ] Try to create new Category data
         try {
-            
+
             // [ 2-1 ] Hand off the validated data to the upsert action
             $action->execute($validatedDate);
 
             // [ 2-2 ] Flash success message
-            session()->flash('status', 'Category '. $validatedDate['name'] .' data inserted successfully.');
+            $this->dispatch('toast', message: 'Category ' . $validatedDate['name'] . ' data inserted successfully.', type: 'success');
 
             // [ 2-3 ] Return to categories table view
             return redirect()->route('panel.categories');
-
         } catch (Exception $e) {
-            
+
             // [ 2-1 ] Catch domain exceptions (e.g., business logic errors thrown by actions)
-            $this->addError('form_execution', $e->getMessage());
-        
+            $this->dispatch('toast', message: 'Failed to insert category data.', type: 'error');
         }
     }
 
@@ -62,12 +61,12 @@ class Create extends Component
     * =============================
     * ====== Render the view ======
     * =============================
-    **/ 
+    **/
     #[Title('New Categories')]
     public function render()
     {
         return view(
-            'livewire.admin.categories.create', 
+            'livewire.admin.categories.create',
             [
                 'parentCategories' => Category::whereNull('parent_id')->get()
             ]

@@ -50,12 +50,14 @@ class Reg extends Component
         // [ 3 ] Merge session items
         resolve(MergeGuestCartWithUserCartService::class)->mergeItems($user->id);
 
-        // [ 4 ] Login the use
-        // Auth::login($user);
+        // [ 4 ] Dispatch the registered event
+        $this->dispatch('toast', message: 'Account created successfully.', type: 'success');
 
-        // [ 5 ] Redirect the user home
-        // return redirect()->to(route('home'));
-        return redirect()->to(route('login'));
+        // [ 5 ] Login the use
+        Auth::login($user);
+
+        // [ 6 ] Redirect the user home
+        return redirect()->to(route('home'));
     }
 
     public function render()

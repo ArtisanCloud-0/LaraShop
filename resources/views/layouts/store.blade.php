@@ -324,5 +324,8 @@
         </div>
       </footer>
     </div>
+    
+    <x-message.toast />
+
   </body>
 </html>

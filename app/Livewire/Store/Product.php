@@ -67,6 +67,7 @@ class Product extends Component
         $variant = ProductDetails::findOrFail($productDetailsId);
         resolve(AddToCartAction::class)->execute($variant->id, 1);
         $this->dispatch('cart-updated');
+        $this->dispatch('toast', message: 'Item added to cart.', type: 'success');
     }
 
     public function render()

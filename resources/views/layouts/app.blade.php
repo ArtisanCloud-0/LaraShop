@@ -66,6 +66,8 @@
             </main>
         </div>
 
+        <x-message.toast />
+
         @livewireScripts
         <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     </body>

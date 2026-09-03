@@ -35,12 +35,11 @@ class Settings extends Component
             'tax_rate'      => $this->taxRate,
         ]);
 
-        session()->flash('status', 'Settings saved successfully.');
+        $this->dispatch('toast', message: 'Settings saved successfully.', type: 'success');
     }
 
     public function render()
     {
         return view('livewire.admin.settings.settings');
     }
-
 }

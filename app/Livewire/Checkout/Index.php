@@ -36,7 +36,7 @@ class Index extends Component
         $this->cartItems = $cartService->getItems();
 
         if (empty($this->cartItems)) {
-            session()->flash('error', 'Your shopping bag is empty.');
+            $this->dispatch('toast', message: 'Your shopping bag is empty.', type: 'error');
             return redirect()->route('cart');
         }
 
@@ -70,7 +70,8 @@ class Index extends Component
         // Immediately clear cart so user cannot submit twice
         $cartService->clearCart();
 
-        session()->flash('status', 'Your order has been placed successfully!');
+        $this->dispatch('toast', message: 'Your order has been placed successfully!', type: 'success');
+
         return redirect()
             ->route('order.success', [
                 'orderNumber' => $this->order->order_number,

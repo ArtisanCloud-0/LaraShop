@@ -68,6 +68,8 @@ class ManageSkus extends Component
             }
             $this->options_raw = implode(', ', $formatted);
         }
+
+        $this->dispatch('toast', message: 'Editing existing Variant SKU configuration.', type: 'info');
     }
 
     public function saveSku()
@@ -98,7 +100,7 @@ class ManageSkus extends Component
                 'options' => $optionsArray,
                 'images'  => array_values($this->images),
             ]);
-            session()->flash('status', 'Variant SKU configuration updated.');
+            $this->dispatch('toast', message: 'Variant SKU configuration updated.', type: 'success');
         } else {
             $this->product->productDetails()->create([
                 'code'    => $this->code,
@@ -107,7 +109,7 @@ class ManageSkus extends Component
                 'options' => $optionsArray,
                 'images'  => array_values($this->images),
             ]);
-            session()->flash('status', 'New Variant SKU appended successfully.');
+            $this->dispatch('toast', message: 'New Variant SKU appended successfully.', type: 'success');
         }
 
         $this->resetForm();
@@ -128,6 +130,7 @@ class ManageSkus extends Component
 
         unset($this->images[$index]);
         $this->images = array_values($this->images);
+        $this->dispatch('toast', message: 'Image removed from Variant SKU configuration.', type: 'info');
     }
 
     public function removeTemporaryImage(int $index): void
@@ -135,6 +138,7 @@ class ManageSkus extends Component
         if (isset($this->new_images[$index])) {
             unset($this->new_images[$index]);
             $this->new_images = array_values($this->new_images);
+            $this->dispatch('toast', message: 'Temporary image removed.', type: 'info');
         }
     }
 
@@ -152,7 +156,7 @@ class ManageSkus extends Component
 
         $sku->delete();
         $this->product->load('productDetails');
-        session()->flash('status', 'Variant record wiped from inventory.');
+        $this->dispatch('toast', message: 'Variant record wiped from inventory.', type: 'success');
     }
 
     public function render()

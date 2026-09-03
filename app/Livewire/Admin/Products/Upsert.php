@@ -47,6 +47,7 @@ class Upsert extends Component
             $this->description = $product->description ?? '';
             $this->is_visible = (bool) $product->is_visible;
             $this->cover_image = $product->cover_image;
+            $this->dispatch('toast', message: 'Loading existing product configuration complete.', type: 'info');
         }
     }
 
@@ -74,15 +75,12 @@ class Upsert extends Component
 
             $this->product = $action->execute($payload, $this->product);
 
-            session()->flash(
-                'status',
-                $this->isEditMode ? 'Product updated successfully.' : 'Product created successfully.'
-            );
+            $this->dispatch('toast', message: $this->isEditMode ? 'Product updated successfully.' : 'Product created successfully.', type: 'success');
 
             return redirect()->route('panel.products');
         } catch (\Throwable $exception) {
             report($exception);
-            session()->flash('error', 'Unable to save product dataset. Please check inputs and retry.');
+            $this->dispatch('toast', message: 'Unable to save product dataset. Please check inputs and retry.', type: 'error');
         }
     }
 
@@ -98,6 +96,7 @@ class Upsert extends Component
         if ($this->product?->exists) {
             $this->product->update(['cover_image' => null]);
         }
+        $this->dispatch('toast', message: 'Cover image removed.', type: 'info');
     }
 
     #[Title('Product Upsert Manager')]

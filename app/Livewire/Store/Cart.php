@@ -69,8 +69,10 @@ class Cart extends Component
             $this->loadCartItems(); // Refresh the cart items after updating the quantity
 
             $this->dispatch('cart-updated'); // Notify the navbar counter to re-render
+
+            $this->dispatch('toast', message: 'Cart updated successfully.', type: 'success'); // Flash success message
         } catch (\InvalidArgumentException $e) {
-            session()->flash('error', $e->getMessage()); // Display error message to the user
+            $this->dispatch('toast', message: $e->getMessage(), type: 'error'); // Flash error message if the quantity is invalid
         }
     }
 
@@ -81,6 +83,8 @@ class Cart extends Component
 
         // Notify the navbar counter to re-render
         $this->dispatch('cart-updated');
+
+        $this->dispatch('toast', message: 'Item removed from cart successfully.', type: 'success'); // Flash success message
     }
 
     #[On('cart-updated')]
@@ -94,7 +98,7 @@ class Cart extends Component
         $items = $cartService->getItems();
 
         if (empty($items)) {
-            session()->flash('error', 'Your shopping bag is empty.');
+            $this->dispatch('toast', message: 'Your shopping bag is empty.', type: 'error');
             return;
         }
 

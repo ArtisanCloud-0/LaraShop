@@ -26,7 +26,7 @@ class Welcome extends Component
         $this->dispatch('cart-updated');
 
         // Session updating message
-        session()->flash('success', "1 item added to your bag!");
+        $this->dispatch('toast', message: "1 item added to your bag!", type: 'success');
     }
 
     public function render()

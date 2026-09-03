@@ -42,9 +42,8 @@ class Profile extends Component
         $imageName = null;
 
         if ($this->image) {
-            $imageName = $this->image->getClientOriginalName();
+            $imageName = $this->image;
             $imageName = $imageName->hashName();
-            dd($imageName);
             $this->image->storeAs('profiles', $imageName, 'public');
         }
 
@@ -57,7 +56,7 @@ class Profile extends Component
 
         $this->reset('image', 'password');
 
-        session()->flash('status', 'Profile updated successfully.');
+        $this->dispatch('toast', message: 'Profile updated successfully.', type: 'success');
     }
 
     public function render()

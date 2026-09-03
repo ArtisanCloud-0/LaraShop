@@ -20,9 +20,9 @@ class Edit extends Component
     public Category $category;
 
     public string $name = '';
- 
+
     public ?int $parent_id = null;
- 
+
     public bool $is_visible = true;
 
     /* 
@@ -69,16 +69,14 @@ class Edit extends Component
             $action->execute($validatedData, $this->category);
 
             // [ 2-2 ] Flash success message
-            session()->flash('status', 'Category '. $validatedData['name'] .' data updated successfully!');
+            $this->dispatch('toast', message: 'Category ' . $validatedData['name'] . ' data updated successfully.', type: 'success');
 
             // [ 2-3 ] Return to the categories table page
             return redirect()->route('panel.categories');
-
         } catch (\Exception $e) {
 
             // [ 2-1 ] Show error messages if not able to update record
-            session()->flash('error', 'Category '. $validatedData['name'] .' data failed to update!');
-
+            $this->dispatch('toast', message: 'Category ' . $validatedData['name'] . ' data failed to update!', type: 'error');
         }
     }
 
