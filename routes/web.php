@@ -13,6 +13,7 @@ use App\Livewire\Store\About;
 use App\Livewire\Store\Auth\Reg;
 use App\Livewire\Store\Auth\Login;
 use App\Livewire\Store\Auth\LogoutSession;
+use App\Livewire\Store\Profile;
 use App\Livewire\Store\ShowOrders;
 
 // Login to store
@@ -51,3 +52,6 @@ Route::get('/product/{product:slug}', ProductDetails::class)->name('product.deta
 
 // Show Orders Page
 Route::get('/showOrders', ShowOrders::class)->name('show.orders');
+
+// Profile Page
+Route::get('/profile', Profile::class)->name('customer.profile');

@@ -177,47 +177,9 @@
             {{-- Cart Counter Component --}}
             <livewire:store.navigation.cart-counter />
 
-            {{-- Desktop Auth Links / Profile Dropdown --}}
-            <div class="hidden md:flex items-center gap-4 text-sm font-medium">
-              @guest
-                <a href="{{ route('login') }}" class="text-slate-600 hover:text-orange-500 dark:text-slate-300 dark:hover:text-orange-300 {{ request()->routeIs('login') ? 'text-orange-500 dark:text-orange-300' : '' }}">Sign in</a>
-                <a href="{{ route('register') }}" class="rounded-xl bg-orange-600 px-3.5 py-1.5 text-xs font-semibold text-white shadow-md hover:bg-orange-500">Sign up</a>
-              @else
-                <div class="relative" x-data="{ userMenuOpen: false }" @click.outside="userMenuOpen = false">
-                  <button
-                    @click="userMenuOpen = !userMenuOpen"
-                    type="button"
-                    class="flex items-center gap-2 rounded-full border border-slate-300 bg-slate-100 p-1 dark:border-slate-700 dark:bg-slate-800 focus:outline-none"
-                  >
-                    <div class="flex h-7 w-7 items-center justify-center rounded-full bg-orange-500 text-xs font-bold text-white">
-                      {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
-                    </div>
-                    <span class="text-xs font-semibold text-slate-700 dark:text-slate-200 pr-1">{{ auth()->user()->name }}</span>
-                    <svg class="w-3.5 h-3.5 text-slate-400 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                    </svg>
-                  </button>
-
-                  <div
-                    x-show="userMenuOpen"
-                    x-cloak
-                    x-transition
-                    class="absolute right-0 mt-2 w-48 rounded-xl border border-slate-200 bg-white p-2 shadow-xl dark:border-slate-800 dark:bg-slate-900 z-50"
-                  >
-                    @if(auth()->user()->isAdmin() || auth()->user()->isSuperAdmin())
-                      <a href="{{ route('dashboard') }}" class="block rounded-lg px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-orange-50 hover:text-orange-600 dark:text-slate-200 dark:hover:bg-slate-800">
-                        Admin Dashboard
-                      </a>
-                    @endif
-                    <a href="{{ route('show.orders') }}" class="block rounded-lg px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-orange-50 hover:text-orange-500 dark:text-slate-200 dark:hover:bg-slate-800">
-                      My Orders
-                    </a>
-                    <a href="{{ route('logout') }}" class="block w-full text-left rounded-lg px-3 py-2 text-xs font-semibold text-red-500 hover:bg-red-50 dark:hover:bg-red-950/40">
-                      Sign Out
-                    </a>
-                  </div>
-                </div>
-              @endguest
+            {{-- Desktop Auth Livewire Island --}}
+            <div class="hidden md:block">
+              <livewire:store.navigation.user-dropdown />
             </div>
 
             {{-- Mobile Menu Trigger Button --}}
@@ -287,26 +249,13 @@
               </div>
             </div>
 
-            <a href="{{ route('about') }}" class="block py-1.5 text-slate-700 dark:text-slate-200 hover:text-orange-500 {{ request()->routeIs('about') ? 'text-orange-500 dark:text-orange-300' : '' }}">About</a>
+            <a 
+              href="{{ route('about') }}" 
+              class="block py-1.5 text-slate-700 dark:text-slate-200 hover:text-orange-500 {{ request()->routeIs('about') ? 'text-orange-500 dark:text-orange-300' : '' }}"
+            >About</a>
 
-            {{-- Mobile User Authentication Links --}}
-            <div class="pt-4 border-t border-slate-200 dark:border-slate-800">
-              @guest
-                <div class="flex flex-col gap-2">
-                  <a href="{{ route('login') }}" class="block text-center rounded-xl border border-slate-300 dark:border-slate-700 py-2 text-xs font-semibold text-slate-700 dark:text-slate-200">Sign in</a>
-                  <a href="{{ route('register') }}" class="block text-center rounded-xl bg-orange-600 py-2 text-xs font-semibold text-white">Sign up</a>
-                </div>
-              @else
-                <div class="space-y-2">
-                  <p class="text-xs font-bold text-slate-400 uppercase tracking-wider">Account ({{ auth()->user()->name }})</p>
-                  @if(auth()->user()->isAdmin() || auth()->user()->isSuperAdmin())
-                    <a href="{{ route('dashboard') }}" class="block text-xs text-slate-700 dark:text-slate-200">Admin Dashboard</a>
-                  @endif
-                  <a href="{{ route('show.orders') }}" class="block text-xs text-slate-700 dark:text-slate-200 hover:text-orange-500 hover:dark:text-orange-300">My Orders</a>
-                  <a href="{{ route('logout') }}" class="block text-xs text-slate-700 dark:text-slate-200 hover:text-red-500 hover:dark:text-red-300">Sign Out</a>
-                </div>
-              @endguest
-            </div>
+            {{-- Mobile Auth Livewire Island --}}
+            <livewire:store.navigation.user-dropdown :isMobile="true" />
           </div>
         </div>
       </nav>
