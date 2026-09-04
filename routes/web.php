@@ -13,6 +13,7 @@ use App\Livewire\Store\About;
 use App\Livewire\Store\Auth\Reg;
 use App\Livewire\Store\Auth\Login;
 use App\Livewire\Store\Auth\LogoutSession;
+use App\Livewire\Store\ShowOrders;
 
 // Login to store
 Route::get('/login', Login::class)->name('login');
@@ -47,3 +48,6 @@ Route::get('/product', Product::class)->name('products');
 
 // Product Details Page
 Route::get('/product/{product:slug}', ProductDetails::class)->name('product.details');
+
+// Show Orders Page
+Route::get('/showOrders', ShowOrders::class)->name('show.orders');

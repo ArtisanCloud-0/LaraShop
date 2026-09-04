@@ -209,7 +209,7 @@
                         Admin Dashboard
                       </a>
                     @endif
-                    <a href="#" class="block rounded-lg px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-orange-50 hover:text-orange-500 dark:text-slate-200 dark:hover:bg-slate-800">
+                    <a href="{{ route('show.orders') }}" class="block rounded-lg px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-orange-50 hover:text-orange-500 dark:text-slate-200 dark:hover:bg-slate-800">
                       My Orders
                     </a>
                     <a href="{{ route('logout') }}" class="block w-full text-left rounded-lg px-3 py-2 text-xs font-semibold text-red-500 hover:bg-red-50 dark:hover:bg-red-950/40">
@@ -302,7 +302,7 @@
                   @if(auth()->user()->isAdmin() || auth()->user()->isSuperAdmin())
                     <a href="{{ route('dashboard') }}" class="block text-xs text-slate-700 dark:text-slate-200">Admin Dashboard</a>
                   @endif
-                  <a href="#" class="block text-xs text-slate-700 dark:text-slate-200 hover:text-orange-500 hover:dark:text-orange-300">My Orders</a>
+                  <a href="{{ route('show.orders') }}" class="block text-xs text-slate-700 dark:text-slate-200 hover:text-orange-500 hover:dark:text-orange-300">My Orders</a>
                   <a href="{{ route('logout') }}" class="block text-xs text-slate-700 dark:text-slate-200 hover:text-red-500 hover:dark:text-red-300">Sign Out</a>
                 </div>
               @endguest

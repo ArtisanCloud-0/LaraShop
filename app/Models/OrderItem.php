@@ -60,4 +60,9 @@ class OrderItem extends Model
     {
         return $this->belongsTo(ProductDetails::class)->withTrashed();
     }
+
+    public function product(): BelongsTo
+    {
+        return $this->belongsTo(Product::class, 'product_id');
+    }
 }
