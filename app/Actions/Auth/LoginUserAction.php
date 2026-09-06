@@ -44,6 +44,7 @@ class LoginUserAction
 		// [ 5 ] Return correct redirect route based on guard
 		return $guard === 'panel'
 			? route('dashboard')
-			: session()->pull('url.intended', route('home'));
+			// : session()->pull('url.intended', route('home'));
+			: route('home');
 	}
 }
