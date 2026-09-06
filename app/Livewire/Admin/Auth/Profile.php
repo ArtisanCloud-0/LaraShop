@@ -12,22 +12,24 @@ class Profile extends Component
 
     public string $name = '';
     public string $email = '';
+    public string $phone = '';
     public string $password = '';
     public ?object $image = null;
 
     public function mount()
     {
         $user = auth('panel')->user();
-        $this->name = $user->name;
-        $this->email = $user->email;
+        $this->name = $user->name ?? '';
+        $this->email = $user->email ?? '';
+        $this->phone = $user->phone ?? '';
     }
 
     public function save(UpdateProfileAction $action)
     {
-
         $this->validate([
             'name'     => 'required|string|max:255',
             'email'    => 'required|email|max:255',
+            'phone'    => 'nullable|string|max:20',
             'password' => 'nullable|min:8',
             'image'    => 'nullable|image|max:2048',
         ], [
@@ -42,19 +44,22 @@ class Profile extends Component
         $imageName = null;
 
         if ($this->image) {
-            $imageName = $this->image;
-            $imageName = $imageName->hashName();
+            $imageName = $this->image->hashName();
             $this->image->storeAs('profiles', $imageName, 'public');
         }
 
         $action->execute(auth('panel')->user(), [
             'name'     => $this->name,
             'email'    => $this->email,
+            'phone'    => $this->phone,
             'password' => $this->password,
             'image'    => $imageName,
         ]);
 
         $this->reset('image', 'password');
+
+        // Dispatch globally so parent layout/navbar updates avatar and user info instantly
+        $this->dispatch('profile-updated');
 
         $this->dispatch('toast', message: 'Profile updated successfully.', type: 'success');
     }

@@ -69,8 +69,20 @@
                 @error('email') <span class="text-red-400 text-[11px] mt-1 block">{{ $message }}</span> @enderror
             </div>
 
+            <!-- Phone Number -->
+            <div>
+                <label class="block text-xs font-semibold text-slate-500 dark:text-slate-300 mb-2">Phone Number</label>
+                <input 
+                    type="text" 
+                    wire:model="phone"
+                    class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-4 py-2.5 text-xs text-slate-500 dark:text-white focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
+                    placeholder="+1 (555) 000-0000"
+                >
+                @error('phone') <span class="text-red-400 text-[11px] mt-1 block">{{ $message }}</span> @enderror
+            </div>
+
             <!-- New Password -->
-            <div class="md:col-span-2">
+            <div>
                 <label class="block text-xs font-semibold text-slate-500 dark:text-slate-300 mb-2">New Password <span class="text-slate-500 font-normal">(Leave blank to keep current)</span></label>
                 <input 
                     type="password" 
