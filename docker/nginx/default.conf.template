@@ -4,7 +4,7 @@ server {
 
     server_name _;
 
-    root /var/www/html/public; // exposes Laravel's public/ directory, not your entire Laravel project
+    root /var/www/html/public;
     index index.php;
 
     charset utf-8;
@@ -13,7 +13,7 @@ server {
     # Laravel / Livewire
     # --------------------------------------------------------
     location / {
-        try_files $uri $uri/ /index.php?$query_string; // allows Laravel routes and Livewire requests to reach Laravel instead of returning a 404 from Nginx.
+        try_files $uri $uri/ /index.php?$query_string;
     }
 
     # --------------------------------------------------------
