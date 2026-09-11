@@ -1,0 +1,52 @@
+# Git
+.git
+.gitignore
+.gitattributes
+
+# Environment / secrets
+.env
+.env.*
+!.env.example
+
+# PHP dependencies
+/vendor/
+
+# Node dependencies
+/node_modules/
+
+# Laravel generated files
+/bootstrap/cache/*
+/storage/framework/cache/*
+/storage/framework/sessions/*
+/storage/framework/testing/*
+/storage/framework/views/*
+/storage/logs/*
+
+# Vite generated files
+/public/hot
+
+# Local storage
+/public/storage
+
+# SQLite
+/database/*.sqlite
+/database/*.sqlite-journal
+/database/*.sqlite-shm
+/database/*.sqlite-wal
+
+# IDE
+.idea/
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Tests / local artifacts
+.phpunit.result.cache
+coverage/
+
+# Documentation / local tooling
+AGENTS.md
+.ai/
+.github/
