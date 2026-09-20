@@ -6,6 +6,9 @@ services:
 
         container_name: larashop-app
 
+        env_file:
+            - .env
+
         ports:
             - "8080:10000"
 
