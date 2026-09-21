@@ -59,6 +59,7 @@ RUN apt-get update \
         libicu-dev \
         libonig-dev \
         libxml2-dev \
+        libsqlite3-dev \
     && docker-php-ext-configure gd \
         --with-freetype \
         --with-jpeg \
@@ -70,7 +71,7 @@ RUN apt-get update \
         intl \
         mbstring \
         opcache \
-        pdo_mysql \
+        pdo_sqlite \
         xml \
         zip \
     && rm -rf /var/lib/apt/lists/*

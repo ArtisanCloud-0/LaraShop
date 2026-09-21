@@ -46,12 +46,54 @@ php artisan storage:link --force || true
 
 
 # ------------------------------------------------------------
+# SQLite database
+# ------------------------------------------------------------
+echo "Preparing SQLite database..."
+
+mkdir -p /var/www/html/database
+
+touch /var/www/html/database/database.sqlite
+
+chown www-data:www-data \
+    /var/www/html/database/database.sqlite
+
+chmod 664 \
+    /var/www/html/database/database.sqlite
+
+
+# ------------------------------------------------------------
 # Database migrations
 # ------------------------------------------------------------
 if [ "${RUN_MIGRATIONS:-true}" = "true" ]; then
+
     echo "Running database migrations..."
 
     php artisan migrate --force
+
+fi
+
+
+# ------------------------------------------------------------
+# Optional demo seed data
+# ------------------------------------------------------------
+if [ "${RUN_SEEDERS:-false}" = "true" ]; then
+
+    echo "Checking demo seed data..."
+
+    USER_COUNT=$(php artisan tinker --execute="echo App\Models\User::count();")
+
+    if [ "${USER_COUNT}" = "0" ]; then
+
+        echo "Database is empty; running demo seeders..."
+
+        php artisan db:seed --force
+
+    else
+
+        echo "Database already contains data; skipping seeders."
+
+    fi
+
 fi
 
 
@@ -85,4 +127,3 @@ echo "========================================="
 
 exec /usr/bin/supervisord \
     -c /etc/supervisor/conf.d/supervisord.conf
-    

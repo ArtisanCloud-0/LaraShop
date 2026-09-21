@@ -224,7 +224,7 @@ class Product extends Component
                             ) {
 
                                 $subQuery->orWhereRaw(
-                                    "LOWER(JSON_UNQUOTE(JSON_EXTRACT(options, '$.Size'))) = ?",
+                                    "LOWER(json_extract(options, '$.Size')) = ?",
                                     [strtolower($size)]
                                 );
                             }
