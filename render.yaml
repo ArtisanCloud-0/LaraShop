@@ -10,6 +10,7 @@ services:
       envVars:
           - key: APP_ENV
             value: production
+            sync: false
 
           - key: APP_DEBUG
             value: "false"
