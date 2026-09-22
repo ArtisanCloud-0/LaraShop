@@ -24,12 +24,14 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
+        $token = Str::lower(Str::random(16));
+
         return [
-            'name' => fake()->name(),
-            'email' => fake()->unique()->safeEmail(),
+            'name' => 'Demo User ' . Str::upper(Str::random(6)),
+            'email' => 'demo-' . $token . '@example.com',
             'email_verified_at' => now(),
-            'phone' => fake()->phoneNumber(),
-            'image' => fake()->imageUrl(),
+            'phone' => '09' . random_int(10000000, 99999999),
+            'image' => null,
             'password' => static::$password ??= Hash::make('password'),
             'remember_token' => Str::random(10),
         ];
