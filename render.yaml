@@ -15,8 +15,7 @@ services:
             value: "false"
 
           - key: APP_KEY
-            generateValue: true
-            sync: "false"
+            sync: false
 
           - key: DB_CONNECTION
             value: sqlite
