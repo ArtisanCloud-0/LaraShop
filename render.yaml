@@ -31,3 +31,9 @@ services:
 
           - key: RUN_SEEDERS
             value: "true"
+
+          - Key: LOG_CHANNEL
+            value: stderr
+
+          - Key: LOG_LEVEL
+            value: debug
